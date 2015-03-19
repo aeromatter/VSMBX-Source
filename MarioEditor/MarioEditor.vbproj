@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{642F5311-EF16-442E-BF75-256F70A47376}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>MarioEditor.My.MyApplication</StartupObject>
+    <RootNamespace>MarioEditor</RootNamespace>
+    <AssemblyName>MarioEditor</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\VSMBX\setup\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>MarioEditor.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>MarioEditor.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>7BFE15D4B5839AF6946A047320F9BFBBA286A151</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MarioEditor_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>vsmbx_logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Audio.vb" />
+    <Compile Include="Classes\libZPlay.vb" />
+    <Compile Include="Classes\PlayerC.vb" />
+    <Compile Include="Classes\NPC.vb" />
+    <Compile Include="Classes\Play.vb" />
+    <Compile Include="Window\AdvancedBlocks.Designer.vb">
+      <DependentUpon>AdvancedBlocks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\AdvancedBlocks.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\Backgrounds.vb" />
+    <Compile Include="Window\BGOs.Designer.vb">
+      <DependentUpon>BGOs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\BGOs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\Blocks.vb" />
+    <Compile Include="Window\BlocksAndTiles.Designer.vb">
+      <DependentUpon>BlocksAndTiles.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\BlocksAndTiles.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Chat.Designer.vb">
+      <DependentUpon>Chat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\Chat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\ControlSettings.Designer.vb">
+      <DependentUpon>ControlSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\ControlSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Debug.Designer.vb">
+      <DependentUpon>Debug.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\Debug.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Form2.Designer.vb">
+      <DependentUpon>Form2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\Form2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\Level.vb" />
+    <Compile Include="Window\Grid.Designer.vb">
+      <DependentUpon>Grid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\Grid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\IRC Online.Designer.vb">
+      <DependentUpon>IRC Online.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\IRC Online.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\IRCclient.Designer.vb">
+      <DependentUpon>IRCclient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\IRCclient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\LevelSettings.Designer.vb">
+      <DependentUpon>LevelSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\LevelSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Window\NPCs.Designer.vb">
+      <DependentUpon>NPCs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\NPCs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Online.Designer.vb">
+      <DependentUpon>Online.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\Online.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\TestSettings.Designer.vb">
+      <DependentUpon>TestSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Window\TestSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Window\AdvancedBlocks.resx">
+      <DependentUpon>AdvancedBlocks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\BGOs.resx">
+      <DependentUpon>BGOs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\BlocksAndTiles.resx">
+      <DependentUpon>BlocksAndTiles.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Chat.resx">
+      <DependentUpon>Chat.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\ControlSettings.resx">
+      <DependentUpon>ControlSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Debug.resx">
+      <DependentUpon>Debug.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Form2.resx">
+      <DependentUpon>Form2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Grid.resx">
+      <DependentUpon>Grid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\IRC Online.resx">
+      <DependentUpon>IRC Online.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\IRCclient.resx">
+      <DependentUpon>IRCclient.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\LevelSettings.resx">
+      <DependentUpon>LevelSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\NPCs.resx">
+      <DependentUpon>NPCs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Online.resx">
+      <DependentUpon>Online.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\TestSettings.resx">
+      <DependentUpon>TestSettings.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MarioEditor_TemporaryKey.pfx" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="vsmbx_logo.ico" />
+    <None Include="Resources\ContainerBG.png" />
+    <None Include="Resources\Eraser.png" />
+    <None Include="Resources\Pointer.png" />
+    <None Include="Resources\HoldBox.png" />
+    <None Include="Resources\CoinCount.png" />
+    <None Include="Resources\LifeCount.png" />
+    <Content Include="Resources\WXsPmMg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

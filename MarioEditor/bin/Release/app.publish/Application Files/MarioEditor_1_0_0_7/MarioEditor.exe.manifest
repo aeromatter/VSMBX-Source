@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="MarioEditor.exe" version="1.0.0.7" publicKeyToken="8ea5fca1c24d2b4b" language="neutral" processorArchitecture="x86" type="win32" />
+  <description asmv2:iconFile="vsmbx_logo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="MarioEditor" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="MarioEditor.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MarioEditor.exe" size="1446912">
+      <assemblyIdentity name="MarioEditor" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>CyvNs6iP+sv5TMXeMTvVWOpx9oY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Resources\WXsPmMg.png" size="499">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>d1xT0PoH/wxUromPBzGQP+zyOFQ=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="vsmbx_logo.ico" size="15086">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>RKt0YHoaDkz/BNWCCpHOqBT3TlQ=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=buddys-PC\buddys" issuerKeyHash="5da602d2b5787dcb74df9576934d125b9fb3e106" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>ZlPKQr1xmTdZbZU4SrU9KLxx0oQ=</DigestValue></Reference></SignedInfo><SignatureValue>ZiiKZXranZUVfxma58OYyeEdlK+aRgU2vdTMDUrkF2ED+meuS4YKROhe6f+UcneHrBgDb1iWScF97sJKy1Dm6IAXIvOLeprFyeN1aoghtcVH2LQ7AI+4FJ8X/iYmUVZ/sPh+IhnJNhIB/E19hDBL5ki676F0cMQeOwyMyykw9Ag=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>2MIYkIWGOdHUJTus9fODRsyZCTteOskNNjB+1U5BCrcmRMV2zsAz3ptqIyHLL2z2W/Oy7npWp0SGFCcPp7obnshVQgzoBjjDcVefm4WkYbXiWjBkALhFbhRY+saxbat5fSjyKcCp+shB2TNLXAA4nM4dxKxscDr+7J7OWD95T8U=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="84d271bc283db54a38956d59379971bd42ca5366" Description="" Url=""><as:assemblyIdentity name="MarioEditor.exe" version="1.0.0.7" publicKeyToken="8ea5fca1c24d2b4b" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=buddys-PC\buddys</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>dKCBnFGWi+xxOsDmE0Iiqb6wxaY=</DigestValue></Reference></SignedInfo><SignatureValue>KvcMiQtbRmbEe/D98QAmQkQUA9mqO3JJ1XG2VfuL+Qkfl+x+aBFyuDdYxtEjxV0xeDLFjiriV0+eX6XCle2rscjaHjnIuNHLYxxwmfLYsLM/qU/rJv276EAEt/ujjefv5ZvtfnDRXozhHuNaEaPEHyE8hnff27Orh7NPo25Zukw=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>2MIYkIWGOdHUJTus9fODRsyZCTteOskNNjB+1U5BCrcmRMV2zsAz3ptqIyHLL2z2W/Oy7npWp0SGFCcPp7obnshVQgzoBjjDcVefm4WkYbXiWjBkALhFbhRY+saxbat5fSjyKcCp+shB2TNLXAA4nM4dxKxscDr+7J7OWD95T8U=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQJFwJKpofNK1DCtlGavifPTANBgkqhkiG9w0BAQUFADArMSkwJwYDVQQDHiAAYgB1AGQAZAB5AHMALQBQAEMAXABiAHUAZABkAHkAczAeFw0xNDA5MjYwNTE2MDRaFw0xNTA5MjYxMTE2MDRaMCsxKTAnBgNVBAMeIABiAHUAZABkAHkAcwAtAFAAQwBcAGIAdQBkAGQAeQBzMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDYwhiQhYY50dQlO6z184NGzJkJO146yQ02MH7VTkEKtyZExXbOwDPem2ojIcsvbPZb87LuelanRIYUJw+nuhueyFVCDOgGOMNxV5+bhaRhteJaMGQAuEVuFFj6xrFtq3l9KPIpwKn6yEHZM0tcADiczh3ErGxwOv7sns5YP3lPxQIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAEk7UeSVm7yZsrIdgO98RzpxYjBUPurYZ8nPjxccPkYMUpiWKJ/2Jp6Gkw8qdaTtiJpCCcaodDL1QEwt86E2HWic4C+qdIJl7bUYlQ9NmiSTakuMqgA8zszdTUaP9pExOF0OPorBBNjngoq0zleZtCAxE8nYmrXXcWZsIM5GGtdg</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
