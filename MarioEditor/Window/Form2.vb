@@ -4,6 +4,7 @@ Imports System.Drawing.Imaging
 Imports System.Threading
 Imports System.Drawing.Text
 Imports System.Text
+Imports System.Windows.Input
 
 Public Class Form2
     Public Shared EditMode As Integer = 0
@@ -69,44 +70,51 @@ Public Class Form2
     Public Shared Online As Boolean = False
     Public Audio As Audio
 
+    Public Shared Function GetKeyStates(key As Key) As KeyStates
+
+    End Function
     Private Sub Form2_Deactivate(sender As Object, e As System.EventArgs) Handles Me.Deactivate
         Me.Focus()
     End Sub
 
-    Private Sub Form2_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+    Public Sub ResetSpawn()
+        Select Case Play.P1
+            Case 1
+                Play.PlayerX = Level.P1start.X - (Play.MarioW - 28)
+                Play.DrawX = Level.P1start.X - (Play.MarioW - 28)
+                Play.PlayerY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
+                Play.DrawY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
+            Case 2
+                Play.PlayerX = Level.P1start.X - (Play.LuigiW - 28)
+                Play.DrawX = Level.P1start.X - (Play.LuigiW - 28)
+                Play.PlayerY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
+                Play.DrawY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
+            Case 3
+                Play.PlayerX = Level.P1start.X - (Play.PeachW - 32)
+                Play.DrawX = Level.P1start.X - (Play.PeachW - 32)
+                Play.PlayerY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
+                Play.DrawY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
+            Case 4
+                Play.PlayerX = Level.P1start.X - (Play.ToadW - 32)
+                Play.DrawX = Level.P1start.X - (Play.ToadW - 32)
+                Play.PlayerY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
+                Play.DrawY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
+        End Select
+    End Sub
+
+    Public Sub KeyboardControl()
         'Begin Testing
-        If e.KeyData = (Keys.F5) Then
+        If (Keyboard.GetKeyStates(Key.F5) And KeyStates.Down) > 0 Then
             Select Case MsgBox("Do you want to save the level first? Any unsaved changes will be lost.", MsgBoxStyle.YesNoCancel)
                 Case MsgBoxResult.Yes
                     Save()
                     'New Rectangle(Level.P1start.X - (Play.MarioW - 28), Level.P1start.Y - (Play.MarioH - Level.P1start.Height), Play.MarioW, Play.MarioH)
                     If IsSaved = True Then
                         Play.IsTesting = True
+
                         Play.ShowHUD()
                         Play.GetPlayer()
-
-                        Select Case Play.P1
-                            Case 1
-                                Play.PlayerX = Level.P1start.X - (Play.MarioW - 28)
-                                Play.DrawX = Level.P1start.X - (Play.MarioW - 28)
-                                Play.PlayerY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                                Play.DrawY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                            Case 2
-                                Play.PlayerX = Level.P1start.X - (Play.LuigiW - 28)
-                                Play.DrawX = Level.P1start.X - (Play.LuigiW - 28)
-                                Play.PlayerY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                                Play.DrawY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                            Case 3
-                                Play.PlayerX = Level.P1start.X - (Play.PeachW - 32)
-                                Play.DrawX = Level.P1start.X - (Play.PeachW - 32)
-                                Play.PlayerY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                                Play.DrawY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                            Case 4
-                                Play.PlayerX = Level.P1start.X - (Play.ToadW - 32)
-                                Play.DrawX = Level.P1start.X - (Play.ToadW - 32)
-                                Play.PlayerY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                                Play.DrawY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                        End Select
+                        ResetSpawn()
 
                         Play.MoveDir = 1
                     End If
@@ -118,28 +126,7 @@ Public Class Form2
                     Play.ShowHUD()
                     Play.GetPlayer()
 
-                    Select Case Play.P1
-                        Case 1
-                            Play.PlayerX = Level.P1start.X - (Play.MarioW - 28)
-                            Play.DrawX = Level.P1start.X - (Play.MarioW - 28)
-                            Play.PlayerY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                            Play.DrawY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                        Case 2
-                            Play.PlayerX = Level.P1start.X - (Play.LuigiW - 28)
-                            Play.DrawX = Level.P1start.X - (Play.LuigiW - 28)
-                            Play.PlayerY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                            Play.DrawY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                        Case 3
-                            Play.PlayerX = Level.P1start.X - (Play.PeachW - 32)
-                            Play.DrawX = Level.P1start.X - (Play.PeachW - 32)
-                            Play.PlayerY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                            Play.DrawY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                        Case 4
-                            Play.PlayerX = Level.P1start.X - (Play.ToadW - 32)
-                            Play.DrawX = Level.P1start.X - (Play.ToadW - 32)
-                            Play.PlayerY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                            Play.DrawY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                    End Select
+                    ResetSpawn()
 
                     Play.MoveDir = 1
 
@@ -148,106 +135,135 @@ Public Class Form2
             End Select
         End If
 
-        Select Case e.KeyData
-            Case PlayerC.RunC
-                Play.IsRunning = True
-            Case PlayerC.RightC
-                Play.Move(1)
-            Case PlayerC.LeftC
-                Play.Move(2)
-            Case PlayerC.JumpC
-                If Play.JumpHeight = 0 And Play.OnGround = True And Play.JumpReleased = True Then
-                    Play.CheckCollision()
-                    Play.IsJumping = True
-                    Play.JumpReleased = False
-                End If
-            Case PlayerC.DownC
+        If (Keyboard.GetKeyStates(PlayerC.RunC) And KeyStates.Down) > 0 Then
+            Play.IsRunning = True
+        End If
+
+        If (Keyboard.GetKeyStates(PlayerC.RightC) And KeyStates.Down) > 0 Then
+            Play.Move(1)
+        End If
+
+        If (Keyboard.GetKeyStates(PlayerC.LeftC) And KeyStates.Down) > 0 Then
+            Play.Move(2)
+        End If
+
+        If (Keyboard.GetKeyStates(PlayerC.JumpC) And KeyStates.Down) > 0 Then
+            If Play.JumpHeight = 0 And Play.OnGround = True And Play.JumpReleased = True Then
                 Play.CheckCollision()
-                Play.IsDucking = True
-            Case (Keys.Control + Keys.Q)
-                Form1.Close()
-            Case Keys.Escape
-                Play.IsTesting = False
+                Play.IsJumping = True
+                Play.JumpReleased = False
+            End If
+        End If
 
-                Select Case Play.P1
-                    Case 1
-                        Play.PlayerX = Level.P1start.X - (Play.MarioW - 28)
-                        Play.DrawX = Level.P1start.X - (Play.MarioW - 28)
-                        Play.PlayerY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                    Case 2
-                        Play.PlayerX = Level.P1start.X - (Play.LuigiW - 28)
-                        Play.DrawX = Level.P1start.X - (Play.LuigiW - 28)
-                        Play.PlayerY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                    Case 3
-                        Play.PlayerX = Level.P1start.X - (Play.PeachW - 32)
-                        Play.DrawX = Level.P1start.X - (Play.PeachW - 32)
-                        Play.PlayerY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                    Case 4
-                        Play.PlayerX = Level.P1start.X - (Play.ToadW - 32)
-                        Play.DrawX = Level.P1start.X - (Play.ToadW - 32)
-                        Play.PlayerY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                End Select
+        If (Keyboard.GetKeyStates(PlayerC.DownC) And KeyStates.Down) > 0 Then
+            Play.CheckCollision()
+            Play.IsDucking = True
+        End If
 
-                Play.Collide = False
-                Play.OnGround = False
-                Play.CollideDir = 0
-            Case (Keys.Control + Keys.S)
-                Form1.SaveFileDialog1.Filter = "Level Files|*.vlvl"
-                Form1.SaveFileDialog1.InitialDirectory = Form1.FilePath & "\Worlds\"
-                Form1.SaveFileDialog1.Title = "Save Level"
+        If ((Keyboard.GetKeyStates(Key.LeftCtrl) And Keyboard.GetKeyStates(Key.Q)) And KeyStates.Down) > 0 Then
+            Form1.Close()
+        End If
 
-                Form1.SaveFileDialog1.ShowDialog()
-            Case (Keys.Control + Keys.O)
-                Form1.OpenFileDialog1.Filter = "Level Files|*.vlvl"
-                Form1.OpenFileDialog1.InitialDirectory = Form1.FilePath & "\Worlds\"
-                Form1.OpenFileDialog1.Title = "Open Level"
-                Form1.OpenFileDialog1.FileName = ""
+        If (Keyboard.GetKeyStates(Key.Escape) And KeyStates.Down) > 0 Then
+            Play.IsTesting = False
+            Play.IsRunning = False
+            Play.IsMoving = False
 
-                Form1.OpenFileDialog1.ShowDialog()
-            Case (Keys.Control + Keys.N)
-                Blocks.Tiles.Clear()
-                Blocks.TileRects.Clear()
-                Backgrounds.BGOs.Clear()
-                Backgrounds.bgorects.Clear()
-                NPC.NPCsets.Clear()
-                NPC.NPCrects.Clear()
-                LevelSettings.BGColor = Color.Black
-                Level.BGtype = 0
-                Level.BG = Nothing
-                Level.BG2 = Nothing
-                Level.Music = ""
-                LevelSettings.PlayM.StopPlayback()
-                Level.Song = ""
-                Level.P1start = Nothing
-                Level.P2start = Nothing
-                Me.Invalidate()
+            ResetSpawn()
 
-                Audio = New Audio
-                Audio.PlaySound(1)
-        End Select
+            Play.Collide = False
+            Play.OnGround = False
+            Play.CollideDir = 0
+
+            For Each i As NPCsets In NPC.NPCsets.Where(Function(d) d.Testing = True).ToList
+
+                NPC.NPCrects.RemoveAt(NPC.NPCsets.IndexOf(i))
+                NPC.NPCsets.Remove(i)
+
+            Next
+
+            For n = 0 To NPC.NPCsets.Count - 1
+
+                Dim tempnpc As NPCsets
+                tempnpc = NPC.NPCsets(n)
+
+                tempnpc.X = NPC.NPCsets(n).rectangle.X
+                tempnpc.Y = NPC.NPCsets(n).rectangle.Y
+
+                NPC.NPCsets(n) = tempnpc
+
+            Next
+        End If
+
+        If ((Keyboard.GetKeyStates(Key.LeftCtrl) And Keyboard.GetKeyStates(Key.S)) And KeyStates.Down) > 0 Then
+            Form1.SaveFileDialog1.Filter = "Level Files|*.vlvl"
+            Form1.SaveFileDialog1.InitialDirectory = Form1.FilePath & "\Worlds\"
+            Form1.SaveFileDialog1.Title = "Save Level"
+
+            Form1.SaveFileDialog1.ShowDialog()
+        End If
+
+        If ((Keyboard.GetKeyStates(Key.LeftCtrl) And Keyboard.GetKeyStates(Key.O)) And KeyStates.Down) > 0 Then
+            Form1.OpenFileDialog1.Filter = "Level Files|*.vlvl"
+            Form1.OpenFileDialog1.InitialDirectory = Form1.FilePath & "\Worlds\"
+            Form1.OpenFileDialog1.Title = "Open Level"
+            Form1.OpenFileDialog1.FileName = ""
+
+            Form1.OpenFileDialog1.ShowDialog()
+        End If
+
+        If ((Keyboard.GetKeyStates(Key.LeftCtrl) And Keyboard.GetKeyStates(Key.N)) And KeyStates.Down) > 0 Then
+            Blocks.Tiles.Clear()
+            Blocks.TileRects.Clear()
+            Backgrounds.BGOs.Clear()
+            Backgrounds.bgorects.Clear()
+            NPC.NPCsets.Clear()
+            NPC.NPCrects.Clear()
+            LevelSettings.BGColor = Color.Black
+            Level.BGtype = 0
+            Level.BG = Nothing
+            Level.BG2 = Nothing
+            Level.Music = ""
+            LevelSettings.PlayM.StopPlayback()
+            Level.Song = ""
+            Level.P1start = Nothing
+            Level.P2start = Nothing
+            Me.Invalidate()
+
+            Audio = New Audio
+            Audio.PlaySound(1)
+        End If
+    End Sub
+
+    Private Sub Form2_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        KeyboardControl()
     End Sub
 
     Private Sub Form2_KeyUp(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyUp
         If Play.IsTesting = True Then
-            Select Case e.KeyData
-                Case PlayerC.RightC
-                    Play.IsMoving = False
-                    Play.CollideDir = 0
-                Case PlayerC.LeftC
-                    Play.IsMoving = False
-                    Play.CollideDir = 0
-                Case PlayerC.RunC
-                    Play.IsRunning = False
-                Case PlayerC.DownC
-                    Play.IsDucking = False
-                Case PlayerC.JumpC
-                    Play.IsJumping = False
-                    Play.JumpReleased = True
-            End Select
+
+            If (Keyboard.GetKeyStates(PlayerC.RightC) And KeyStates.Down) <= 0 Then
+                Play.IsMoving = False
+                Play.CollideDir = 0
+            End If
+
+            If (Keyboard.GetKeyStates(PlayerC.LeftC) And KeyStates.Down) <= 0 Then
+                Play.IsMoving = False
+                Play.CollideDir = 0
+            End If
+
+            If (Keyboard.GetKeyStates(PlayerC.RunC) And KeyStates.Down) <= 0 Then
+                Play.IsRunning = False
+            End If
+
+            If (Keyboard.GetKeyStates(PlayerC.DownC) And KeyStates.Down) <= 0 Then
+                Play.IsDucking = False
+            End If
+
+            If (Keyboard.GetKeyStates(PlayerC.JumpC) And KeyStates.Down) <= 0 Then
+                Play.IsJumping = False
+                Play.JumpReleased = True
+            End If
         End If
     End Sub
 
@@ -274,7 +290,8 @@ Public Class Form2
         End Try
 
         Audio = New Audio
-        KeyPreview = True
+
+        Play.NPClocs = New List(Of ActiveNPC)
 
         PlayerC.LoadControls()
         Play.GetPlayer()
@@ -282,13 +299,13 @@ Public Class Form2
         Audio.PlaySound(3)
     End Sub
 
-    Private Sub Form2_MouseClick(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseClick
+    Public Sub AddObject()
         'Object placement
         Select Case EditMode
             Case 0
                 Dim OverLap As Boolean
 
-                If MouseIsDown = True And screen.Contains(e.X, e.Y) = True Then
+                If MouseIsDown = True And screen.Contains(mouselocX, mouselocY) = True Then
                     r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
 
                     b.rectangle = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
@@ -304,6 +321,11 @@ Public Class Form2
                     b.SizeH = Blocks.SizeH
                     b.FrameSpeed = Blocks.FrameSpeed
                     b.Lava = Blocks.Lava
+                    b.R = AdvancedBlocks.R
+                    b.G = AdvancedBlocks.G
+                    b.B = AdvancedBlocks.B
+                    b.Glow = AdvancedBlocks.Glow
+                    b.Breakable = Blocks.Breakable
 
                     b.X = mouseX * Blocks.TileSize
                     b.Y = mouseY * Blocks.TileSize
@@ -312,10 +334,6 @@ Public Class Form2
                     b.Invisible = Blocks.Invisible
                     b.Slip = Blocks.Slippery
                 End If
-
-                'For i = 0 To Blocks.TileRects.Count - 1
-
-                'Next
 
                 For i = 0 To Blocks.Tiles.Count - 1
                     If r.IntersectsWith(Blocks.Tiles(i).rectangle) And Blocks.Sizable = False Then
@@ -329,7 +347,7 @@ Public Class Form2
                     End If
                 Next
 
-                If Blocks.Tiles.Contains(b) = False And OverLap = False And screen.Contains(e.X, e.Y) = True And Fill = False Then
+                If Blocks.Tiles.Contains(b) = False And OverLap = False And screen.Contains(mouselocX, mouselocY) = True And Fill = False Then
                     If b.Width > 0 And b.Height > 0 And b.ID > 0 Then
                         Blocks.TileRects.Add(b.rectangle)
                         Blocks.Tiles.Add(b)
@@ -344,44 +362,79 @@ Public Class Form2
             Case 1
                 r = New Rectangle(mouseX * Blocks.TileSize, mouseY * Blocks.TileSize, Blocks.TileW, Blocks.TileH)
 
-                For Each i As Block In Blocks.Tiles.ToList
-                    If i.rectangle.Contains(r) Or r.IntersectsWith(i.rectangle) Then
-                        If MouseIsDown = True Then
-                            Blocks.Tiles.Remove(i)
-                            Blocks.TileRects.Remove(i.rectangle)
-                            Audio.PlaySound(0)
-                            Me.Invalidate()
+                If Play.IsTesting = False Then
+                    For Each i As Block In Blocks.Tiles.ToList
+                        If i.rectangle.Contains(r) Or r.IntersectsWith(i.rectangle) Then
+                            If MouseIsDown = True Then
+                                Blocks.Tiles.Remove(i)
+                                Blocks.TileRects.Remove(i.rectangle)
+                                Audio.PlaySound(0)
+                                Me.Invalidate()
+                            End If
                         End If
-                    End If
-                Next
+                    Next
 
-                For Each bg As BGO In Backgrounds.BGOs.ToList
-                    If bg.rectangle.Contains(r) Or r.IntersectsWith(bg.rectangle) Then
-                        If MouseIsDown = True Then
-                            Backgrounds.BGOs.Remove(bg)
-                            Backgrounds.bgorects.Remove(bg.rectangle)
-                            Audio.PlaySound(1)
-                            Me.Invalidate()
+                    For Each bg As BGO In Backgrounds.BGOs.ToList
+                        If bg.rectangle.Contains(r) Or r.IntersectsWith(bg.rectangle) Then
+                            If MouseIsDown = True Then
+                                Backgrounds.BGOs.Remove(bg)
+                                Backgrounds.bgorects.Remove(bg.rectangle)
+                                Audio.PlaySound(1)
+                                Me.Invalidate()
+                            End If
                         End If
-                    End If
-                Next
+                    Next
 
-                For Each i As NPCsets In NPC.NPCsets.ToList
-                    If i.rectangle.Contains(r) Or r.IntersectsWith(i.rectangle) Then
-                        If MouseIsDown = True Then
-                            NPC.NPCsets.Remove(i)
-                            NPC.NPCrects.Remove(i.rectangle)
-                            Audio.PlaySound(2)
-                            Me.Invalidate()
+                    For Each i As NPCsets In NPC.NPCsets.ToList
+                        If i.rectangle.Contains(r) Or r.IntersectsWith(i.rectangle) Then
+                            If MouseIsDown = True Then
+                                NPC.NPCsets.Remove(i)
+                                NPC.NPCrects.Remove(i.rectangle)
+                                Audio.PlaySound(2)
+                                Me.Invalidate()
+                            End If
                         End If
-                    End If
-                Next
+                    Next
+                ElseIf Play.IsTesting = True Then
+                    For Each i As Block In Blocks.Tiles.ToList
+                        If i.rectangle.Contains(r) Or r.IntersectsWith(i.rectangle) Then
+                            If MouseIsDown = True Then
+                                Blocks.Tiles.Remove(i)
+                                Blocks.TileRects.Remove(i.rectangle)
+                                Audio.PlaySound(0)
+                                Me.Invalidate()
+                            End If
+                        End If
+                    Next
+
+                    For Each bg As BGO In Backgrounds.BGOs.ToList
+                        If bg.rectangle.Contains(r) Or r.IntersectsWith(bg.rectangle) Then
+                            If MouseIsDown = True Then
+                                Backgrounds.BGOs.Remove(bg)
+                                Backgrounds.bgorects.Remove(bg.rectangle)
+                                Audio.PlaySound(1)
+                                Me.Invalidate()
+                            End If
+                        End If
+                    Next
+
+                    For Each i As NPCsets In NPC.NPCsets.ToList
+                        If New Rectangle(i.X, i.Y, i.Width, i.Height).Contains(r) Or r.IntersectsWith(New Rectangle(i.X, i.Y, i.Width, i.Height)) Then
+                            If MouseIsDown = True Then
+                                NPC.NPCsets.Remove(i)
+                                NPC.NPCrects.Remove(New Rectangle(i.X, i.Y, i.Width, i.Height))
+                                Audio.PlaySound(2)
+                                Me.Invalidate()
+                            End If
+                        End If
+                    Next
+                End If
 
                 Form1.Focus()
             Case 2
                 Dim bgorect As New Rectangle
 
-                If MouseIsDown = True And screen.Contains(e.X, e.Y) = True Then
+                If MouseIsDown = True And screen.Contains(mouselocX, mouselocY) = True Then
                     r = New Rectangle(mouseX * Backgrounds.BGOSize, mouseY * Backgrounds.BGOSize, Backgrounds.BGOW, Backgrounds.BGOH)
                     Backgrounds.bgo.rectangle = New Rectangle(mouseX * Backgrounds.BGOSize, mouseY * Backgrounds.BGOSize, Backgrounds.BGOW, Backgrounds.BGOH)
                     Backgrounds.bgo.IMG = TB.Image
@@ -403,7 +456,7 @@ Public Class Form2
                     bgorect = rect
                 Next
 
-                If Backgrounds.BGOs.Contains(Backgrounds.bgo) = False And bgorect.IntersectsWith(r) = False And r.IntersectsWith(bgorect) = False And Backgrounds.bgorects.Contains(Backgrounds.bgo.rectangle) = False And screen.Contains(e.X, e.Y) = True And MouseIsDown = True Then
+                If Backgrounds.BGOs.Contains(Backgrounds.bgo) = False And bgorect.IntersectsWith(r) = False And r.IntersectsWith(bgorect) = False And Backgrounds.bgorects.Contains(Backgrounds.bgo.rectangle) = False And screen.Contains(mouselocX, mouselocY) = True And MouseIsDown = True Then
                     Backgrounds.bgorects.Add(Backgrounds.bgo.rectangle)
                     Backgrounds.BGOs.Add(Backgrounds.bgo)
                 End If
@@ -419,7 +472,7 @@ Public Class Form2
                         End If
                     Next
 
-                    If Level.P1start.Contains(r) = False And OverLap = False And screen.Contains(e.X, e.Y) = True Then
+                    If Level.P1start.Contains(r) = False And OverLap = False And screen.Contains(mouselocX, mouselocY) = True Then
                         Level.P1start = r
                         Dim graphic As Graphics = Me.CreateGraphics()
                         graphic.DrawImage(Mario, Level.P1start, New Rectangle(500, 0, 28, 54), GraphicsUnit.Pixel)
@@ -438,7 +491,7 @@ Public Class Form2
                         End If
                     Next
 
-                    If Level.P1start.Contains(r) = False And OverLap = False And screen.Contains(e.X, e.Y) = True Then
+                    If Level.P1start.Contains(r) = False And OverLap = False And screen.Contains(mouselocX, mouselocY) = True Then
                         Level.P2start = r
                         Dim graphic As Graphics = Me.CreateGraphics()
                         graphic.DrawImage(Luigi, Level.P2start, New Rectangle(500, 0, 28, 62), GraphicsUnit.Pixel)
@@ -448,7 +501,7 @@ Public Class Form2
             Case 5
                 Dim OverLap As Boolean = False
 
-                If MouseIsDown = True And screen.Contains(e.X, e.Y) = True Then
+                If MouseIsDown = True And screen.Contains(mouselocX, mouselocY) = True Then
                     r = New Rectangle((mouseX * NPC.NPCSize) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
                     NPC.NPC.rectangle = New Rectangle(mouseX * NPC.NPCSize, (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
                     NPC.NPC.IMG = TB.Image
@@ -469,10 +522,11 @@ Public Class Form2
                     NPC.NPC.MSG = NPC.Message
                     NPC.NPC.MoveSpeed = NPC.MoveSpeed
                     NPC.NPC.MetroidGlass = NPC.MetroidGlass
+                    NPC.NPC.Testing = Play.IsTesting
                 End If
 
                 For i = 0 To NPC.NPCsets.Count - 1
-                    If r.IntersectsWith(NPC.NPCsets(i).rectangle) And NPC.NPCsets(i).MetroidGlass = False Then
+                    If r.IntersectsWith(NPC.NPCsets(i).rectangle) And NPC.NPCsets(i).MetroidGlass = False And NPC.NPCsets(i).Testing = False And r.IntersectsWith(New Rectangle(NPC.NPC.X, NPC.NPC.Y, NPC.NPC.Width, NPC.NPC.Height)) = True Then
                         OverLap = True
                         NPC.NPC.rectangle = Nothing
                     End If
@@ -485,9 +539,11 @@ Public Class Form2
                     End If
                 Next
 
-                If NPC.NPCsets.Contains(NPC.NPC) = False And OverLap = False And screen.Contains(e.X, e.Y) = True Then
-                    NPC.NPCrects.Add(NPC.NPC.rectangle)
-                    NPC.NPCsets.Add(NPC.NPC)
+                If NPC.NPCsets.Contains(NPC.NPC) = False And OverLap = False And screen.Contains(mouselocX, mouselocY) = True And MouseIsDown = True Then
+                    If NPC.NPC.Width > 0 And NPC.NPC.Height > 0 And NPC.NPC.ID > 0 And NPC.NPC.rectangle.IsEmpty = False Then
+                        NPC.NPCrects.Add(NPC.NPC.rectangle)
+                        NPC.NPCsets.Add(NPC.NPC)
+                    End If
                 End If
             Case 6
                 r = New Rectangle(mouseX * Blocks.TileSize, mouseY * Blocks.TileSize, Blocks.TileW, Blocks.TileH)
@@ -496,6 +552,10 @@ Public Class Form2
                     If i.rectangle.Contains(r) Then
                         If MouseIsDown = True Then
                             SelectedBlock = i.ID
+                            AdvancedBlocks.R = i.R
+                            AdvancedBlocks.G = i.G
+                            AdvancedBlocks.B = i.B
+                            AdvancedBlocks.Glow = i.Glow
                             Blocks.GetBlock(SelectedBlock)
                             Blocks.Tiles.Remove(i)
                             Blocks.TileRects.Remove(i.rectangle)
@@ -542,11 +602,11 @@ Public Class Form2
         Debug.MouseLoc(mouseX, mouseY)
     End Sub
 
-    Private Sub Form2_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
-        MouseIsDown = True
+    Private Sub Form2_MouseClick(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseClick
+        AddObject()
     End Sub
 
-    Private Sub Panel1_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Form2_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
         MouseIsDown = True
     End Sub
 
@@ -612,7 +672,7 @@ Public Class Form2
         'Get mouse data relative to level
         If Play.IsTesting = False Then
             Select Case EditMode
-                Case 0, 1, 2, 5, 6
+                Case 0, 1, 2, 5, 6, 7
                     mouseX = Math.Floor((e.X + (Me.AutoScrollPosition.X * -1)) / 32)
                     mouseY = Math.Floor((e.Y + (Me.AutoScrollPosition.Y * -1)) / 32)
                 Case Else
@@ -621,7 +681,7 @@ Public Class Form2
             End Select
         Else
             Select Case EditMode
-                Case 0, 1, 2, 5, 6
+                Case 0, 1, 2, 5, 6, 7
                     mouseX = Math.Floor((e.X + (Play.ViewPort.X)) / 32)
                     mouseY = Math.Floor((e.Y + (Play.ViewPort.Y)) / 32)
                 Case Else
@@ -630,258 +690,11 @@ Public Class Form2
             End Select
         End If
 
-        'Object placement
-        Select Case EditMode
-            Case 0
-                Dim OverLap As Boolean
+        If MouseIsMoving = True Then
+            Me.Invalidate(Cursor.Clip)
+        End If
 
-                If MouseIsDown = True And screen.Contains(e.X, e.Y) = True Then
-
-                    r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
-                    b.rectangle = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
-
-                    b.IMG = TB.Image
-                    b.Width = Blocks.TileW
-                    b.Height = Blocks.TileH
-                    b.ID = SelectedBlock
-                    b.gfxWidth = Blocks.gfxWidth
-                    b.gfxHeight = Blocks.gfxHeight
-                    b.TotalFrames = Blocks.TotalFrames
-                    b.SizeW = Blocks.SizeW
-                    b.SizeH = Blocks.SizeH
-                    b.FrameSpeed = Blocks.FrameSpeed
-                    b.Lava = Blocks.Lava
-
-                    b.X = mouseX * Blocks.TileSize
-                    b.Y = mouseY * Blocks.TileSize
-
-                    b.Animated = Blocks.Animated
-                    b.Invisible = Blocks.Invisible
-                    b.Slip = Blocks.Slippery
-                End If
-
-                For i = 0 To Blocks.Tiles.Count - 1
-                    If r.IntersectsWith(Blocks.Tiles(i).rectangle) And Blocks.Sizable = False Then
-                        OverLap = True
-                    End If
-                Next
-
-                For i = 0 To NPC.NPCsets.Count - 1
-                    If r.IntersectsWith(NPC.NPCsets(i).rectangle) And NPC.NPCsets(i).MetroidGlass = False Then
-                        OverLap = True
-                    End If
-                Next
-
-                If Blocks.Tiles.Contains(b) = False And OverLap = False And screen.Contains(e.X, e.Y) = True And Fill = False And MouseIsDown = True Then
-                    If b.Width > 0 And b.Height > 0 And b.ID > 0 Then
-                        Blocks.TileRects.Add(b.rectangle)
-                        Blocks.Tiles.Add(b)
-                    End If
-                End If
-
-                If Fill = True Then
-                    BlocksAndTiles.Button39.Text = "Fill: On"
-                Else
-                    BlocksAndTiles.Button39.Text = "Fill: Off"
-                End If
-            Case 1
-                r = New Rectangle(mouseX * Blocks.TileSize, mouseY * Blocks.TileSize, Blocks.TileW, Blocks.TileH)
-
-                For Each i As Block In Blocks.Tiles.ToList
-                    If i.rectangle.Contains(r) Or r.IntersectsWith(i.rectangle) Then
-                        If MouseIsDown = True Then
-                            Blocks.Tiles.Remove(i)
-                            Blocks.TileRects.Remove(i.rectangle)
-                            Audio.PlaySound(0)
-                            Me.Invalidate()
-                        End If
-                    End If
-                Next
-
-                For Each bg As BGO In Backgrounds.BGOs.ToList
-                    If bg.rectangle.Contains(r) Or r.IntersectsWith(bg.rectangle) Then
-                        If MouseIsDown = True Then
-                            Backgrounds.BGOs.Remove(bg)
-                            Backgrounds.bgorects.Remove(bg.rectangle)
-                            Audio.PlaySound(1)
-                            Me.Invalidate()
-                        End If
-                    End If
-                Next
-
-                For Each i As NPCsets In NPC.NPCsets.ToList
-                    If i.rectangle.Contains(r) Or r.IntersectsWith(i.rectangle) Then
-                        If MouseIsDown = True Then
-                            NPC.NPCsets.Remove(i)
-                            NPC.NPCrects.Remove(i.rectangle)
-                            Audio.PlaySound(2)
-                            Me.Invalidate()
-                        End If
-                    End If
-                Next
-
-                Form1.Focus()
-            Case 2
-                Dim bgorect As New Rectangle
-
-                If MouseIsDown = True And screen.Contains(e.X, e.Y) = True Then
-                    r = New Rectangle(mouseX * Backgrounds.BGOSize, mouseY * Backgrounds.BGOSize, Backgrounds.BGOW, Backgrounds.BGOH)
-                    Backgrounds.bgo.rectangle = New Rectangle(mouseX * Backgrounds.BGOSize, mouseY * Backgrounds.BGOSize, Backgrounds.BGOW, Backgrounds.BGOH)
-                    Backgrounds.bgo.IMG = TB.Image
-                    Backgrounds.bgo.X = mouseX * Backgrounds.BGOSize
-                    Backgrounds.bgo.Y = mouseY * Backgrounds.BGOSize
-                    Backgrounds.bgo.Width = Backgrounds.BGOW
-                    Backgrounds.bgo.Height = Backgrounds.BGOH
-                    Backgrounds.bgo.ID = SelectedBGO
-                    Backgrounds.bgo.gfxWidth = Backgrounds.gfxWidth
-                    Backgrounds.bgo.gfxHeight = Backgrounds.gfxHeight
-                    Backgrounds.bgo.TotalFrames = Backgrounds.TotalFrames
-                    Backgrounds.bgo.FrameSpeed = Backgrounds.FrameSpeed
-                    Backgrounds.bgo.ForeGround = Backgrounds.ForeGround
-
-                    Backgrounds.bgo.Animated = Backgrounds.Animated
-                End If
-
-                For Each rect As Rectangle In Backgrounds.bgorects
-                    bgorect = rect
-                Next
-
-                If Backgrounds.BGOs.Contains(Backgrounds.bgo) = False And bgorect.IntersectsWith(r) = False And r.IntersectsWith(bgorect) = False And Backgrounds.bgorects.Contains(Backgrounds.bgo.rectangle) = False And screen.Contains(e.X, e.Y) = True Then
-                    Backgrounds.bgorects.Add(Backgrounds.bgo.rectangle)
-                    Backgrounds.BGOs.Add(Backgrounds.bgo)
-                End If
-            Case 3
-                r = New Rectangle(mouseX * 4, (mouseY * 32) - (54 - 32), 28, 54)
-
-                Dim OverLap As Boolean = False
-
-                If MouseIsDown = True Then
-                    For i = 0 To Blocks.Tiles.Count - 1
-                        If r.IntersectsWith(Blocks.Tiles(i).rectangle) And Blocks.Sizable = False Then
-                            OverLap = True
-                        End If
-                    Next
-
-                    If Level.P1start.Contains(r) = False And OverLap = False And screen.Contains(e.X, e.Y) = True Then
-                        Level.P1start = r
-                        Dim graphic As Graphics = Me.CreateGraphics()
-                        graphic.DrawImage(Mario, Level.P1start, New Rectangle(500, 0, 28, 54), GraphicsUnit.Pixel)
-                    End If
-                End If
-
-            Case 4
-                r = New Rectangle(mouselocX, (mouseY * 32) - (62 - 32), 28, 62)
-
-                Dim OverLap As Boolean = False
-
-                If MouseIsDown = True Then
-                    For i = 0 To Blocks.Tiles.Count - 1
-                        If r.IntersectsWith(Blocks.Tiles(i).rectangle) And Blocks.Sizable = False Then
-                            OverLap = True
-                        End If
-                    Next
-
-                    If Level.P1start.Contains(r) = False And OverLap = False And screen.Contains(e.X, e.Y) = True Then
-                        Level.P2start = r
-                        Dim graphic As Graphics = Me.CreateGraphics()
-                        graphic.DrawImage(Luigi, Level.P2start, New Rectangle(500, 0, 28, 62), GraphicsUnit.Pixel)
-                    End If
-                End If
-
-            Case 5
-                Dim OverLap As Boolean = False
-                Dim npcrect As New Rectangle
-
-                If MouseIsDown = True And screen.Contains(e.X, e.Y) = True Then
-                    r = New Rectangle((mouseX * NPC.NPCSize) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
-                    NPC.NPC.rectangle = New Rectangle((mouseX * NPC.NPCSize) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
-                    NPC.NPC.IMG = TB.Image
-                    NPC.NPC.X = mouseX * NPC.NPCSize
-                    NPC.NPC.Y = mouseY * NPC.NPCSize
-                    NPC.NPC.Width = NPC.NPCW
-                    NPC.NPC.Height = NPC.NPCH
-                    NPC.NPC.ID = SelectedNPC
-                    NPC.NPC.gfxWidth = NPC.gfxWidth
-                    NPC.NPC.gfxHeight = NPC.gfxHeight
-                    NPC.NPC.TotalFrames = NPC.TotalFrames
-                    NPC.NPC.FrameSpeed = NPC.FrameSpeed
-                    NPC.NPC.FrameStyle = NPC.FrameStyle
-                    NPC.NPC.AI = NPC.AI
-                    NPC.NPC.Animated = NPC.Animated
-                    NPC.NPC.Direction = NPC.Direction
-                    NPC.NPC.HasGravity = NPC.HasGravity
-                    NPC.NPC.MSG = NPC.Message
-                    NPC.NPC.MoveSpeed = NPC.MoveSpeed
-                    NPC.NPC.MetroidGlass = NPC.MetroidGlass
-                End If
-
-                For i = 0 To NPC.NPCsets.Count - 1
-                    If r.IntersectsWith(NPC.NPCsets(i).rectangle) And NPC.NPCsets(i).MetroidGlass = False Then
-                        OverLap = True
-                    End If
-                Next
-
-                For i = 0 To Blocks.Tiles.Count - 1
-                    If r.IntersectsWith(Blocks.Tiles(i).rectangle) And Blocks.Sizable = False Then
-                        OverLap = True
-                    End If
-                Next
-
-                If NPC.NPCsets.Contains(NPC.NPC) = False And OverLap = False And screen.Contains(e.X, e.Y) = True Then
-                    NPC.NPCrects.Add(NPC.NPC.rectangle)
-                    NPC.NPCsets.Add(NPC.NPC)
-                End If
-
-            Case 6
-                r = New Rectangle(mouseX * Blocks.TileSize, mouseY * Blocks.TileSize, Blocks.TileW, Blocks.TileH)
-
-                For Each i As Block In Blocks.Tiles.ToList
-                    If i.rectangle.Contains(r) Then
-                        If MouseIsDown = True Then
-                            SelectedBlock = i.ID
-                            Blocks.GetBlock(SelectedBlock)
-                            Blocks.Tiles.Remove(i)
-                            Blocks.TileRects.Remove(i.rectangle)
-                            Audio.PlaySound(4)
-                            Me.Invalidate()
-                            EditMode = 0
-                        End If
-                    End If
-                Next
-
-                For Each bg As BGO In Backgrounds.BGOs.ToList
-                    If bg.rectangle.Contains(r) Then
-                        If MouseIsDown = True Then
-                            SelectedBGO = bg.ID
-                            Backgrounds.GetBGO()
-                            Backgrounds.BGOs.Remove(bg)
-                            Backgrounds.bgorects.Remove(bg.rectangle)
-                            Audio.PlaySound(4)
-                            Me.Invalidate()
-                            EditMode = 2
-                        End If
-                    End If
-                Next
-
-                For Each i As NPCsets In NPC.NPCsets.ToList
-                    If i.rectangle.Contains(r) Then
-                        If MouseIsDown = True Then
-                            SelectedNPC = i.ID
-                            NPC.GetNPC()
-                            NPC.NPCsets.Remove(i)
-                            NPC.NPCrects.Remove(i.rectangle)
-                            Audio.PlaySound(4)
-                            Me.Invalidate()
-                            EditMode = 5
-                        End If
-                    End If
-                Next
-        End Select
-
-        PointRec = New Rectangle(mouselocX, mouselocY, My.Resources.Pointer.Width, My.Resources.Pointer.Height)
-        EraseRec = New Rectangle(mouselocX, mouselocY, My.Resources.Eraser.Width, My.Resources.Eraser.Height)
-
-        Debug.MouseLoc(mouseX, mouseY)
+        AddObject()
     End Sub
 
     Private Sub Form2_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
@@ -916,39 +729,49 @@ Public Class Form2
             End If
         End If
 
+        Dim ImgA As New ImageAttributes
+        Dim CM As ColorMatrix = New ColorMatrix(New Single()() _
+        { _
+        New Single() {Level.Brightness / 100, 0.0, 0.0, 0.0, 0.0}, _
+        New Single() {0.0, Level.Brightness / 100, 0.0, 0.0, 0.0}, _
+        New Single() {0.0, 0.0, Level.Brightness / 100, 0.0, 0.0}, _
+        New Single() {0.0, 0.0, 0.0, 1.0, 0.0}, _
+        New Single() {0.0, 0.0, 0.0, 0.0, 1.0}})
+        ImgA.SetColorMatrix(CM)
+
         Select Case Level.BGtype
             Case 1
                 For x = 0 To (Level.LevelW / Level.BG.Width) + (Level.LevelW / Level.BG.Width)
                     If Draw.IsVisible(New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height), Level.BG.Width, Level.BG.Height)) = True Then
-                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height), Level.BG.Width, Level.BG.Height))
+                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height), Level.BG.Width, Level.BG.Height), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
                 For x = 0 To (Level.LevelW / Level.BG2.Width) + (Level.LevelW / Level.BG2.Width)
                     If Draw.IsVisible(New Rectangle(x * Level.BG2.Width, Level.LevelH - ((Level.BG.Height + Level.BG2.Height)), Level.BG2.Width, Level.BG2.Height)) = True Then
-                        bg.DrawImage(Level.BG2, New Rectangle(x * Level.BG2.Width, Level.LevelH - ((Level.BG.Height + Level.BG2.Height)), Level.BG2.Width, Level.BG2.Height))
+                        bg.DrawImage(Level.BG2, New Rectangle(x * Level.BG2.Width, Level.LevelH - ((Level.BG.Height + Level.BG2.Height)), Level.BG2.Width, Level.BG2.Height), 0, 0, Level.BG2.Width, Level.BG2.Height, GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
             Case 2
                 For x = 0 To (Level.LevelW / Level.BG.Width) + (Level.LevelW / Level.BG.Width)
                     If Draw.IsVisible(New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height), Level.BG.Width, Level.BG.Height)) = True Then
-                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height), Level.BG.Width, Level.BG.Height))
+                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height), Level.BG.Width, Level.BG.Height), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
             Case 3
                 For x = 0 To (Level.LevelW / Level.BG.Width) + (Level.LevelW / Level.BG.Width)
                     If Draw.IsVisible(New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height / 4), Level.BG.Width, Level.BG.Height / 4)) = True Then
-                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height / 4), Level.BG.Width, Level.BG.Height / 4), New Rectangle(0, (Level.BG.Height / 4) * Anim(8, 4), Level.BG.Width, (Level.BG.Height / 4)), GraphicsUnit.Pixel)
+                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - (Level.BG.Height / 4), Level.BG.Width, Level.BG.Height / 4), 0, Convert.ToInt32((Level.BG.Height / 4) * Anim(8, 4)), Level.BG.Width, Convert.ToInt32(Level.BG.Height / 4), GraphicsUnit.Pixel, ImgA)
                     End If
 
                     If Draw.IsVisible(New Rectangle(x * Level.BG2.Width, Level.LevelH - (((Level.BG.Height / 4) + Level.BG2.Height)), Level.BG2.Width, Level.BG2.Height)) = True Then
-                        bg.DrawImage(Level.BG2, New Rectangle(x * Level.BG2.Width, Level.LevelH - (((Level.BG.Height / 4) + Level.BG2.Height)), Level.BG2.Width, Level.BG2.Height))
+                        bg.DrawImage(Level.BG2, New Rectangle(x * Level.BG2.Width, Level.LevelH - (((Level.BG.Height / 4) + Level.BG2.Height)), Level.BG2.Width, Level.BG2.Height), 0, 0, Level.BG2.Width, Level.BG2.Height, GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
             Case 4
                 For x = 0 To (Level.LevelW / Level.BG.Width) + (Level.LevelW / Level.BG.Width)
                     For y = 0 To (Level.LevelH / Level.BG.Height) + (Level.LevelH / Level.BG.Height)
                         If Draw.IsVisible(New Rectangle(x * Level.BG.Width, y * Level.BG.Height, Level.BG.Width, Level.BG.Height)) = True Then
-                            bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, y * Level.BG.Height, Level.BG.Width, Level.BG.Height))
+                            bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, y * Level.BG.Height, Level.BG.Width, Level.BG.Height), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
                         End If
                     Next
                 Next
@@ -956,31 +779,32 @@ Public Class Form2
                 For x = 0 To (Level.LevelW / Level.BG.Width) + (Level.LevelW / Level.BG.Width)
                     For y = 0 To (Level.LevelH / (Level.BG.Height / 2)) + (Level.LevelH / (Level.BG.Height / 2))
                         If Draw.IsVisible(New Rectangle(x * Level.BG.Width, 0, Level.BG.Width, Level.BG.Height / 2)) = True Then
-                            bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, 0, Level.BG.Width, Level.BG.Height / 2), New Rectangle(0, 0, Level.BG.Width, Level.BG.Height / 2), GraphicsUnit.Pixel)
+                            bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, 0, Level.BG.Width, Level.BG.Height / 2), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
                         End If
 
                         If Draw.IsVisible(New Rectangle(x * Level.BG.Width, y * (Level.BG.Height / 2), Level.BG.Width, Level.BG.Height / 2)) = True Then
-                            bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, y * (Level.BG.Height / 2), Level.BG.Width, Level.BG.Height / 2), New Rectangle(0, Level.BG.Height / 2, Level.BG.Width, Level.BG.Height / 2), GraphicsUnit.Pixel)
+                            bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, y * (Level.BG.Height / 2), Level.BG.Width, Level.BG.Height / 2), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
                         End If
                     Next
                 Next
             Case 6
                 For x = 0 To (Level.LevelW / Level.BG.Width) + (Level.LevelW / Level.BG.Width)
-                    If Draw.IsVisible(New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * (((Level.BG.Height - Me.Height) + 34) / ((14 + SystemInformation.HorizontalScrollBarHeight) + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height)) = True And HorizontalScroll.Visible = True Then
-                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * (((Level.BG.Height - Me.Height) + 34) / ((14 + SystemInformation.HorizontalScrollBarHeight) + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height), New Rectangle(0, 0, Level.BG.Width, Level.BG.Height), GraphicsUnit.Pixel)
-                    ElseIf Draw.IsVisible(New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * (((Level.BG.Height - Me.Height) + 34) / (14 + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height)) = True And HorizontalScroll.Visible = False Then
-                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * (((Level.BG.Height - Me.Height) + 34) / (14 + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height), New Rectangle(0, 0, Level.BG.Width, Level.BG.Height), GraphicsUnit.Pixel)
+                    If Draw.IsVisible(New Rectangle(x * Level.BG.Width, ((Level.LevelH - Level.BG.Height) / (Level.HeightInc * 32)) * Math.Abs(Me.AutoScrollPosition.Y), Level.BG.Width, Level.BG.Height)) = True And HorizontalScroll.Visible = True Then
+                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, ((Level.LevelH - Level.BG.Height) / (Level.HeightInc * 32)) * Math.Abs(Me.AutoScrollPosition.Y), Level.BG.Width, Level.BG.Height), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
+                    ElseIf Draw.IsVisible(New Rectangle(x * Level.BG.Width, (Level.BG.Height - Me.Height) / Level.LevelH, Level.BG.Width, Level.BG.Height)) = True And HorizontalScroll.Visible = False Then
+                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, (Level.BG.Height - Me.Height) / Level.LevelH, Level.BG.Width, Level.BG.Height), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
+                'Label1.Text = Level.HeightInc * 32
             Case 7
                 For x = 0 To (Level.LevelW / Level.BG.Width) + (Level.LevelW / Level.BG.Width)
                     If Draw.IsVisible(New Rectangle(x * Level.BG.Width, Level.LevelH - ((Level.BG.Height + Level.BG.Height)), Level.BG.Width, Level.BG.Height)) = True Then
-                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - ((Level.BG.Height + Level.BG.Height)), Level.BG.Width, Level.BG.Height))
+                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Level.LevelH - ((Level.BG.Height + Level.BG.Height)), Level.BG.Width, Level.BG.Height), 0, 0, Level.BG.Width, Level.BG.Height, GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
                 For x = 0 To (Level.LevelW / Level.BG2.Width) + (Level.LevelW / Level.BG.Width)
                     If Draw.IsVisible(New Rectangle(x * Level.BG2.Width, Parallax / ((Level.LevelH / 32) / (Level.BG.Height / (Level.LevelH / 32))), Level.BG2.Width, Level.BG2.Height)) = True Then
-                        bg.DrawImage(Level.BG2, New Rectangle(x * Level.BG2.Width, Parallax / ((Level.LevelH / 32) / (Level.BG.Height / (Level.LevelH / 32))), Level.BG2.Width, Level.BG2.Height))
+                        bg.DrawImage(Level.BG2, New Rectangle(x * Level.BG2.Width, Parallax / ((Level.LevelH / 32) / (Level.BG.Height / (Level.LevelH / 32))), Level.BG2.Width, Level.BG2.Height), 0, 0, Level.BG2.Width, Level.BG2.Height, GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
             Case 8
@@ -988,7 +812,7 @@ Public Class Form2
                     If Draw.IsVisible(New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * ((((Level.BG.Height / 4) - Me.Height) + 34) / ((14 + SystemInformation.HorizontalScrollBarHeight) + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height / 4)) = True And HorizontalScroll.Visible = True Then
                         bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * ((((Level.BG.Height / 4) - Me.Height) + 34) / ((14 + SystemInformation.HorizontalScrollBarHeight) + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height / 4), New Rectangle(0, (Level.BG.Height / 4) * Anim(8, 4), Level.BG.Width, (Level.BG.Height / 4)), GraphicsUnit.Pixel)
                     ElseIf Draw.IsVisible(New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * ((((Level.BG.Height / 4) - Me.Height) + 34) / (14 + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height / 4)) = True And HorizontalScroll.Visible = False Then
-                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * ((((Level.BG.Height / 4) - Me.Height) + 34) / (14 + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height / 4), New Rectangle(0, (Level.BG.Height / 4) * Anim(8, 4), Level.BG.Width, (Level.BG.Height / 4)), GraphicsUnit.Pixel)
+                        bg.DrawImage(Level.BG, New Rectangle(x * Level.BG.Width, Me.AutoScrollPosition.Y * ((((Level.BG.Height / 4) - Me.Height) + 34) / (14 + (Level.HeightInc * 32))), Level.BG.Width, Level.BG.Height / 4), 0, Convert.ToInt32((Level.BG.Height / 4) * Anim(8, 4)), Level.BG.Width, Convert.ToInt32(Level.BG.Height / 4), GraphicsUnit.Pixel, ImgA)
                     End If
                 Next
         End Select
@@ -1052,170 +876,98 @@ Public Class Form2
         End If
 
         'Draw/Animate Blocks
+
         For Each i As Block In Blocks.Tiles.ToList
             If graphic.IsVisible(i.rectangle) = True Then
-                If i.Animated = True Then
-                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                Else
-                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, 0, i.gfxWidth, i.gfxHeight), GraphicsUnit.Pixel)
-                End If
+                Dim ImgB As New ImageAttributes
+                Dim CM2 As ColorMatrix = New ColorMatrix(New Single()() _
+                { _
+                New Single() {i.R / 255, 0.0, 0.0, 0.0, 0.0}, _
+                New Single() {0.0, i.G / 255, 0.0, 0.0, 0.0}, _
+                New Single() {0.0, 0.0, i.B / 255, 0.0, 0.0}, _
+                New Single() {0.0, 0.0, 0.0, i.Glow / 100, 0.0}, _
+                New Single() {0.0, 0.0, 0.0, 0.0, 0.2}})
+                ImgB.SetColorMatrix(CM2)
+
+                Select Case i.Invisible
+                    Case False
+                        If AdvancedBlocks.GraphicChanged = False Then
+                            If i.Animated = True Then
+                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
+                            Else
+                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, 0, i.gfxWidth, i.gfxHeight), GraphicsUnit.Pixel)
+                            End If
+                        Else
+                            If i.Animated = True Then
+                                graphic.DrawImage(i.IMG, i.rectangle, 0, Convert.ToInt32(i.Height * Anim(i.FrameSpeed, i.TotalFrames)), i.gfxWidth, i.Height, GraphicsUnit.Pixel, ImgB)
+                            Else
+                                graphic.DrawImage(i.IMG, i.rectangle, 0, 0, i.gfxWidth, i.gfxHeight, GraphicsUnit.Pixel, ImgB)
+                            End If
+                        End If
+                    Case True
+                        If Play.IsTesting = False Then
+                            If AdvancedBlocks.GraphicChanged = False Then
+                                If i.Animated = True Then
+                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
+                                Else
+                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, 0, i.gfxWidth, i.gfxHeight), GraphicsUnit.Pixel)
+                                End If
+                            Else
+                                If i.Animated = True Then
+                                    graphic.DrawImage(i.IMG, i.rectangle, 0, Convert.ToInt32(i.Height * Anim(i.FrameSpeed, i.TotalFrames)), i.gfxWidth, i.Height, GraphicsUnit.Pixel, ImgB)
+                                Else
+                                    graphic.DrawImage(i.IMG, i.rectangle, 0, 0, i.gfxWidth, i.gfxHeight, GraphicsUnit.Pixel, ImgB)
+                                End If
+                            End If
+                        End If
+                End Select
             End If
         Next
+
+        Debug.TotalObjBlocks = Blocks.TileRects.Where(Function(c) e.Graphics.IsVisible(c)).Count
 
         'Animate NPCs
         For Each i As NPCsets In NPC.NPCsets
             If graphic.IsVisible(i.rectangle) = True Then
                 If i.Animated = True Then
-                    Select Case i.FrameSpeed
-                        Case 1
-                            '800%
 
-                            If i.FrameStyle = 0 Then
+                    If Play.IsTesting = False Then
+                        If i.FrameStyle = 0 Then
 
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(1, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
+                            graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
 
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(1, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(1, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                            ElseIf i.FrameStyle = 2 Then
-
+                        ElseIf i.FrameStyle = 1 Then
+                            If i.Direction = 0 Then
+                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
                             End If
-                        Case 2
-                            '400%
 
-                            If i.FrameStyle = 0 Then
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(2, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(2, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(2, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                            ElseIf i.FrameStyle = 2 Then
-
+                            If i.Direction = 2 Then
+                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
                             End If
-                        Case 3
-                            '267%
 
-                            If i.FrameStyle = 0 Then
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(3, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
+                        ElseIf i.FrameStyle = 2 Then
 
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(3, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
+                        End If
+                    ElseIf Play.IsTesting = True Then
+                        If i.FrameStyle = 0 Then
 
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(3, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
+                            graphic.DrawImage(i.IMG, New Rectangle(i.X, i.Y, i.Width, i.Height), New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
 
-                            ElseIf i.FrameStyle = 2 Then
-
+                        ElseIf i.FrameStyle = 1 Then
+                            If i.Direction = 0 Then
+                                graphic.DrawImage(i.IMG, New Rectangle(i.X, i.Y, i.Width, i.Height), New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
                             End If
-                        Case 4
-                            '200%
-                            If i.FrameStyle = 0 Then
 
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(4, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(4, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(4, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-                            ElseIf i.FrameStyle = 2 Then
-
+                            If i.Direction = 2 Then
+                                graphic.DrawImage(i.IMG, New Rectangle(i.X, i.Y, i.Width, i.Height), New Rectangle(0, i.Height * Anim2(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
                             End If
-                        Case 5
-                            '160%
-                            If i.FrameStyle = 0 Then
 
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(5, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
+                        ElseIf i.FrameStyle = 2 Then
 
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(5, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
+                        End If
 
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(5, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-                            ElseIf i.FrameStyle = 2 Then
+                    End If
 
-                            End If
-                        Case 6
-                            '133%
-                            If i.FrameStyle = 0 Then
-
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(6, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(6, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(68, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-                            ElseIf i.FrameStyle = 2 Then
-
-                            End If
-                        Case 7
-                            '114%
-                            If i.FrameStyle = 0 Then
-
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(7, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(7, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(7, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-
-                            ElseIf i.FrameStyle = 2 Then
-
-                            End If
-                        Case 8
-                            '100%
-                            If i.FrameStyle = 0 Then
-                                graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(8, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-
-                            ElseIf i.FrameStyle = 1 Then
-                                If i.Direction = 0 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(8, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                                If i.Direction = 2 Then
-                                    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim2(8, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                End If
-
-                            ElseIf i.FrameStyle = 2 Then
-                                'If AnimFrame8b >= i.gfxHeight / i.Height Then
-                                '    AnimFrame8b = i.gfxHeight / 3
-                                'End If
-
-                                'If i.Direction = 0 Then
-                                '    graphic.DrawImage(i.Mask, i.rectangle, New Rectangle(0, i.Height * AnimFrame8b, i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                '    graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * AnimFrame8b, i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                                'End If
-                            End If
-                    End Select
 
                 ElseIf i.ID >= 1 And i.Animated = False Then
                     If i.FrameStyle = 0 Then
@@ -1243,232 +995,129 @@ Public Class Form2
             End If
         Next
 
-        If Play.IsTesting = False Then
-            'Draw Selected Object at Mouse
-            If MouseIsMoving = True Then
-                PointRec = New Rectangle(mouselocX, mouselocY, My.Resources.Pointer.Width, My.Resources.Pointer.Height)
-                EraseRec = New Rectangle(mouselocX, mouselocY, My.Resources.Eraser.Width, My.Resources.Eraser.Height)
+        Debug.TotalObjNPCs = NPC.NPCrects.Where(Function(c) e.Graphics.IsVisible(c)).Count
 
-                If EditMode = 0 Then
-                    Blocks.GetBlock(SelectedBlock)
-
-                    r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
-
-                    If Blocks.Animated = True Then
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, Blocks.TileH * Anim(Blocks.FrameSpeed, Blocks.TotalFrames), Blocks.gfxWidth, Blocks.TileH), GraphicsUnit.Pixel)
-                    Else
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Blocks.gfxWidth, Blocks.gfxHeight), GraphicsUnit.Pixel)
-                    End If
-
-                ElseIf EditMode = 2 Then
-                    Backgrounds.GetBGO()
-
-                    r = New Rectangle((mouseX * 32) + Play.ViewPort.X, mouseY * 32, Backgrounds.BGOW, Backgrounds.BGOH)
-
-                    If Backgrounds.Animated = True Then
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, Backgrounds.BGOH * Anim(Backgrounds.FrameSpeed, Backgrounds.TotalFrames), Backgrounds.gfxWidth, Backgrounds.BGOH), GraphicsUnit.Pixel)
-                    Else
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Backgrounds.gfxWidth, Backgrounds.gfxHeight), GraphicsUnit.Pixel)
-                    End If
-
-                ElseIf EditMode = 3 Then
-                    Draw.DrawImage(Mario, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (54 - 32), 28, 54), New Rectangle(500, 0, 28, 54), GraphicsUnit.Pixel)
-
-                ElseIf EditMode = 4 Then
-                    Draw.DrawImage(Luigi, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (62 - 32), 28, 62), New Rectangle(500, 0, 28, 62), GraphicsUnit.Pixel)
-
-                ElseIf EditMode = 5 Then
-                    NPC.GetNPC()
-
-                    r = New Rectangle(((mouseX * NPC.NPCSize) + Play.ViewPort.X) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
-
-                    If NPC.Animated = True Then
-                        If NPC.Direction = 0 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH * Anim(NPC.FrameSpeed, NPC.TotalFrames), NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        ElseIf NPC.Direction = 2 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH * Anim2(NPC.FrameSpeed, NPC.TotalFrames), NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        End If
-                    Else
-                        If NPC.Direction = 0 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        ElseIf NPC.Direction = 2 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        End If
-                    End If
-                End If
-            End If
-        End If
-        
         graphic.ResetTransform()
-
         Draw.ResetTransform()
 
         Draw.TranslateTransform(Play.ViewPort.X * -1, Play.ViewPort.Y * -1, Drawing2D.MatrixOrder.Prepend)
 
         If Play.IsTesting = True Then
-            'Draw.DrawRectangle(Pens.Red, Play.ViewPort)
+            Dim ImgC As New ImageAttributes
 
-            'Draw Selected Object at Mouse
-            If MouseIsMoving = True Then
-                PointRec = New Rectangle(mouselocX, mouselocY, My.Resources.Pointer.Width, My.Resources.Pointer.Height)
-                EraseRec = New Rectangle(mouselocX, mouselocY, My.Resources.Eraser.Width, My.Resources.Eraser.Height)
-
-                If EditMode = 0 Then
-                    Blocks.GetBlock(SelectedBlock)
-
-                    r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
-
-                    If Blocks.Animated = True Then
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, Blocks.TileH * Anim(Blocks.FrameSpeed, Blocks.TotalFrames), Blocks.gfxWidth, Blocks.TileH), GraphicsUnit.Pixel)
-                    Else
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Blocks.gfxWidth, Blocks.gfxHeight), GraphicsUnit.Pixel)
-                    End If
-
-                ElseIf EditMode = 2 Then
-                    Backgrounds.GetBGO()
-
-                    r = New Rectangle((mouseX * 32) + Play.ViewPort.X, mouseY * 32, Backgrounds.BGOW, Backgrounds.BGOH)
-
-                    If Backgrounds.Animated = True Then
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, Backgrounds.BGOH * Anim(Backgrounds.FrameSpeed, Backgrounds.TotalFrames), Backgrounds.gfxWidth, Backgrounds.BGOH), GraphicsUnit.Pixel)
-                    Else
-                        graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Backgrounds.gfxWidth, Backgrounds.gfxHeight), GraphicsUnit.Pixel)
-                    End If
-
-                ElseIf EditMode = 3 Then
-                    Draw.DrawImage(Mario, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (54 - 32), 28, 54), New Rectangle(500, 0, 28, 54), GraphicsUnit.Pixel)
-
-                ElseIf EditMode = 4 Then
-                    Draw.DrawImage(Luigi, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (62 - 32), 28, 62), New Rectangle(500, 0, 28, 62), GraphicsUnit.Pixel)
-
-                ElseIf EditMode = 5 Then
-                    NPC.GetNPC()
-
-                    r = New Rectangle(((mouseX * NPC.NPCSize) + Play.ViewPort.X) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
-
-                    If NPC.Animated = True Then
-                        If NPC.Direction = 0 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH * Anim(NPC.FrameSpeed, NPC.TotalFrames), NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        ElseIf NPC.Direction = 2 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH * Anim2(NPC.FrameSpeed, NPC.TotalFrames), NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        End If
-                    Else
-                        If NPC.Direction = 0 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        ElseIf NPC.Direction = 2 Then
-                            graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
-                        End If
-                    End If
-                End If
+            If Play.IsStarman = True Then
+                Dim col As New Random
+                Dim CM3 As ColorMatrix = New ColorMatrix(New Single()() _
+                { _
+                New Single() {Math.Abs(col.Next(1, 255) / 80), 0.0, 0.0, 0.0, 0.0}, _
+                New Single() {0.0, Math.Abs(col.Next(1, 255) / 80), 0.0, 0.0, 0.0}, _
+                New Single() {0.0, 0.0, Math.Abs(col.Next(1, 255) / 60), 0.0, 0.0}, _
+                New Single() {0.0, 0.0, 0.0, 1.0, 0.0}, _
+                New Single() {0.0, 0.0, 0.0, 0.0, 1.0}})
+                ImgC.SetColorMatrix(CM3)
             End If
 
             Draw.ResetTransform()
             Draw.TranslateTransform(Play.ViewPort.X * -1, Play.ViewPort.Y * -1, Drawing2D.MatrixOrder.Prepend)
 
-            If Play.CurPlayer = 1 Then
-                Select Case Play.MarioState
-                    Case 0
-                        Play.PlayerW = 28
-                        Play.PlayerH = 32
+            Select Case Play.CurPlayer
+                Case 1
+                    Play.PlayerW = Play.MarioW
+                    Play.PlayerH = Play.MarioH
 
-                        If Play.OnGround = False Then
-                            Play.PlayerW = 30
-                            Play.PlayerH = 30
-                        End If
+                    Draw.DrawImage(Mario, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH, GraphicsUnit.Pixel, ImgC)
+                Case 2
+                    Play.PlayerW = Play.LuigiW
+                    Play.PlayerH = Play.LuigiH
 
-                        Draw.DrawImage(Mario, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                    Case 1, 2, 3, 6
-                        Play.PlayerW = 32
-                        Play.PlayerH = 54
+                    Draw.DrawImage(Luigi, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH, GraphicsUnit.Pixel, ImgC)
+                Case 3
+                    Play.PlayerW = Play.PeachW
+                    Play.PlayerH = Play.PeachH
 
-                        If Play.OnGround = False Then
-                            Play.PlayerW = 32
-                            Play.PlayerH = 52
-                        End If
+                    Draw.DrawImage(Peach, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH, GraphicsUnit.Pixel, ImgC)
+                Case 4
+                    Play.PlayerW = Play.ToadW
+                    Play.PlayerH = Play.ToadH
 
-                        Draw.DrawImage(Mario, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                    Case 4, 5
-                        Play.PlayerW = 48
-                        Play.PlayerH = 56
-
-                        If Play.OnGround = False Then
-                            Play.PlayerW = 48
-                            Play.PlayerH = 54
-                        End If
-
-                        Draw.DrawImage(Mario, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                End Select
-            ElseIf Play.CurPlayer = 2 Then
-                Select Case Play.LuigiState
-                    Case 0
-                        Play.PlayerW = 22
-                        Play.PlayerH = 32
-
-                        If Play.OnGround = False Then
-                            Play.PlayerW = 30
-                            Play.PlayerH = 30
-                        End If
-
-                        Draw.DrawImage(Luigi, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                    Case 1, 2, 3, 6
-                        Play.PlayerW = 32
-                        Play.PlayerH = 54
-
-                        If Play.OnGround = False Then
-                            Play.PlayerW = 32
-                            Play.PlayerH = 54
-                        End If
-
-                        Draw.DrawImage(Luigi, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                    Case 4, 5
-                        Play.PlayerW = 46
-                        Play.PlayerH = 62
-
-                        If Play.OnGround = False Then
-                            Play.PlayerW = 46
-                            Play.PlayerH = 62
-                        End If
-
-                        Draw.DrawImage(Luigi, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                End Select
-            ElseIf Play.CurPlayer = 3 Then
-                Select Case Play.PeachState
-                    Case 0
-                        Play.PlayerW = 26
-                        Play.PlayerH = 44
-
-                        Draw.DrawImage(Peach, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                    Case 1, 2, 3, 6
-                        Play.PlayerW = 32
-                        Play.PlayerH = 64
-
-                        Draw.DrawImage(Peach, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                    Case 4
-                        Play.PlayerW = 44
-                        Play.PlayerH = 64
-
-                        Draw.DrawImage(Peach, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                    Case 5
-                        Play.PlayerW = 44
-                        Play.PlayerH = 68
-
-                        Draw.DrawImage(Peach, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), New Rectangle(PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH), GraphicsUnit.Pixel)
-                End Select
-            End If
+                    Draw.DrawImage(Toad, New Rectangle(Play.DrawX, Play.DrawY + (Play.PlayerH - Play.DrawH), Play.PlayerW, Play.DrawH), PlayerFX, PlayerFY, Play.PlayerW, Play.DrawH, GraphicsUnit.Pixel, ImgC)
+            End Select
         End If
-        'Draw.ResetTransform()
+        Draw.ResetTransform()
 
         'FG BGOs
-        Draw.TranslateTransform(Me.AutoScrollPosition.X, Me.AutoScrollPosition.Y, Drawing2D.MatrixOrder.Prepend)
+        If Play.IsTesting = True Then
+            graphic.TranslateTransform(Play.ViewPort.X * -1, Play.ViewPort.Y * -1, Drawing2D.MatrixOrder.Prepend)
+        Else
+            graphic.TranslateTransform(Me.AutoScrollPosition.X, Me.AutoScrollPosition.Y, Drawing2D.MatrixOrder.Prepend)
+        End If
+
         For Each i As BGO In Backgrounds.BGOs.ToList
-            If e.Graphics.IsVisible(i.rectangle) = True Then
+            If graphic.IsVisible(i.rectangle) = True Then
                 If i.Animated = True And i.ForeGround = True Then
                     graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, i.Height * Anim(i.FrameSpeed, i.TotalFrames), i.gfxWidth, i.Height), GraphicsUnit.Pixel)
-                ElseIf i.Animated = False And i.ForeGround = True Then
+                End If
+
+                If i.Animated = False And i.ID > 0 And i.ForeGround = True Then
                     graphic.DrawImage(i.IMG, i.rectangle, New Rectangle(0, 0, i.gfxWidth, i.gfxHeight), GraphicsUnit.Pixel)
                 End If
             End If
         Next
+
+        If MouseIsMoving = True Then
+            PointRec = New Rectangle(mouselocX, mouselocY, My.Resources.Pointer.Width, My.Resources.Pointer.Height)
+            EraseRec = New Rectangle(mouselocX, mouselocY, My.Resources.Eraser.Width, My.Resources.Eraser.Height)
+
+            If EditMode = 0 Then
+                Blocks.GetBlock(SelectedBlock)
+
+                r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
+
+                If Blocks.Animated = True Then
+                    graphic.DrawImage(TB.Image, r, New Rectangle(0, Blocks.TileH * Anim(Blocks.FrameSpeed, Blocks.TotalFrames), Blocks.gfxWidth, Blocks.TileH), GraphicsUnit.Pixel)
+                Else
+                    graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Blocks.gfxWidth, Blocks.gfxHeight), GraphicsUnit.Pixel)
+                End If
+
+            ElseIf EditMode = 2 Then
+                Backgrounds.GetBGO()
+
+                r = New Rectangle((mouseX * 32) + Play.ViewPort.X, mouseY * 32, Backgrounds.BGOW, Backgrounds.BGOH)
+
+                If Backgrounds.Animated = True Then
+                    graphic.DrawImage(TB.Image, r, New Rectangle(0, Backgrounds.BGOH * Anim(Backgrounds.FrameSpeed, Backgrounds.TotalFrames), Backgrounds.gfxWidth, Backgrounds.BGOH), GraphicsUnit.Pixel)
+                Else
+                    graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Backgrounds.gfxWidth, Backgrounds.gfxHeight), GraphicsUnit.Pixel)
+                End If
+
+            ElseIf EditMode = 3 Then
+                Draw.DrawImage(Mario, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (54 - 32), 28, 54), New Rectangle(500, 0, 28, 54), GraphicsUnit.Pixel)
+
+            ElseIf EditMode = 4 Then
+                Draw.DrawImage(Luigi, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (62 - 32), 28, 62), New Rectangle(500, 0, 28, 62), GraphicsUnit.Pixel)
+
+            ElseIf EditMode = 5 Then
+                NPC.GetNPC()
+
+                r = New Rectangle(((mouseX * NPC.NPCSize) + Play.ViewPort.X) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
+
+                If NPC.Animated = True Then
+                    If NPC.Direction = 0 Then
+                        graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH * Anim(NPC.FrameSpeed, NPC.TotalFrames), NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
+                    ElseIf NPC.Direction = 2 Then
+                        graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH * Anim2(NPC.FrameSpeed, NPC.TotalFrames), NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
+                    End If
+                Else
+                    If NPC.Direction = 0 Then
+                        graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
+                    ElseIf NPC.Direction = 2 Then
+                        graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.NPCH, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
+                    End If
+                End If
+            End If
+        End If
+
+        Debug.TotalObjBGOs = Backgrounds.bgorects.Where(Function(c) e.Graphics.IsVisible(c)).Count
 
         graphic.ResetTransform()
 
@@ -1519,6 +1168,7 @@ Public Class Form2
             sw.WriteLine(RC.ConvertToString(Level.P2start))
             sw.WriteLine(Level.Time)
             sw.WriteLine(Play.GravityLevel)
+            sw.WriteLine(Level.Brightness)
 
             sw.WriteLine("[BLOCK]")
 
@@ -1540,6 +1190,11 @@ Public Class Form2
                 sw.WriteLine(i.TotalFrames)
                 sw.WriteLine(i.X)
                 sw.WriteLine(i.Y)
+                sw.WriteLine(i.R)
+                sw.WriteLine(i.G)
+                sw.WriteLine(i.B)
+                sw.WriteLine(i.Glow)
+                sw.WriteLine(i.Breakable)
             Next
 
             sw.WriteLine("[BGO]")
@@ -1874,6 +1529,8 @@ Public Class Form2
         Level.LevelW = sr.ReadLine()
         Level.LevelH = sr.ReadLine()
 
+        Level.HeightInc = ((Level.LevelH - (19 * 32)) + 32) / 32
+
         SetBG()
 
         Me.AutoScrollMinSize = New Size(Level.LevelW, Level.LevelH)
@@ -1896,6 +1553,7 @@ Public Class Form2
         Level.P2start = RC.ConvertFromString(sr.ReadLine())
         Level.Time = sr.ReadLine()
         Play.GravityLevel = sr.ReadLine()
+        Level.Brightness = sr.ReadLine()
 
         Dim CurLine As String = ""
 
@@ -1929,6 +1587,11 @@ Public Class Form2
                     b.TotalFrames = sr.ReadLine()
                     b.X = sr.ReadLine()
                     b.Y = sr.ReadLine()
+                    b.R = sr.ReadLine()
+                    b.G = sr.ReadLine()
+                    b.B = sr.ReadLine()
+                    b.Glow = sr.ReadLine()
+                    b.Breakable = sr.ReadLine()
 
                     Blocks.GetBlock(b.ID)
 
@@ -2253,496 +1916,22 @@ Public Class Form2
                 End If
             Next
 
-            Select Case Play.CurPlayer
-                Case 1
-                    If Play.IsMoving = True Then
-
-                        Play.IsDucking = False
-
-                        If Play.MarioState > 0 Then
-                            If Play.OnGround = True Then
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        PlayerFX = 500
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 200
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 100
-                                        End If
-                                    Case 2
-                                        PlayerFX = 400
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 700
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 600
-                                        End If
-                                End Select
-                            ElseIf Play.IsDucking = False And Play.OnGround = False Then
-                                Select Case Play.MarioState
-                                    Case 0
-                                        Play.DrawH = 30
-                                    Case 1, 2, 3, 6
-                                        Play.DrawH = 54
-                                    Case 4, 5
-                                        Play.DrawW = 46
-                                        Play.DrawH = 56
-                                End Select
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        If Play.MarioState > 0 Then
-                                            PlayerFX = 500
-                                            PlayerFY = 300
-                                        Else
-                                            PlayerFX = 500
-                                            PlayerFY = 200
-                                        End If
-                                    Case 2
-                                        If Play.MarioState > 0 Then
-                                            PlayerFX = 400
-                                            PlayerFY = 500
-                                        Else
-                                            PlayerFX = 400
-                                            PlayerFY = 600
-                                        End If
-                                End Select
-                            End If
-                        Else
-                            If Play.OnGround = True Then
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        PlayerFX = 500
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 100
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 0
-                                        End If
-                                    Case 2
-                                        PlayerFX = 400
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 800
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 700
-                                        End If
-                                End Select
-                            End If
-                        End If
-                    Else
-                        If Play.IsDucking = False And Play.OnGround = True Then
-                            Select Case Play.MarioState
-                                Case 0
-                                    Play.DrawH = 30
-                                Case 1, 2, 3, 6
-                                    Play.DrawH = 54
-                                Case 4, 5
-                                    Play.DrawW = 44
-                                    Play.DrawH = 56
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    PlayerFX = 500
-                                    PlayerFY = 0
-                                Case 2
-                                    PlayerFX = 400
-                                    PlayerFY = 800
-                            End Select
-                        ElseIf Play.IsDucking = False And Play.OnGround = False Then
-                            Select Case Play.MarioState
-                                Case 0
-                                    Play.DrawH = 30
-                                Case 1, 2, 3, 6
-                                    Play.DrawH = 54
-                                Case 4, 5
-                                    Play.DrawW = 48
-                                    Play.DrawH = 56
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    If Play.MarioState > 0 Then
-                                        PlayerFX = 500
-                                        PlayerFY = 300
-                                    Else
-                                        PlayerFX = 500
-                                        PlayerFY = 200
-                                    End If
-                                Case 2
-                                    If Play.MarioState > 0 Then
-                                        PlayerFX = 400
-                                        PlayerFY = 500
-                                    Else
-                                        PlayerFX = 400
-                                        PlayerFY = 600
-                                    End If
-                            End Select
-                        ElseIf Play.IsDucking = True And Play.OnGround = True Then
-                            Select Case Play.MarioState
-                                Case 0
-                                    Play.DrawH = 30
-                                Case 1, 2, 3, 6
-                                    Play.DrawH = 36
-                                Case 4, 5
-                                    Play.DrawH = 36
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    PlayerFX = 500
-                                    PlayerFY = 600
-                                Case 2
-                                    PlayerFX = 400
-                                    PlayerFY = 200
-                            End Select
-                        End If
-                    End If
-                Case 2
-                    If Play.IsMoving = True Then
-
-                        Play.IsDucking = False
-
-                        If Play.LuigiState > 0 Then
-                            If Play.OnGround = True Then
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        PlayerFX = 500
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 200
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 100
-                                        End If
-                                    Case 2
-                                        PlayerFX = 400
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 700
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 600
-                                        End If
-                                End Select
-                            ElseIf Play.IsDucking = False And Play.OnGround = False Then
-                                Select Case Play.LuigiState
-                                    Case 0
-                                        Play.DrawH = 32
-                                    Case 1, 2, 3, 6
-                                        Play.DrawW = 32
-                                        Play.DrawH = 62
-                                    Case 4, 5
-                                        Play.DrawW = 46
-                                        Play.DrawH = 64
-                                End Select
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        If Play.LuigiState > 0 Then
-                                            PlayerFX = 500
-                                            PlayerFY = 300
-                                        Else
-                                            PlayerFX = 500
-                                            PlayerFY = 200
-                                        End If
-                                    Case 2
-                                        If Play.LuigiState > 0 Then
-                                            PlayerFX = 400
-                                            PlayerFY = 500
-                                        Else
-                                            PlayerFX = 400
-                                            PlayerFY = 600
-                                        End If
-                                End Select
-                            End If
-                        Else
-                            If Play.OnGround = True Then
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        PlayerFX = 500
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 100
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 0
-                                        End If
-                                    Case 2
-                                        PlayerFX = 400
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 800
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 700
-                                        End If
-                                End Select
-                            End If
-                        End If
-                    Else
-                        If Play.IsDucking = False And Play.OnGround = True Then
-                            Select Case Play.LuigiState
-                                Case 0
-                                    Play.DrawH = 32
-                                Case 1, 2, 3, 6
-                                    Play.DrawW = 32
-                                    Play.DrawH = 62
-                                Case 4, 5
-                                    Play.DrawW = 46
-                                    Play.DrawH = 64
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    PlayerFX = 500
-                                    PlayerFY = 0
-                                Case 2
-                                    PlayerFX = 400
-                                    PlayerFY = 800
-                            End Select
-                        ElseIf Play.IsDucking = False And Play.OnGround = False Then
-                            Select Case Play.LuigiState
-                                Case 0
-                                    Play.DrawH = 32
-                                Case 1, 2, 3, 6
-                                    Play.DrawW = 32
-                                    Play.DrawH = 62
-                                Case 4, 5
-                                    Play.DrawW = 46
-                                    Play.DrawH = 64
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    If Play.LuigiState > 0 Then
-                                        PlayerFX = 500
-                                        PlayerFY = 300
-                                    Else
-                                        PlayerFX = 500
-                                        PlayerFY = 200
-                                    End If
-                                Case 2
-                                    If Play.LuigiState > 0 Then
-                                        PlayerFX = 400
-                                        PlayerFY = 500
-                                    Else
-                                        PlayerFX = 400
-                                        PlayerFY = 600
-                                    End If
-                            End Select
-                        ElseIf Play.IsDucking = True And Play.OnGround = True Then
-                            Select Case Play.LuigiState
-                                Case 0
-                                    Play.DrawH = 30
-                                Case 1, 2, 3, 6
-                                    Play.DrawH = 36
-                                Case 4, 5
-                                    Play.DrawH = 36
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    PlayerFX = 500
-                                    PlayerFY = 600
-                                Case 2
-                                    PlayerFX = 400
-                                    PlayerFY = 200
-                            End Select
-                        End If
-                    End If
-                Case 3
-                    If Play.IsMoving = True Then
-
-                        Play.IsDucking = False
-
-                        If Play.PeachState > 0 Then
-                            If Play.OnGround = True Then
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        PlayerFX = 500
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 200
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 100
-                                        End If
-                                    Case 2
-                                        PlayerFX = 400
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 700
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 600
-                                        End If
-                                End Select
-                            ElseIf Play.IsDucking = False And Play.OnGround = False Then
-                                Select Case Play.PeachState
-                                    Case 0
-                                        Play.DrawH = 26
-                                    Case 1, 2, 3, 6
-                                        Play.DrawW = 32
-                                        Play.DrawH = 64
-                                    Case 4
-                                        Play.DrawW = 44
-                                        Play.DrawH = 64
-                                    Case 5
-                                        Play.DrawW = 44
-                                        Play.DrawH = 68
-                                End Select
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        If Play.PeachState > 0 Then
-                                            PlayerFX = 500
-                                            PlayerFY = 300
-                                        Else
-                                            PlayerFX = 500
-                                            PlayerFY = 200
-                                        End If
-                                    Case 2
-                                        If Play.PeachState > 0 Then
-                                            PlayerFX = 400
-                                            PlayerFY = 500
-                                        Else
-                                            PlayerFX = 400
-                                            PlayerFY = 600
-                                        End If
-                                End Select
-                            End If
-                        Else
-                            If Play.OnGround = True Then
-                                Select Case Play.MoveDir
-                                    Case 1
-                                        PlayerFX = 500
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 100
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 0
-                                        End If
-                                    Case 2
-                                        PlayerFX = 400
-                                        If Play.RunFrame = 1 Then
-                                            Play.RunFrame = 2
-                                            PlayerFY = 800
-                                        ElseIf Play.RunFrame = 2 Then
-                                            Play.RunFrame = 1
-                                            PlayerFY = 700
-                                        End If
-                                End Select
-                            End If
-                        End If
-                    Else
-                        If Play.IsDucking = False And Play.OnGround = True Then
-                            Select Case Play.PeachState
-                                Case 0
-                                    Play.DrawH = 26
-                                Case 1, 2, 3, 6
-                                    Play.DrawW = 32
-                                    Play.DrawH = 64
-                                Case 4
-                                    Play.DrawW = 44
-                                    Play.DrawH = 64
-                                Case 5
-                                    Play.DrawW = 44
-                                    Play.DrawH = 68
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    PlayerFX = 500
-                                    PlayerFY = 0
-                                Case 2
-                                    PlayerFX = 400
-                                    PlayerFY = 800
-                            End Select
-                        ElseIf Play.IsDucking = False And Play.OnGround = False Then
-                            Select Case Play.PeachState
-                                Case 0
-                                    Play.DrawH = 26
-                                Case 1, 2, 3, 6
-                                    Play.DrawW = 32
-                                    Play.DrawH = 64
-                                Case 4
-                                    Play.DrawW = 44
-                                    Play.DrawH = 64
-                                Case 5
-                                    Play.DrawW = 44
-                                    Play.DrawH = 68
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    If Play.PeachState > 0 Then
-                                        PlayerFX = 500
-                                        PlayerFY = 300
-                                    Else
-                                        PlayerFX = 500
-                                        PlayerFY = 200
-                                    End If
-                                Case 2
-                                    If Play.LuigiState > 0 Then
-                                        PlayerFX = 400
-                                        PlayerFY = 500
-                                    Else
-                                        PlayerFX = 400
-                                        PlayerFY = 600
-                                    End If
-                            End Select
-                        ElseIf Play.IsDucking = True And Play.OnGround = True Then
-                            Select Case Play.PeachState
-                                Case 0
-                                    Play.DrawH = 26
-                                Case 1, 2, 3, 6
-                                    Play.DrawW = 32
-                                    Play.DrawH = 64
-                                Case 4
-                                    Play.DrawW = 32
-                                    Play.DrawH = 34
-                                Case 5
-                                    Play.DrawW = 32
-                                    Play.DrawH = 38
-                            End Select
-                            Select Case Play.MoveDir
-                                Case 1
-                                    PlayerFX = 500
-                                    PlayerFY = 600
-                                Case 2
-                                    PlayerFX = 400
-                                    PlayerFY = 200
-                            End Select
-                        End If
-                    End If
-            End Select
+            If Play.IsTesting = True Then
+                Play.GetPlayerFrame()
+            End If
 
             stopw.Reset()
         End If
-
-
-
 
         Me.Refresh()
 
         If Play.IsTesting = True Then
             Play.Gravity()
+            Play.AI()
+            KeyboardControl()
         End If
 
         curscreen = New Rectangle(Me.AutoScrollPosition.X * -1, Me.AutoScrollPosition.Y * -1, 800, 672)
-    End Sub
-
-    Private Sub Mouse_Tick(sender As System.Object, e As System.EventArgs) Handles Mouse.Tick
-        If MouseIsMoving = True Then
-            Me.Invalidate(Cursor.Clip)
-        End If
-
-        If Play.IsTesting = True Then
-            If EditMode = 0 Or EditMode = 1 Or EditMode = 2 Or EditMode = 5 Or EditMode = 6 Then
-                mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 32)
-                mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
-            ElseIf EditMode = 3 Or EditMode = 4 Then
-                mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 4)
-                mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
-            End If
-        End If
     End Sub
 
     Private Sub Form2_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged

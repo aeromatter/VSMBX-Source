@@ -20,7 +20,38 @@
     Dim FrameStyle As Integer
     Dim CurFrame As Integer
     Dim MetroidGlass As Boolean
+
+    Dim OnGround As Boolean
+    Dim Testing As Boolean
+    Dim hopHeight As Integer
+    Dim totalJumps As Integer
+    Dim isJumping As Integer
+    Dim Delay As Integer
 End Structure
+
+Public Class ActiveNPC
+    Public rectangle As Rectangle
+    Public X As Integer
+    Public Y As Integer
+    Public Width As Integer
+    Public Height As Integer
+    Public ID As Integer
+    Public IMG As Image
+    Public Animated As Boolean
+    Public SourceRect As Rectangle
+    Public gfxWidth As Integer
+    Public gfxHeight As Integer
+    Public TotalFrames As Integer
+    Public FrameSpeed As Integer
+    Public AI As Integer
+    Public Direction As Integer
+    Public MSG As String
+    Public HasGravity As Boolean
+    Public MoveSpeed As Double
+    Public FrameStyle As Integer
+    Public CurFrame As Integer
+    Public MetroidGlass As Boolean
+End Class
 
 Public Class NPC
     Public Shared NPCW As Integer = 32
@@ -43,6 +74,9 @@ Public Class NPC
     Public Shared MetroidGlass As Boolean
 
     Public Shared bmp As Bitmap
+
+    Public posX As Integer
+    Public posY As Integer
 
     Public Shared path As String
     Public Shared path2 As String
@@ -78,22 +112,17 @@ Public Class NPC
             Case 1
                 path = Form1.FilePath & "\graphics\npc\npc-1.png"
 
-
                 gfxHeight = 64
                 Animated = True
                 TotalFrames = 2
-                FrameSpeed = 8
             Case 2
                 path = Form1.FilePath & "\graphics\npc\npc-2.png"
 
-
                 gfxHeight = 64
                 Animated = True
                 TotalFrames = 2
-                FrameSpeed = 8
             Case 3
                 path = Form1.FilePath & "\graphics\npc\npc-3.png"
-
 
                 Animated = True
                 TotalFrames = 2
@@ -104,7 +133,6 @@ Public Class NPC
                 AI = 1
             Case 4
                 path = Form1.FilePath & "\graphics\npc\npc-244.png"
-
 
                 Animated = True
                 TotalFrames = 2

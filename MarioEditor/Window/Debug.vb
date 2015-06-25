@@ -4,6 +4,9 @@ Public Class Debug
     Public Shared TotalBlocks As Integer = 0
     Public Shared TotalBGOs As Integer = 0
     Public Shared TotalNPCs As Integer = 0
+    Public Shared TotalObjBlocks As Integer = 0
+    Public Shared TotalObjBGOs As Integer = 0
+    Public Shared TotalObjNPCs As Integer = 0
     Public Memory As New PerformanceCounter("Memory", "Available MBytes")
     Public CPU As New PerformanceCounter("Processor", "% Processor Time", "_Total")
 
@@ -13,7 +16,12 @@ Public Class Debug
     End Sub
 
     Private Sub Debug_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-
+        Label21.Text = "Left: " & PlayerC.LeftC
+        Label22.Text = "Right: " & PlayerC.RightC
+        Label23.Text = "Up: " & PlayerC.UpC
+        Label24.Text = "Down: " & PlayerC.DownC
+        Label25.Text = "Jump: " & PlayerC.JumpC
+        Label26.Text = "Run: " & PlayerC.RunC
     End Sub
 
     Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
@@ -61,5 +69,9 @@ Public Class Debug
 
         Label16.Text = "Collision Dir: " & Play.CollideDir
         Label17.Text = "Move Dir: " & Play.MoveDir
+
+        Label18.Text = "OS Blocks: " & TotalObjBlocks
+        Label19.Text = "OS BGOs: " & TotalObjBGOs
+        Label20.Text = "OS NPCs: " & TotalObjNPCs
     End Sub
 End Class

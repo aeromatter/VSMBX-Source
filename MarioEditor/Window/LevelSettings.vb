@@ -286,6 +286,8 @@ Public Class LevelSettings
         TextBox3.Text = Level.LevelH / 32
 
         TextBox4.Text = Play.GravityLevel.ToString
+
+        TrackBar1.Value = Level.Brightness / 10
     End Sub
 
     Private Sub Button8_Click(sender As System.Object, e As System.EventArgs) Handles Button8.Click
@@ -296,7 +298,7 @@ Public Class LevelSettings
 
                 Form2.AutoScrollMinSize = New Size(Level.LevelW, Level.LevelH)
 
-                Level.HeightInc = (Level.LevelH - (19 * 32)) / 32
+                Level.HeightInc = ((Level.LevelH - (19 * 32)) + 32) / 32
                 Form2.Update()
             End If
         Catch ex As Exception
@@ -1084,5 +1086,9 @@ Public Class LevelSettings
         End Select
 
         Form2.Refresh()
+    End Sub
+
+    Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
+        Level.Brightness = TrackBar1.Value * 10
     End Sub
 End Class

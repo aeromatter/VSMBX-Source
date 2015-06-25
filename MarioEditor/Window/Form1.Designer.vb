@@ -596,7 +596,7 @@ Partial Class Form1
         Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
-        Me.Text = "Visual Super Mario Bros. X  - Level Editor - Beta Version 1.0.1.4 - www.SuperMari" & _
+        Me.Text = "Visual Super Mario Bros. X  - Level Editor - Beta Version 1.0.2.1 - www.SuperMari" & _
     "oBrothersX.org"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.MenuStrip1.ResumeLayout(False)

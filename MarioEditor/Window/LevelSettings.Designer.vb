@@ -191,6 +191,8 @@ Partial Class LevelSettings
         Me.Button10 = New System.Windows.Forms.Button()
         Me.Button9 = New System.Windows.Forms.Button()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -219,6 +221,8 @@ Partial Class LevelSettings
         Me.GroupBox27.SuspendLayout()
         Me.GroupBox26.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
+        Me.GroupBox12.SuspendLayout()
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -1888,11 +1892,30 @@ Partial Class LevelSettings
         Me.TextBox4.TabIndex = 8
         Me.TextBox4.Text = "12"
         '
+        'GroupBox12
+        '
+        Me.GroupBox12.Controls.Add(Me.TrackBar1)
+        Me.GroupBox12.Location = New System.Drawing.Point(118, 221)
+        Me.GroupBox12.Name = "GroupBox12"
+        Me.GroupBox12.Size = New System.Drawing.Size(105, 60)
+        Me.GroupBox12.TabIndex = 17
+        Me.GroupBox12.TabStop = False
+        Me.GroupBox12.Text = "Brightness"
+        '
+        'TrackBar1
+        '
+        Me.TrackBar1.Location = New System.Drawing.Point(6, 19)
+        Me.TrackBar1.Name = "TrackBar1"
+        Me.TrackBar1.Size = New System.Drawing.Size(93, 45)
+        Me.TrackBar1.TabIndex = 19
+        Me.TrackBar1.Value = 10
+        '
         'LevelSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(900, 286)
+        Me.ClientSize = New System.Drawing.Size(900, 341)
+        Me.Controls.Add(Me.GroupBox12)
         Me.Controls.Add(Me.GroupBox9)
         Me.Controls.Add(Me.misc_settings)
         Me.Controls.Add(Me.mario64_settings)
@@ -1945,6 +1968,9 @@ Partial Class LevelSettings
         Me.GroupBox26.ResumeLayout(False)
         Me.GroupBox9.ResumeLayout(False)
         Me.GroupBox9.PerformLayout()
+        Me.GroupBox12.ResumeLayout(False)
+        Me.GroupBox12.PerformLayout()
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2116,4 +2142,6 @@ Partial Class LevelSettings
     Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
     Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
     Friend WithEvents Button10 As System.Windows.Forms.Button
+    Friend WithEvents GroupBox12 As System.Windows.Forms.GroupBox
+    Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
 End Class

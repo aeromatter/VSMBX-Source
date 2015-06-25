@@ -296,6 +296,8 @@
             Play.ToadState = ComboBox1.SelectedIndex
         End If
 
+        Play.CurState = ComboBox1.SelectedIndex
+
         Play.GetPlayer()
 
         Me.Close()

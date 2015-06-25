@@ -9234,11 +9234,10 @@ Partial Class BlocksAndTiles
         Me.Button700.Size = New System.Drawing.Size(41, 23)
         Me.Button700.TabIndex = 14
         Me.Button700.Text = "Redo"
-        Me.Button700.UseVisualStyleBackColor = true
+        Me.Button700.UseVisualStyleBackColor = True
         '
         'Button701
         '
-        Me.Button701.Enabled = false
         Me.Button701.Location = New System.Drawing.Point(130, 270)
         Me.Button701.Name = "Button701"
         Me.Button701.Size = New System.Drawing.Size(74, 23)

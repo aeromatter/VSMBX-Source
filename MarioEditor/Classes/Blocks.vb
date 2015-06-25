@@ -19,6 +19,11 @@ Public Structure Block
     Dim SizeW As Integer
     Dim SizeH As Integer
     Dim Lava As Boolean
+    Dim R As Integer
+    Dim G As Integer
+    Dim B As Integer
+    Dim Glow As Integer
+    Dim Breakable As Boolean
 End Structure
 
 Public Class Blocks
@@ -46,6 +51,7 @@ Public Class Blocks
     Public Shared FillList As New List(Of List(Of Block))
     Public Shared IsSlope As Boolean
     Public Shared SlopeType As Integer
+    Public Shared Breakable As Boolean
 
     Public Shared StartRect As Rectangle
     Public Shared ScanRect As Rectangle
@@ -187,6 +193,7 @@ Public Class Blocks
         Lava = False
         IsSlope = False
         SlopeType = 0
+        Breakable = False
 
         'slope type 1 = 45* angle | left face
         'slope type 2 = 45* angle | right face
@@ -935,6 +942,7 @@ Public Class Blocks
 
                 gfxHeight = 128
                 Animated = True
+                Breakable = True
             Case 209
                 path = Form1.FilePath & "\graphics\block\block-621.png"
             Case 210

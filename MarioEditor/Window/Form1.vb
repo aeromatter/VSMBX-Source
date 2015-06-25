@@ -79,6 +79,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button6_Click(sender As System.Object, e As System.EventArgs) Handles Button6.Click
+        Form2.EditMode = 7
         LevelSettings.MdiParent = Me
 
         If Form2.Mario Is Nothing And Form2.Luigi Is Nothing And Directory.Exists(Form1.FilePath & "\graphics\mario\") And Directory.Exists(Form1.FilePath & "\graphics\luigi\") Then
@@ -190,6 +191,7 @@ Public Class Form1
 
                 Dim Audio = New Audio
                 Audio.PlaySound(5)
+
                 'save level
             Case MsgBoxResult.No
                 Play.IsTesting = True

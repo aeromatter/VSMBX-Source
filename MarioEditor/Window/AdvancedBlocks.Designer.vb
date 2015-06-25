@@ -38,8 +38,24 @@ Partial Class AdvancedBlocks
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.TrackBar2 = New System.Windows.Forms.TrackBar()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.TrackBar3 = New System.Windows.Forms.TrackBar()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.TrackBar4 = New System.Windows.Forms.TrackBar()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox4.SuspendLayout()
+        CType(Me.TrackBar2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox5.SuspendLayout()
+        CType(Me.TrackBar3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox6.SuspendLayout()
+        CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -192,11 +208,90 @@ Partial Class AdvancedBlocks
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 4
         '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.TrackBar1)
+        Me.GroupBox3.Location = New System.Drawing.Point(218, 12)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(105, 65)
+        Me.GroupBox3.TabIndex = 3
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Color - R"
+        '
+        'TrackBar1
+        '
+        Me.TrackBar1.Location = New System.Drawing.Point(6, 19)
+        Me.TrackBar1.Maximum = 255
+        Me.TrackBar1.Name = "TrackBar1"
+        Me.TrackBar1.Size = New System.Drawing.Size(93, 45)
+        Me.TrackBar1.TabIndex = 0
+        Me.TrackBar1.Value = 255
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.TrackBar2)
+        Me.GroupBox4.Location = New System.Drawing.Point(218, 83)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(105, 65)
+        Me.GroupBox4.TabIndex = 4
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Color - G"
+        '
+        'TrackBar2
+        '
+        Me.TrackBar2.Location = New System.Drawing.Point(6, 19)
+        Me.TrackBar2.Maximum = 255
+        Me.TrackBar2.Name = "TrackBar2"
+        Me.TrackBar2.Size = New System.Drawing.Size(93, 45)
+        Me.TrackBar2.TabIndex = 0
+        Me.TrackBar2.Value = 255
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.TrackBar3)
+        Me.GroupBox5.Location = New System.Drawing.Point(218, 154)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(105, 65)
+        Me.GroupBox5.TabIndex = 5
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Color - B"
+        '
+        'TrackBar3
+        '
+        Me.TrackBar3.Location = New System.Drawing.Point(6, 19)
+        Me.TrackBar3.Maximum = 255
+        Me.TrackBar3.Name = "TrackBar3"
+        Me.TrackBar3.Size = New System.Drawing.Size(93, 45)
+        Me.TrackBar3.TabIndex = 0
+        Me.TrackBar3.Value = 255
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.TrackBar4)
+        Me.GroupBox6.Location = New System.Drawing.Point(329, 12)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(105, 65)
+        Me.GroupBox6.TabIndex = 6
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Glow"
+        '
+        'TrackBar4
+        '
+        Me.TrackBar4.Location = New System.Drawing.Point(6, 19)
+        Me.TrackBar4.Name = "TrackBar4"
+        Me.TrackBar4.Size = New System.Drawing.Size(93, 45)
+        Me.TrackBar4.TabIndex = 0
+        Me.TrackBar4.Value = 10
+        '
         'AdvancedBlocks
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(223, 230)
+        Me.ClientSize = New System.Drawing.Size(443, 230)
+        Me.Controls.Add(Me.GroupBox6)
+        Me.Controls.Add(Me.GroupBox5)
+        Me.Controls.Add(Me.GroupBox4)
+        Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -207,6 +302,18 @@ Partial Class AdvancedBlocks
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
+        CType(Me.TrackBar2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
+        CType(Me.TrackBar3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
+        CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -225,4 +332,12 @@ Partial Class AdvancedBlocks
     Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents TrackBar2 As System.Windows.Forms.TrackBar
+    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Friend WithEvents TrackBar3 As System.Windows.Forms.TrackBar
+    Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
+    Friend WithEvents TrackBar4 As System.Windows.Forms.TrackBar
 End Class

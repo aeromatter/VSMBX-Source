@@ -39,6 +39,7 @@ Public Class Play
     Public Shared LuigiState As Integer = 1
     Public Shared PeachState As Integer = 1
     Public Shared ToadState As Integer = 1
+    Public Shared CurState As Integer = 1
     Public Shared RunFrame As Integer = 1
     Public Shared IsMoving As Boolean = False
     Public Shared MoveDir As Integer
@@ -47,6 +48,7 @@ Public Class Play
     Public Shared OnGround As Boolean = False
     Public Shared PlayerCollide As Rectangle
     Public Shared IsDucking As Boolean = False
+    Public Shared IsStarman As Boolean = True
 
     Public Shared MoveSpeed As Integer = 6
     Public Shared JumpSpeed As Integer = 12
@@ -68,6 +70,7 @@ Public Class Play
     Public Shared ToadW As Integer
     Public Shared ToadH As Integer
 
+    Public Shared NPClocs As List(Of ActiveNPC)
     Public Shared ViewPort As Rectangle
 
     Public Shared Sub ShowHUD()
@@ -82,32 +85,32 @@ Public Class Play
             Case 0
                 Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-1.png")
 
-                PlayerW = 24
+                PlayerW = 26
                 PlayerH = 30
             Case 1
                 Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-2.png")
 
-                PlayerW = 28
+                PlayerW = 32
                 PlayerH = 54
             Case 2
                 Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-3.png")
 
-                PlayerW = 28
+                PlayerW = 32
                 PlayerH = 54
             Case 3
                 Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-7.png")
 
-                PlayerW = 28
+                PlayerW = 32
                 PlayerH = 54
             Case 4
                 Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-4.png")
 
-                PlayerW = 44
+                PlayerW = 46
                 PlayerH = 56
             Case 5
                 Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-5.png")
 
-                PlayerW = 44
+                PlayerW = 46
                 PlayerH = 56
             Case 6
                 Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-6.png")
@@ -123,37 +126,37 @@ Public Class Play
             Case 0
                 Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-1.png")
 
-                PlayerW = 22
+                PlayerW = 30
                 PlayerH = 32
             Case 1
                 Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-2.png")
 
-                PlayerW = 28
+                PlayerW = 32
                 PlayerH = 62
             Case 2
                 Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-3.png")
 
-                PlayerW = 28
+                PlayerW = 32
                 PlayerH = 62
             Case 3
                 Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-7.png")
 
-                PlayerW = 28
+                PlayerW = 32
                 PlayerH = 62
             Case 4
                 Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-4.png")
 
-                PlayerW = 42
+                PlayerW = 46
                 PlayerH = 64
             Case 5
                 Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-5.png")
 
-                PlayerW = 42
+                PlayerW = 46
                 PlayerH = 64
             Case 6
                 Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-6.png")
 
-                PlayerW = 28
+                PlayerW = 32
                 PlayerH = 62
         End Select
 
@@ -164,37 +167,37 @@ Public Class Play
             Case 0
                 Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-1.png")
 
-                PlayerW = 26
+                PlayerW = 28
                 PlayerH = 44
             Case 1
                 Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-2.png")
 
-                PlayerW = 32
+                PlayerW = 34
                 PlayerH = 64
             Case 2
                 Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-3.png")
 
-                PlayerW = 32
+                PlayerW = 34
                 PlayerH = 64
             Case 3
                 Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-7.png")
 
-                PlayerW = 32
+                PlayerW = 34
                 PlayerH = 64
             Case 4
                 Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-4.png")
 
-                PlayerW = 44
+                PlayerW = 46
                 PlayerH = 64
             Case 5
                 Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-5.png")
 
-                PlayerW = 44
+                PlayerW = 46
                 PlayerH = 68
             Case 6
                 Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-6.png")
 
-                PlayerW = 38
+                PlayerW = 40
                 PlayerH = 64
         End Select
 
@@ -205,37 +208,37 @@ Public Class Play
             Case 0
                 Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-1.png")
 
-                PlayerW = 28
+                PlayerW = 30
                 PlayerH = 38
             Case 1
                 Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-2.png")
 
-                PlayerW = 32
+                PlayerW = 34
                 PlayerH = 54
             Case 2
                 Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-3.png")
 
-                PlayerW = 32
+                PlayerW = 34
                 PlayerH = 54
             Case 3
                 Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-7.png")
 
-                PlayerW = 32
+                PlayerW = 34
                 PlayerH = 54
             Case 4
                 Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-4.png")
 
-                PlayerW = 42
+                PlayerW = 46
                 PlayerH = 54
             Case 5
                 Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-5.png")
 
-                PlayerW = 40
+                PlayerW = 46
                 PlayerH = 54
             Case 6
                 Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-6.png")
 
-                PlayerW = 34
+                PlayerW = 36
                 PlayerH = 52
         End Select
 
@@ -252,12 +255,318 @@ Public Class Play
         'playerdied = true
     End Sub
 
+    Public Shared Sub UsePowerup()
+        Select Case CurState
+            Case 1
+
+        End Select
+    End Sub
+
+    Public Shared Sub AI()
+
+        For i = 0 To NPC.NPCsets.Count - 1
+            Dim tempnpc = NPC.NPCsets(i)
+
+            Select Case NPC.NPCsets(i).AI
+                Case 0
+                    If NPC.NPCsets(i).Direction = 0 Then
+                        tempnpc.X -= NPC.NPCsets(i).MoveSpeed
+                    ElseIf NPC.NPCsets(i).Direction = 2 Then
+                        tempnpc.X += NPC.NPCsets(i).MoveSpeed
+                    End If
+                Case 1
+                    tempnpc.Delay += 1
+
+                    If NPC.NPCsets(i).Direction = 0 Then
+                        tempnpc.X -= NPC.NPCsets(i).MoveSpeed
+                    ElseIf NPC.NPCsets(i).Direction = 2 Then
+                        tempnpc.X += NPC.NPCsets(i).MoveSpeed
+                    End If
+
+                    If tempnpc.Delay >= 64 And tempnpc.OnGround = True Then
+                        If NPC.NPCsets(i).totalJumps <= 3 Then
+                            tempnpc.TotalFrames = 4
+
+                            tempnpc.isJumping = True
+
+                            tempnpc.Y -= 1
+                            tempnpc.hopHeight += 1
+
+                            If tempnpc.hopHeight >= 12 Then
+                                tempnpc.isJumping = False
+                                tempnpc.hopHeight = 0
+
+                                tempnpc.totalJumps += 1
+                            End If
+                        ElseIf NPC.NPCsets(i).totalJumps >= 4 Then
+                            tempnpc.isJumping = True
+
+                            tempnpc.Y -= 2
+                            tempnpc.hopHeight += 2
+
+                            If tempnpc.hopHeight >= 64 Then
+                                tempnpc.isJumping = False
+                                tempnpc.hopHeight = 0
+
+                                tempnpc.totalJumps = 0
+                                tempnpc.Delay = 0
+
+                                tempnpc.TotalFrames = 2
+                            End If
+                        End If
+                    End If
+            End Select
+
+            If NPC.NPCsets(i).HasGravity = True And tempnpc.isJumping = False Then
+                tempnpc.OnGround = False
+
+                For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s))
+                    If New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) Then
+
+                        tempnpc.OnGround = True
+                        tempnpc.Y = (r.Top - tempnpc.Height)
+                    End If
+                Next
+
+                Select Case NPC.NPCsets(i).AI
+                    Case 0
+                        If tempnpc.OnGround = False Then
+                            tempnpc.Y += GravityLevel
+                        End If
+                    Case 1
+                        If tempnpc.OnGround = False Then
+                            tempnpc.Y += GravityLevel / 2
+                        End If
+                End Select
+                
+            End If
+
+            NPC.NPCsets(i) = tempnpc
+        Next
+    End Sub
+
+    Public Shared Sub GetPlayerFrame()
+        If IsDucking = False Then
+            If CurPlayer = 1 Then
+                Select Case Play.MarioState
+                    Case 0
+                        DrawH = 30
+                    Case 1, 2, 3, 6
+                        DrawH = 54
+                    Case 4, 5
+                        DrawW = 46
+                        DrawH = 56
+                End Select
+            ElseIf CurPlayer = 2 Then
+                Select Case Play.LuigiState
+                    Case 0
+                        DrawW = 28
+                        DrawH = 32
+                    Case 1, 2, 3, 6
+                        DrawW = 32
+                        DrawH = 62
+                    Case 4, 5
+                        DrawW = 46
+                        DrawH = 64
+                End Select
+            ElseIf CurPlayer = 3 Then
+                Select Case Play.PeachState
+                    Case 0
+                        DrawH = 44
+                    Case 1, 2, 3, 6
+                        DrawW = 32
+                        DrawH = 64
+                    Case 4
+                        DrawW = 44
+                        DrawH = 64
+                    Case 5
+                        DrawW = 44
+                        DrawH = 68
+                End Select
+            ElseIf CurPlayer = 4 Then
+                Select Case Play.ToadState
+                    Case 0
+                        DrawH = 38
+                    Case 1, 2, 3, 6
+                        DrawW = 32
+                        DrawH = 54
+                    Case 4
+                        DrawW = 42
+                        DrawH = 54
+                    Case 5
+                        DrawW = 40
+                        DrawH = 54
+                End Select
+            End If
+        Else
+            If CurPlayer = 1 Then
+                Select Case Play.MarioState
+                    Case 0
+                        DrawH = 30
+                    Case 1, 2, 3, 6
+                        DrawH = 36
+                    Case 4, 5
+                        DrawH = 36
+                End Select
+            ElseIf CurPlayer = 2 Then
+                Select Case Play.LuigiState
+                    Case 0
+                        DrawW = 28
+                        DrawH = 32
+                    Case 1, 2, 3, 6
+                        DrawH = 36
+                    Case 4, 5
+                        DrawH = 36
+                End Select
+            ElseIf CurPlayer = 3 Then
+                Select Case Play.PeachState
+                    Case 0
+                        DrawH = 38
+                    Case 1, 2, 3, 6
+                        DrawW = 32
+                        DrawH = 32
+                    Case 4
+                        DrawW = 32
+                        DrawH = 34
+                    Case 5
+                        DrawW = 32
+                        DrawH = 38
+                End Select
+            ElseIf CurPlayer = 4 Then
+                Select Case Play.ToadState
+                    Case 0
+                        DrawH = 28
+                    Case 1, 2, 3, 6
+                        DrawW = 32
+                        DrawH = 32
+                    Case 4
+                        DrawW = 32
+                        DrawH = 32
+                    Case 5
+                        DrawW = 32
+                        DrawH = 34
+                End Select
+            End If
+        End If
+
+        If IsMoving = True Then
+            IsDucking = False
+
+            If CurState > 0 Then
+                If OnGround = True And IsDucking = False Then
+                    Select Case MoveDir
+                        Case 1
+                            Form2.PlayerFX = 500
+                            If RunFrame = 1 Then
+                                RunFrame = 2
+                                Form2.PlayerFY = 200
+                            ElseIf RunFrame = 2 Then
+                                RunFrame = 1
+                                Form2.PlayerFY = 100
+                            End If
+                        Case 2
+                            Form2.PlayerFX = 400
+                            If RunFrame = 1 Then
+                                RunFrame = 2
+                                Form2.PlayerFY = 700
+                            ElseIf RunFrame = 2 Then
+                                RunFrame = 1
+                                Form2.PlayerFY = 600
+                            End If
+                    End Select
+                ElseIf IsDucking = False And OnGround = False Then
+                    Select Case MoveDir
+                        Case 1
+                            If CurState > 0 Then
+                                Form2.PlayerFX = 500
+                                Form2.PlayerFY = 300
+                            Else
+                                Form2.PlayerFX = 500
+                                Form2.PlayerFY = 200
+                            End If
+                        Case 2
+                            If CurState > 0 Then
+                                Form2.PlayerFX = 400
+                                Form2.PlayerFY = 500
+                            Else
+                                Form2.PlayerFX = 400
+                                Form2.PlayerFY = 600
+                            End If
+                    End Select
+                End If
+            Else
+                If OnGround = True And IsDucking = False Then
+                    Select Case MoveDir
+                        Case 1
+                            Form2.PlayerFX = 500
+                            If RunFrame = 1 Then
+                                RunFrame = 2
+                                Form2.PlayerFY = 100
+                            ElseIf RunFrame = 2 Then
+                                RunFrame = 1
+                                Form2.PlayerFY = 0
+                            End If
+                        Case 2
+                            Form2.PlayerFX = 400
+                            If RunFrame = 1 Then
+                                RunFrame = 2
+                                Form2.PlayerFY = 800
+                            ElseIf RunFrame = 2 Then
+                                RunFrame = 1
+                                Form2.PlayerFY = 700
+                            End If
+                    End Select
+                End If
+            End If
+        Else
+
+            If IsDucking = False And OnGround = True Then
+                Select Case MoveDir
+                    Case 1
+                        Form2.PlayerFX = 500
+                        Form2.PlayerFY = 0
+                    Case 2
+                        Form2.PlayerFX = 400
+                        Form2.PlayerFY = 800
+                End Select
+            ElseIf IsDucking = False And OnGround = False Then
+                Select Case MoveDir
+                    Case 1
+                        If CurState > 0 Then
+                            Form2.PlayerFX = 500
+                            Form2.PlayerFY = 300
+                        Else
+                            Form2.PlayerFX = 500
+                            Form2.PlayerFY = 200
+                        End If
+                    Case 2
+                        If CurState > 0 Then
+                            Form2.PlayerFX = 400
+                            Form2.PlayerFY = 500
+                        Else
+                            Form2.PlayerFX = 400
+                            Form2.PlayerFY = 600
+                        End If
+                End Select
+            ElseIf IsDucking = True And OnGround = True Then
+                Select Case MoveDir
+                    Case 1
+                        Form2.PlayerFX = 500
+                        Form2.PlayerFY = 600
+                    Case 2
+                        Form2.PlayerFX = 400
+                        Form2.PlayerFY = 200
+                End Select
+            End If
+        End If
+    End Sub
+
     Public Shared Sub Gravity()
         PlayerCollide = New Rectangle(PlayerX, PlayerY, PlayerW, PlayerH)
 
         OnGround = False
         For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s))
-            If PlayerCollide.IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) Then
+            If PlayerCollide.IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) And IsJumping = False Then
 
                 OnGround = True
                 CheckCollision()
@@ -269,8 +578,9 @@ Public Class Play
                 End If
             End If
         Next
-        
+
         If OnGround = False And IsJumping = False Then
+            PlayerCollide.Y += GravityLevel
             PlayerY += GravityLevel
             DrawY += GravityLevel
         End If
@@ -283,6 +593,8 @@ Public Class Play
             If JumpHeight > 0 Then
                 JumpHeight = 0
             End If
+
+            CheckCollision()
 
             Select Case MoveDir
                 Case 1
@@ -301,16 +613,8 @@ Public Class Play
             DrawY -= JumpSpeed
             JumpHeight += JumpSpeed
 
-            Select Case CurPlayer
-                Case 1, 3
-                    If JumpHeight >= 178 Then
-                        IsJumping = False
-                    End If
-                Case 2
-                    If JumpHeight >= 226 Then
-                        IsJumping = False
-                    End If
-            End Select
+            Jump()
+            CheckCollision()
 
             Select Case MoveDir
                 Case 1
@@ -324,21 +628,13 @@ Public Class Play
                         DrawX -= Play.MoveSpeed
                     End If
             End Select
+
         ElseIf IsJumping = True And IsMoving = False Then
             PlayerY -= JumpSpeed
             DrawY -= JumpSpeed
             JumpHeight += JumpSpeed
 
-            Select Case CurPlayer
-                Case 1, 3
-                    If JumpHeight >= 128 Then
-                        IsJumping = False
-                    End If
-                Case 2
-                    If JumpHeight >= 160 Then
-                        IsJumping = False
-                    End If
-            End Select
+            Jump()
         End If
 
         'End Testing when player falls in pit
@@ -351,21 +647,34 @@ Public Class Play
         MaintainLevelBounds()
     End Sub
 
+    Public Shared Sub Jump()
+        Select Case CurPlayer
+            Case 1, 3, 4
+                If JumpHeight >= 128 Then
+                    IsJumping = False
+                End If
+            Case 2
+                If JumpHeight >= 160 Then
+                    IsJumping = False
+                End If
+        End Select
+    End Sub
+
     Public Shared Sub CheckCollision()
         PlayerCollide = New Rectangle(PlayerX, PlayerY, PlayerW, PlayerH)
 
         CollideDir = 0
 
-        For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s))
+        For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s)).ToList
             Select Case MoveDir
                 Case 1
-                    If (PlayerCollide.Right = r.Left) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
+                    If ((PlayerCollide.Right = r.Left) Or PlayerCollide.IntersectsWith(New Rectangle(r.X - MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
                         CollideDir = 1
                     ElseIf (PlayerCollide.Right >= ViewPort.Right - 32) Then
                         CollideDir = 1
                     End If
                 Case 2
-                    If (PlayerCollide.Left = r.Right) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
+                    If ((PlayerCollide.Left = r.Right) Or PlayerCollide.IntersectsWith(New Rectangle(r.X + MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
                         CollideDir = 2
                     ElseIf (PlayerCollide.Left <= ViewPort.Left) Then
                         CollideDir = 2
@@ -378,39 +687,33 @@ Public Class Play
                 PlayerCollide.Y = (r.Bottom + 2)
                 PlayerY = (r.Bottom + 2)
                 DrawY = (r.Bottom + 2)
+
+                If CurState > 0 And Blocks.Tiles.Item(Blocks.TileRects.IndexOf(r)).Breakable = True Then
+                    Blocks.Tiles.RemoveAt(Blocks.TileRects.IndexOf(r))
+                    Blocks.TileRects.Remove(r)
+                End If
             End If
         Next
+
+        If IsRunning = False Then
+            MoveSpeed = 4
+        Else
+            MoveSpeed = 8
+        End If
+
+        If IsStarman = True Then
+            MoveSpeed += 4
+        End If
     End Sub
 
     Public Shared Sub Move(dir As Integer)
         MoveDir = dir
 
-        Select Case dir
-            Case 1
-                CheckCollision()
+        CheckCollision()
 
-                If IsRunning = False Then
-                    MoveSpeed = 4
-                Else
-                    MoveSpeed = 8
-                End If
-
-                If Not CollideDir = 1 Then
-                    IsMoving = True
-                End If
-            Case 2
-                CheckCollision()
-
-                If IsRunning = False Then
-                    MoveSpeed = 4
-                Else
-                    MoveSpeed = 8
-                End If
-
-                If Not CollideDir = 2 Then
-                    IsMoving = True
-                End If
-        End Select
+        If Not CollideDir = dir Then
+            IsMoving = True
+        End If
 
         MaintainLevelBounds()
     End Sub
@@ -424,6 +727,12 @@ Public Class Play
                 ViewPort.X = 0
             ElseIf ViewPort.Right > (Level.LevelW + PlayerW) Then
                 ViewPort.X = (Level.LevelW - Form2.Width) + 32
+            End If
+
+            If PlayerX < 0 Then
+                PlayerX = 0
+            ElseIf PlayerCollide.Right > ViewPort.Right Then
+                PlayerCollide.X = ViewPort.Right - PlayerCollide.Width
             End If
 
             If ViewPort.Y < 0 Then
