@@ -23,10 +23,20 @@
 
     Dim OnGround As Boolean
     Dim Testing As Boolean
+    Dim isMoving As Boolean
     Dim hopHeight As Integer
     Dim totalJumps As Integer
     Dim isJumping As Integer
     Dim Delay As Integer
+    Dim thwompRise As Boolean
+    Dim thwompFall As Boolean
+    Dim lakituThrow As Boolean
+    Dim radius As Integer
+    Dim angle As Integer
+    Dim Friction As Double
+    Dim Flutter As Double
+    Dim playedSound As Boolean
+    Dim totalFire As Integer
 End Structure
 
 Public Class ActiveNPC
@@ -97,11 +107,11 @@ Public Class NPC
         MetroidGlass = False
 
         If NPCs.RadioButton1.Checked = True Then
-            Direction = 0
-        ElseIf NPCs.RadioButton2.Checked = True Then
-            Direction = 1
-        ElseIf NPCs.RadioButton3.Checked = True Then
             Direction = 2
+        ElseIf NPCs.RadioButton2.Checked = True Then
+            Direction = 0
+        ElseIf NPCs.RadioButton3.Checked = True Then
+            Direction = 1
         End If
 
         Message = ""
@@ -140,10 +150,9 @@ Public Class NPC
                 gfxHeight = 96
                 NPCW = 40
                 NPCH = 48
-                AI = 1
+                AI = 5
             Case 5
                 path = Form1.FilePath & "\graphics\npc\npc-71.png"
-
 
                 Animated = True
                 TotalFrames = 2
@@ -154,7 +163,7 @@ Public Class NPC
             Case 6
                 path = Form1.FilePath & "\graphics\npc\npc-37.png"
 
-
+                HasGravity = False
                 gfxWidth = 48
                 gfxHeight = 64
                 NPCW = 48
@@ -163,13 +172,12 @@ Public Class NPC
             Case 7
                 path = Form1.FilePath & "\graphics\npc\npc-38.png"
 
-
+                HasGravity = False
                 AI = 3
                 gfxHeight = 64
                 FrameStyle = 1
             Case 8
                 path = Form1.FilePath & "\graphics\npc\npc-6.png"
-
 
                 Animated = True
                 TotalFrames = 2
@@ -181,17 +189,14 @@ Public Class NPC
             Case 9
                 path = Form1.FilePath & "\graphics\npc\npc-4.png"
 
-
                 Animated = True
                 TotalFrames = 2
                 FrameStyle = 1
                 gfxHeight = 108
                 NPCH = 54
-                AI = 5
                 FrameSpeed = 8
             Case 10
                 path = Form1.FilePath & "\graphics\npc\npc-76.png"
-
 
                 Animated = True
                 TotalFrames = 4
@@ -199,22 +204,19 @@ Public Class NPC
                 FrameStyle = 1
                 FrameSpeed = 7
                 NPCH = 56
-                AI = 6
+                AI = 5
             Case 11
                 path = Form1.FilePath & "\graphics\npc\npc-161.png"
 
-
                 Animated = True
                 TotalFrames = 4
-
                 gfxHeight = 224
                 NPCH = 56
                 FrameStyle = 1
                 FrameSpeed = 3
-                AI = 6
+                AI = 5
             Case 12
                 path = Form1.FilePath & "\graphics\npc\npc-72.png"
-
 
                 Animated = True
                 TotalFrames = 2
@@ -224,26 +226,24 @@ Public Class NPC
                 FrameSpeed = 8
                 NPCW = 48
                 NPCH = 62
-                AI = 5
             Case 13
                 path = Form1.FilePath & "\graphics\npc\npc-48.png"
 
-
+                MoveSpeed = 5
                 Animated = True
                 TotalFrames = 2
                 gfxHeight = 64
                 FrameSpeed = 4
-                AI = 7
+                AI = 6
             Case 14
                 path = Form1.FilePath & "\graphics\npc\npc-47.png"
 
-
+                MoveSpeed = 5
                 gfxHeight = 64
                 NPCH = 64
-                AI = 8
+                AI = 7
             Case 15
                 path = Form1.FilePath & "\graphics\npc\npc-12.png"
-
 
                 Animated = True
                 TotalFrames = 2
@@ -251,30 +251,27 @@ Public Class NPC
                 gfxWidth = 28
                 NPCW = 28
                 FrameSpeed = 3
-                AI = 9
+                AI = 8
             Case 16
                 path = Form1.FilePath & "\graphics\npc\npc-23.png"
-
 
                 Animated = True
                 TotalFrames = 2
                 FrameStyle = 1
                 FrameSpeed = 8
                 gfxHeight = 64
-                AI = 5
             Case 17
                 path = Form1.FilePath & "\graphics\npc\npc-17.png"
 
-
                 gfxHeight = 28
                 NPCH = 28
-                AI = 10
+                AI = 9
                 FrameStyle = 1
+                MoveSpeed = 6
             Case 18
                 path = Form1.FilePath & "\graphics\npc\npc-136.png"
 
-
-                AI = 11
+                AI = 4
                 Animated = True
                 TotalFrames = 2
                 gfxHeight = 64
@@ -282,8 +279,7 @@ Public Class NPC
             Case 19
                 path = Form1.FilePath & "\graphics\npc\npc-137.png"
 
-
-                AI = 12
+                AI = 10
                 gfxHeight = 168
                 NPCH = 28
                 Animated = True
@@ -292,7 +288,6 @@ Public Class NPC
             Case 20
                 path = Form1.FilePath & "\graphics\npc\npc-53.png"
 
-
                 Animated = True
                 TotalFrames = 2
                 gfxHeight = 64
@@ -300,11 +295,9 @@ Public Class NPC
             Case 21
                 path = Form1.FilePath & "\graphics\npc\npc-54.png"
 
-
-                AI = 13
+                AI = 11
             Case 22
                 path = Form1.FilePath & "\graphics\npc\npc-36.png"
-
 
                 Animated = True
                 TotalFrames = 2
@@ -314,8 +307,7 @@ Public Class NPC
             Case 23
                 path = Form1.FilePath & "\graphics\npc\npc-259.png"
 
-
-                AI = 14
+                AI = 12
                 Animated = True
                 TotalFrames = 5
                 gfxHeight = 160
@@ -323,76 +315,64 @@ Public Class NPC
             Case 24
                 path = Form1.FilePath & "\graphics\npc\npc-15.png"
 
-
                 gfxWidth = 68
                 gfxHeight = 270
                 NPCW = 68
                 NPCH = 54
-                AI = 15
+                AI = 13
                 Animated = True
                 TotalFrames = 5
                 FrameSpeed = 5
+                MoveSpeed = 4
             Case 25
                 path = Form1.FilePath & "\graphics\npc\npc-267.png"
-
 
                 gfxWidth = 84
                 gfxHeight = 620
                 NPCW = 84
                 NPCH = 62
-                AI = 16
+                AI = 14
+                MoveSpeed = 4
                 FrameStyle = 1
             Case 26
                 path = Form1.FilePath & "\graphics\npc\npc-86.png"
-
 
                 gfxWidth = 64
                 gfxHeight = 1200
                 NPCW = 64
                 NPCH = 80
-                AI = 17
                 FrameStyle = 3
             Case 27
                 path = Form1.FilePath & "\graphics\npc\npc-73.png"
-
 
                 gfxWidth = 44
                 gfxHeight = 44
                 NPCW = 44
                 NPCH = 44
-                AI = 18
             Case 28
                 path = Form1.FilePath & "\graphics\npc\npc-5.png"
 
-
                 gfxWidth = 32
                 gfxHeight = 32
                 NPCW = 32
                 NPCH = 32
-                AI = 18
             Case 29
                 path = Form1.FilePath & "\graphics\npc\npc-7.png"
 
-
                 gfxWidth = 32
                 gfxHeight = 32
                 NPCW = 32
                 NPCH = 32
-                AI = 18
             Case 30
                 path = Form1.FilePath & "\graphics\npc\npc-24.png"
 
-
-                AI = 18
             Case 31
                 path = Form1.FilePath & "\graphics\npc\npc-21.png"
 
-
-                AI = 19
+                AI = 10
                 HasGravity = True
             Case 32
                 path = Form1.FilePath & "\graphics\npc\npc-84.png"
-
 
                 gfxHeight = 64
                 NPCH = 64
@@ -402,66 +382,54 @@ Public Class NPC
             Case 33
                 path = Form1.FilePath & "\graphics\npc\npc-58.png"
 
-
-                AI = 19
+                AI = 10
                 HasGravity = True
             Case 34
                 path = Form1.FilePath & "\graphics\npc\npc-69.png"
 
-
                 gfxHeight = 128
                 NPCH = 128
                 HasGravity = True
-                AI = 19
+                AI = 10
             Case 35
                 path = Form1.FilePath & "\graphics\npc\npc-70.png"
-
 
                 gfxHeight = 256
                 NPCH = 256
                 HasGravity = True
-                AI = 19
+                AI = 10
             Case 36
                 path = Form1.FilePath & "\graphics\npc\npc-81.png"
 
-
                 gfxWidth = 128
                 NPCW = 128
-                AI = 20
                 HasGravity = False
             Case 37
                 path = Form1.FilePath & "\graphics\npc\npc-80.png"
 
-
                 gfxWidth = 128
                 NPCW = 128
-                AI = 20
                 HasGravity = False
             Case 38
                 path = Form1.FilePath & "\graphics\npc\npc-82.png"
 
-
                 gfxWidth = 128
                 NPCW = 128
-                AI = 20
                 HasGravity = False
             Case 39
                 path = Form1.FilePath & "\graphics\npc\npc-67.png"
 
-
                 gfxWidth = 128
                 NPCW = 128
-                AI = 20
+                AI = 10
             Case 40
                 path = Form1.FilePath & "\graphics\npc\npc-68.png"
 
-
                 gfxWidth = 256
                 NPCW = 256
-                AI = 20
+                AI = 10
             Case 41
                 path = Form1.FilePath & "\graphics\npc\npc-160.png"
-
 
                 gfxWidth = 316
                 NPCW = 316
@@ -469,28 +437,22 @@ Public Class NPC
                 NPCH = 32
                 Animated = True
                 FrameStyle = 1
-                AI = 20
                 HasGravity = False
                 FrameSpeed = 4
             Case 42
                 path = Form1.FilePath & "\graphics\npc\npc-83.png"
 
-
                 gfxWidth = 256
                 NPCW = 256
-                AI = 20
                 HasGravity = False
             Case 43
                 path = Form1.FilePath & "\graphics\npc\npc-79.png"
 
-
                 gfxWidth = 64
                 NPCW = 64
-                AI = 20
                 HasGravity = False
             Case 44
                 path = Form1.FilePath & "\graphics\npc\npc-78.png"
-
 
                 gfxWidth = 128
                 NPCW = 128
@@ -498,184 +460,149 @@ Public Class NPC
                 NPCH = 32
                 Animated = True
                 FrameStyle = 1
-                AI = 20
                 HasGravity = False
                 FrameSpeed = 5
             Case 45
                 path = Form1.FilePath & "\graphics\npc\npc-45.png"
 
-
                 gfxHeight = 128
                 NPCH = 32
-                AI = 20
                 Animated = True
                 FrameSpeed = 8
                 HasGravity = True
             Case 46
                 path = Form1.FilePath & "\graphics\npc\npc-8.png"
 
-
                 gfxHeight = 96
                 NPCH = 48
-                AI = 21
                 Animated = True
                 FrameSpeed = 8
             Case 47
                 path = Form1.FilePath & "\graphics\npc\npc-74.png"
 
-
                 gfxWidth = 48
                 NPCW = 48
                 gfxHeight = 128
                 NPCH = 64
-                AI = 21
                 Animated = True
                 FrameSpeed = 8
             Case 48
                 path = Form1.FilePath & "\graphics\npc\npc-52.png"
 
-
                 gfxWidth = 48
                 NPCW = 48
                 gfxHeight = 64
                 NPCH = 32
-                AI = 22
                 Animated = True
                 FrameSpeed = 8
                 FrameStyle = 1
             Case 49
                 path = Form1.FilePath & "\graphics\npc\npc-51.png"
 
-
                 gfxHeight = 128
                 NPCH = 64
-                AI = 23
                 Animated = True
                 FrameSpeed = 8
             Case 50
                 path = Form1.FilePath & "\graphics\npc\npc-245.png"
 
-
                 gfxHeight = 128
                 NPCH = 64
-                AI = 21
                 FrameStyle = 1
             Case 51
                 path = Form1.FilePath & "\graphics\npc\npc-261.png"
 
-
                 gfxHeight = 128
                 NPCH = 32
-                AI = 24
                 Animated = True
                 FrameSpeed = 8
                 FrameStyle = 1
             Case 52
                 path = Form1.FilePath & "\graphics\npc\npc-229.png"
 
-
                 gfxHeight = 64
                 NPCH = 32
-                AI = 25
                 Animated = True
                 FrameSpeed = 8
                 FrameStyle = 1
             Case 53
                 path = Form1.FilePath & "\graphics\npc\npc-230.png"
 
-
                 gfxHeight = 64
                 NPCH = 32
-                AI = 25
                 Animated = True
                 FrameSpeed = 8
                 FrameStyle = 1
             Case 54
                 path = Form1.FilePath & "\graphics\npc\npc-231.png"
 
-
-                AI = 26
             Case 55
                 path = Form1.FilePath & "\graphics\npc\npc-75.png"
-
 
                 gfxWidth = 38
                 NPCW = 38
                 gfxHeight = 174
                 NPCH = 58
                 FrameStyle = 1
-                AI = 27
             Case 56
                 path = Form1.FilePath & "\graphics\npc\npc-198.png"
-
 
                 gfxHeight = 64
                 NPCH = 64
                 FrameStyle = 1
-                AI = 27
+                AI = 10
             Case 57
                 path = Form1.FilePath & "\graphics\npc\npc-94.png"
-
 
                 gfxHeight = 54
                 NPCH = 54
                 FrameStyle = 1
-                AI = 27
+                AI = 10
             Case 58
                 path = Form1.FilePath & "\graphics\npc\npc-101.png"
-
 
                 gfxHeight = 62
                 NPCH = 62
                 FrameStyle = 1
-                AI = 27
+                AI = 10
             Case 59
                 path = Form1.FilePath & "\graphics\npc\npc-9.png"
-
-
-                AI = 28
+                MoveSpeed = 3
             Case 60
                 path = Form1.FilePath & "\graphics\npc\npc-14.png"
 
-
-                AI = 29
+                AI = 10
             Case 61
                 path = Form1.FilePath & "\graphics\npc\npc-34.png"
 
-
-                AI = 30
             Case 62
                 path = Form1.FilePath & "\graphics\npc\npc-169.png"
 
-
-                AI = 29
+                AI = 10
             Case 63
                 path = Form1.FilePath & "\graphics\npc\npc-170.png"
 
-
-                AI = 29
+                AI = 10
             Case 64
                 path = Form1.FilePath & "\graphics\npc\npc-264.png"
 
-
-                AI = 29
+                AI = 10
             Case 65
                 path = Form1.FilePath & "\graphics\npc\npc-90.png"
 
-
-                AI = 28
+                MoveSpeed = 4
             Case 66
                 path = Form1.FilePath & "\graphics\npc\npc-10.png"
-
 
                 Animated = True
                 gfxHeight = 128
                 FrameSpeed = 7
                 HasGravity = False
+                AI = 10
             Case 67
                 path = Form1.FilePath & "\graphics\npc\npc-103.png"
 
-
+                AI = 10
                 Animated = True
                 gfxHeight = 128
                 FrameSpeed = 7
@@ -683,7 +610,8 @@ Public Class NPC
             Case 68
                 path = Form1.FilePath & "\graphics\npc\npc-35.png"
 
-
+                AI = 10
+                HasGravity = True
                 gfxHeight = 64
                 Animated = True
                 FrameSpeed = 8
@@ -691,7 +619,8 @@ Public Class NPC
             Case 69
                 path = Form1.FilePath & "\graphics\npc\npc-191.png"
 
-
+                AI = 10
+                HasGravity = True
                 gfxHeight = 64
                 Animated = True
                 FrameSpeed = 6
@@ -707,14 +636,16 @@ Public Class NPC
             Case 71
                 path = Form1.FilePath & "\graphics\npc\npc-22.png"
 
-
+                AI = 10
+                HasGravity = True
                 gfxHeight = 160
                 Animated = True
                 FrameSpeed = 4
             Case 72
                 path = Form1.FilePath & "\graphics\npc\npc-49.png"
 
-
+                AI = 10
+                HasGravity = True
                 gfxHeight = 160
                 NPCH = 32
                 Animated = True
@@ -722,26 +653,26 @@ Public Class NPC
             Case 73
                 path = Form1.FilePath & "\graphics\npc\npc-248.png"
 
-
-                AI = 28
+                HasGravity = True
+                AI = 10
             Case 74
                 path = Form1.FilePath & "\graphics\npc\npc-238.png"
 
-
+                AI = 10
+                HasGravity = True
                 Animated = True
                 gfxHeight = 96
             Case 75
                 path = Form1.FilePath & "\graphics\npc\npc-273.png"
 
-
-                AI = 28
+                AI = 10
+                HasGravity = True
             Case 76
                 path = Form1.FilePath & "\graphics\npc\npc-287.png"
 
-
+                AI = 10
                 Animated = True
                 gfxHeight = 64
-                AI = 28
             Case 77
                 path = Form1.FilePath & "\graphics\npc\npc-226.png"
 
@@ -751,7 +682,7 @@ Public Class NPC
             Case 78
                 path = Form1.FilePath & "\graphics\npc\npc-213.png"
 
-
+                AI = 10
                 HasGravity = False
             Case 79
                 path = Form1.FilePath & "\graphics\npc\npc-225.png"
@@ -762,13 +693,13 @@ Public Class NPC
             Case 80
                 path = Form1.FilePath & "\graphics\npc\npc-214.png"
 
-
+                AI = 10
                 Animated = True
                 gfxHeight = 64
             Case 81
                 path = Form1.FilePath & "\graphics\npc\npc-11.png"
 
-
+                AI = 10
                 Animated = True
                 gfxHeight = 96
             Case 82
@@ -776,7 +707,6 @@ Public Class NPC
 
             Case 83
                 path = Form1.FilePath & "\graphics\npc\npc-97.png"
-
 
                 Animated = True
                 gfxHeight = 96
@@ -790,10 +720,9 @@ Public Class NPC
             Case 86
                 path = Form1.FilePath & "\graphics\npc\npc-104.png"
 
-
                 gfxWidth = 96
                 NPCW = 96
-            Case 87
+            Case 87 'End of SMB3 Enemies
                 path = Form1.FilePath & "\graphics\npc\npc-57.png"
 
 

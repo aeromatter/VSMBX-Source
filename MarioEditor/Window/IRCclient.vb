@@ -33,13 +33,13 @@ Public Class IRCclient
         sr = New StreamReader(NS)
         sw = New StreamWriter(NS)
 
-        sw.WriteLine(String.Format("USER " & "vsmbxuser" & " " & """" & """" & " " & """" & Dns.GetHostName & """" & " " & "VSMBX_USER" & vbCrLf))
+        sw.WriteLine(String.Format("USER vsmbxuser " & Dns.GetHostName & " VSMBX_USER VSMBX_USER" & vbCrLf))
         sw.Flush()
 
-        sw.WriteLine(String.Format("NICK " & Nick & vbCrLf))
+        sw.WriteLine(String.Format("NICK {0} {1}", Nick, vbCrLf))
         sw.Flush()
 
-        sw.WriteLine(String.Format("JOIN " & Channel & vbCrLf))
+        sw.WriteLine(String.Format("JOIN {0} {1}", Channel, vbCrLf))
         sw.Flush()
     End Sub
 

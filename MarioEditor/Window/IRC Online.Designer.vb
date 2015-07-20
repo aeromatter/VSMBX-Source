@@ -145,8 +145,10 @@ Partial Class IRC
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "IRC"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "IRC Connection"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()

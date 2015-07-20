@@ -26,8 +26,7 @@ Public Class Play
 
     Public Shared PlayerX As Integer
     Public Shared PlayerY As Integer
-    Public Shared PlayerW As Integer
-    Public Shared PlayerH As Integer
+
     Public Shared DrawW As Integer
     Public Shared DrawH As Integer
     Public Shared DrawX As Integer
@@ -35,10 +34,12 @@ Public Class Play
 
     Public Shared PlayerBox As Rectangle
     Public Shared OnYoshi As Boolean
+
     Public Shared MarioState As Integer = 1
     Public Shared LuigiState As Integer = 1
     Public Shared PeachState As Integer = 1
     Public Shared ToadState As Integer = 1
+
     Public Shared CurState As Integer = 1
     Public Shared RunFrame As Integer = 1
     Public Shared IsMoving As Boolean = False
@@ -48,7 +49,7 @@ Public Class Play
     Public Shared OnGround As Boolean = False
     Public Shared PlayerCollide As Rectangle
     Public Shared IsDucking As Boolean = False
-    Public Shared IsStarman As Boolean = True
+    Public Shared IsStarman As Boolean = False
 
     Public Shared MoveSpeed As Integer = 6
     Public Shared JumpSpeed As Integer = 12
@@ -61,16 +62,6 @@ Public Class Play
 
     Public Shared GravityLevel As Integer = 12
 
-    Public Shared MarioW As Integer
-    Public Shared MarioH As Integer
-    Public Shared LuigiW As Integer
-    Public Shared LuigiH As Integer
-    Public Shared PeachW As Integer
-    Public Shared PeachH As Integer
-    Public Shared ToadW As Integer
-    Public Shared ToadH As Integer
-
-    Public Shared NPClocs As List(Of ActiveNPC)
     Public Shared ViewPort As Rectangle
 
     Public Shared Sub ShowHUD()
@@ -80,181 +71,6 @@ Public Class Play
         LivesLoc = New Point((HoldBoxLoc.X - HoldBoxLoc.Width) - 64, 24)
     End Sub
 
-    Public Shared Sub GetPlayer()
-        Select Case MarioState
-            Case 0
-                Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-1.png")
-
-                PlayerW = 26
-                PlayerH = 30
-            Case 1
-                Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-2.png")
-
-                PlayerW = 32
-                PlayerH = 54
-            Case 2
-                Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-3.png")
-
-                PlayerW = 32
-                PlayerH = 54
-            Case 3
-                Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-7.png")
-
-                PlayerW = 32
-                PlayerH = 54
-            Case 4
-                Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-4.png")
-
-                PlayerW = 46
-                PlayerH = 56
-            Case 5
-                Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-5.png")
-
-                PlayerW = 46
-                PlayerH = 56
-            Case 6
-                Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-6.png")
-
-                PlayerW = 32
-                PlayerH = 54
-        End Select
-
-        MarioW = PlayerW
-        MarioH = PlayerH
-
-        Select Case LuigiState
-            Case 0
-                Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-1.png")
-
-                PlayerW = 30
-                PlayerH = 32
-            Case 1
-                Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-2.png")
-
-                PlayerW = 32
-                PlayerH = 62
-            Case 2
-                Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-3.png")
-
-                PlayerW = 32
-                PlayerH = 62
-            Case 3
-                Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-7.png")
-
-                PlayerW = 32
-                PlayerH = 62
-            Case 4
-                Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-4.png")
-
-                PlayerW = 46
-                PlayerH = 64
-            Case 5
-                Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-5.png")
-
-                PlayerW = 46
-                PlayerH = 64
-            Case 6
-                Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-6.png")
-
-                PlayerW = 32
-                PlayerH = 62
-        End Select
-
-        LuigiW = PlayerW
-        LuigiH = PlayerH
-
-        Select Case PeachState
-            Case 0
-                Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-1.png")
-
-                PlayerW = 28
-                PlayerH = 44
-            Case 1
-                Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-2.png")
-
-                PlayerW = 34
-                PlayerH = 64
-            Case 2
-                Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-3.png")
-
-                PlayerW = 34
-                PlayerH = 64
-            Case 3
-                Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-7.png")
-
-                PlayerW = 34
-                PlayerH = 64
-            Case 4
-                Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-4.png")
-
-                PlayerW = 46
-                PlayerH = 64
-            Case 5
-                Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-5.png")
-
-                PlayerW = 46
-                PlayerH = 68
-            Case 6
-                Form2.Peach = New Bitmap(Form1.FilePath & "\graphics\peach\peach-6.png")
-
-                PlayerW = 40
-                PlayerH = 64
-        End Select
-
-        PeachW = PlayerW
-        PeachH = PlayerH
-
-        Select Case ToadState
-            Case 0
-                Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-1.png")
-
-                PlayerW = 30
-                PlayerH = 38
-            Case 1
-                Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-2.png")
-
-                PlayerW = 34
-                PlayerH = 54
-            Case 2
-                Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-3.png")
-
-                PlayerW = 34
-                PlayerH = 54
-            Case 3
-                Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-7.png")
-
-                PlayerW = 34
-                PlayerH = 54
-            Case 4
-                Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-4.png")
-
-                PlayerW = 46
-                PlayerH = 54
-            Case 5
-                Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-5.png")
-
-                PlayerW = 46
-                PlayerH = 54
-            Case 6
-                Form2.Toad = New Bitmap(Form1.FilePath & "\graphics\toad\toad-6.png")
-
-                PlayerW = 36
-                PlayerH = 52
-        End Select
-
-        ToadW = PlayerW
-        ToadH = PlayerH
-
-        PlayerBox = New Rectangle(PlayerX, PlayerY, PlayerW, PlayerH)
-
-        MaintainLevelBounds()
-
-        'If hurt = true and state > 0 then
-        'mariostate = 1
-        'else
-        'playerdied = true
-    End Sub
-
     Public Shared Sub UsePowerup()
         Select Case CurState
             Case 1
@@ -262,26 +78,56 @@ Public Class Play
         End Select
     End Sub
 
-    Public Shared Sub AI()
+    Public Shared Sub EndTesting()
+        Play.IsTesting = False
+        Play.IsRunning = False
+        Play.IsMoving = False
 
+        Form2.ResetSpawn()
+
+        Play.Collide = False
+        Play.OnGround = False
+        Play.CollideDir = 0
+
+        For Each i As NPCsets In NPC.NPCsets.Where(Function(d) d.Testing = True).ToList
+
+            NPC.NPCrects.RemoveAt(NPC.NPCsets.IndexOf(i))
+            NPC.NPCsets.Remove(i)
+
+        Next
+
+        For n = 0 To NPC.NPCsets.Count - 1
+
+            Dim tempnpc As NPCsets
+            tempnpc = NPC.NPCsets(n)
+
+            tempnpc.X = NPC.NPCsets(n).rectangle.X
+            tempnpc.Y = NPC.NPCsets(n).rectangle.Y
+
+            NPC.NPCsets(n) = tempnpc
+
+        Next
+    End Sub
+
+    Public Shared Sub AI()
         For i = 0 To NPC.NPCsets.Count - 1
             Dim tempnpc = NPC.NPCsets(i)
 
+            If NPC.NPCsets(i).isMoving = True Then
+                If NPC.NPCsets(i).Direction = 2 Then
+                    tempnpc.X -= NPC.NPCsets(i).MoveSpeed
+                ElseIf NPC.NPCsets(i).Direction = 1 Then
+                    tempnpc.X += NPC.NPCsets(i).MoveSpeed
+                End If
+            End If
+
             Select Case NPC.NPCsets(i).AI
                 Case 0
-                    If NPC.NPCsets(i).Direction = 0 Then
-                        tempnpc.X -= NPC.NPCsets(i).MoveSpeed
-                    ElseIf NPC.NPCsets(i).Direction = 2 Then
-                        tempnpc.X += NPC.NPCsets(i).MoveSpeed
-                    End If
+                    tempnpc.isMoving = True
                 Case 1
                     tempnpc.Delay += 1
 
-                    If NPC.NPCsets(i).Direction = 0 Then
-                        tempnpc.X -= NPC.NPCsets(i).MoveSpeed
-                    ElseIf NPC.NPCsets(i).Direction = 2 Then
-                        tempnpc.X += NPC.NPCsets(i).MoveSpeed
-                    End If
+                    tempnpc.isMoving = True
 
                     If tempnpc.Delay >= 64 And tempnpc.OnGround = True Then
                         If NPC.NPCsets(i).totalJumps <= 3 Then
@@ -315,92 +161,358 @@ Public Class Play
                             End If
                         End If
                     End If
+                Case 2
+                    If ((PlayerCollide.X >= tempnpc.X) And (PlayerCollide.Right <= tempnpc.rectangle.Right)) And tempnpc.thwompRise = False Then
+                        tempnpc.HasGravity = True
+                        'tempnpc.thwompFall = True
+                    Else
+                        If (New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).Top > tempnpc.rectangle.Top) And tempnpc.OnGround = True Then
+                            tempnpc.HasGravity = False
+                            tempnpc.thwompRise = True
+                            tempnpc.Y -= 2
+                        ElseIf (New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).Top = tempnpc.rectangle.Top) Then
+                            tempnpc.thwompRise = False
+                            tempnpc.playedSound = False
+                        End If
+                    End If
+                Case 3
+                    If (PlayerCollide.X < tempnpc.X) Then
+                        tempnpc.Direction = 2
+
+                        If MoveDir = tempnpc.Direction Then
+                            tempnpc.X -= 1
+
+                            If PlayerCollide.Y > tempnpc.Y Then
+                                tempnpc.Y += 1
+                            ElseIf PlayerCollide.Y < tempnpc.Y Then
+                                tempnpc.Y -= 1
+                            End If
+                            tempnpc.SourceRect = New Rectangle(0, tempnpc.Height, tempnpc.Width, tempnpc.Height)
+                        Else
+                            tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+                        End If
+                    Else
+                        tempnpc.Direction = 1
+
+                        If MoveDir = tempnpc.Direction Then
+                            tempnpc.X += 1
+
+                            If PlayerCollide.Y > tempnpc.Y Then
+                                tempnpc.Y += 2
+                            ElseIf PlayerCollide.Y < tempnpc.Y Then
+                                tempnpc.Y -= 2
+                            End If
+                            tempnpc.SourceRect = New Rectangle(0, tempnpc.Height * 3, tempnpc.Width, tempnpc.Height)
+                        Else
+                            tempnpc.SourceRect = New Rectangle(0, tempnpc.gfxHeight, tempnpc.Width, tempnpc.Height)
+                        End If
+                    End If
+                Case 4
+                    Select Case tempnpc.Direction
+                        Case 1
+                            tempnpc.X += tempnpc.MoveSpeed
+                        Case 2
+                            tempnpc.X -= tempnpc.MoveSpeed
+                    End Select
+                Case 5
+                    tempnpc.isMoving = True
+
+                    If tempnpc.hopHeight < 144 And tempnpc.OnGround = True Then
+                        tempnpc.Y -= 6
+                        tempnpc.hopHeight += 6
+                        tempnpc.isJumping = True
+                    Else
+                        tempnpc.isJumping = False
+                        tempnpc.hopHeight = 0
+                    End If
+                Case 6
+                    tempnpc.isMoving = True
+
+                    If (PlayerCollide.X - tempnpc.X) >= 64 And tempnpc.Direction = 2 Then
+                        tempnpc.Direction = 1
+                    ElseIf (tempnpc.X - PlayerCollide.Right) >= 64 And tempnpc.Direction = 1 Then
+                        tempnpc.Direction = 2
+                    End If
+                Case 7
+                    If NPC.NPCsets(i).Direction = 2 Then
+                        tempnpc.X -= NPC.NPCsets(i).MoveSpeed
+                        tempnpc.Y -= (NPC.NPCsets(i).MoveSpeed / 6)
+                    ElseIf NPC.NPCsets(i).Direction = 1 Then
+                        tempnpc.X += NPC.NPCsets(i).MoveSpeed
+                        tempnpc.Y += (NPC.NPCsets(i).MoveSpeed / 6)
+                    End If
+
+                    If (PlayerCollide.X - tempnpc.X) >= 128 And tempnpc.Direction = 2 Then
+                        tempnpc.Direction = 1
+                    ElseIf (tempnpc.X - PlayerCollide.Right) >= 128 And tempnpc.Direction = 1 Then
+                        tempnpc.Direction = 2
+                    End If
+
+                    If tempnpc.lakituThrow = False And tempnpc.Delay < 600 Then
+                        tempnpc.Delay += 1
+
+                        tempnpc.Animated = False
+                        tempnpc.gfxHeight = 64
+
+                        tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+                    ElseIf tempnpc.Delay >= 600 Then
+                        tempnpc.Delay = 0
+                        tempnpc.lakituThrow = True
+                    End If
+
+                    If tempnpc.lakituThrow = True Then
+                        tempnpc.Animated = True
+                        tempnpc.gfxHeight = 384
+
+                        tempnpc.Delay += 1
+
+                        If tempnpc.Delay >= 100 Then
+                            tempnpc.lakituThrow = False
+                            tempnpc.Delay = 0
+                        End If
+                    End If
+                Case 8
+                    If tempnpc.Delay < 100 And tempnpc.hopHeight = 0 Then
+                        tempnpc.Delay += 1
+                    Else
+                        If tempnpc.hopHeight < 128 Then
+                            tempnpc.Y -= 6
+                            tempnpc.hopHeight += 6
+                        Else
+                            If tempnpc.Y < tempnpc.rectangle.Y Then
+                                tempnpc.Y += GravityLevel
+                            Else
+                                tempnpc.hopHeight = 0
+                                tempnpc.Delay = 0
+                            End If
+                        End If
+                    End If
+                Case 9
+                    If NPC.NPCsets(i).Direction = 2 Then
+                        tempnpc.X -= NPC.NPCsets(i).MoveSpeed
+                        tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+                    ElseIf NPC.NPCsets(i).Direction = 1 Then
+                        tempnpc.X += NPC.NPCsets(i).MoveSpeed
+                        tempnpc.SourceRect = New Rectangle(0, tempnpc.Height, tempnpc.Width, tempnpc.Height)
+                    End If
+                Case 10
+
+                Case 11
+                    tempnpc.Delay += 1
+
+                    If tempnpc.Delay >= 64 And tempnpc.OnGround = True Then
+                        tempnpc.isJumping = True
+
+                        tempnpc.Y -= 2
+                        tempnpc.hopHeight += 2
+
+                        tempnpc.TotalFrames = 2
+                        tempnpc.Animated = True
+
+                        If NPC.NPCsets(i).Direction = 2 Then
+                            tempnpc.X -= NPC.NPCsets(i).MoveSpeed * 2
+                        ElseIf NPC.NPCsets(i).Direction = 1 Then
+                            tempnpc.X += NPC.NPCsets(i).MoveSpeed * 2
+                        End If
+
+                        If tempnpc.hopHeight >= 64 Then
+                            tempnpc.isJumping = False
+                            tempnpc.hopHeight = 0
+
+                            tempnpc.totalJumps = 0
+                            tempnpc.Delay = 0
+
+                            tempnpc.Animated = False
+                            tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+                        End If
+                    Else
+                        tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+                    End If
+                Case 12
+                    If tempnpc.angle < 360 Then
+                        tempnpc.angle += 1
+                    ElseIf tempnpc.angle >= 360 Then
+                        tempnpc.angle = 0
+                    End If
+
+                    If tempnpc.radius <= 0 Then
+                        tempnpc.radius = 96
+                    End If
+
+                    If NPC.NPCsets(i).Direction = 2 Then
+                        tempnpc.X = tempnpc.rectangle.X + Math.Sin(tempnpc.angle / 8) * tempnpc.radius
+                        tempnpc.Y = (tempnpc.rectangle.Y - tempnpc.radius) + Math.Cos(tempnpc.angle / 8) * tempnpc.radius
+                    ElseIf NPC.NPCsets(i).Direction = 1 Then
+                        tempnpc.X = tempnpc.rectangle.X - Math.Sin(tempnpc.angle / 8) * tempnpc.radius
+                        tempnpc.Y = (tempnpc.rectangle.Y + tempnpc.radius) - Math.Cos(tempnpc.angle / 8) * tempnpc.radius
+                    End If
+                Case 13
+                    If tempnpc.Delay < 500 Then
+                        If NPC.NPCsets(i).Direction = 2 Then
+                            tempnpc.X -= NPC.NPCsets(i).MoveSpeed
+                        ElseIf NPC.NPCsets(i).Direction = 1 Then
+                            tempnpc.X += NPC.NPCsets(i).MoveSpeed
+                        End If
+
+                        tempnpc.Delay += 1
+                    Else
+                        tempnpc.Animated = False
+                        tempnpc.SourceRect = New Rectangle(0, tempnpc.Height * Math.Floor((tempnpc.Delay / 100)), tempnpc.Width, tempnpc.Height)
+
+                        If tempnpc.Friction < tempnpc.MoveSpeed Then
+                            tempnpc.Friction += 0.01
+                        End If
+
+                        If NPC.NPCsets(i).Direction = 2 Then
+                            tempnpc.X -= (NPC.NPCsets(i).MoveSpeed - tempnpc.Friction)
+                        ElseIf NPC.NPCsets(i).Direction = 1 Then
+                            tempnpc.X += (NPC.NPCsets(i).MoveSpeed - tempnpc.Friction)
+                        End If
+
+                        tempnpc.Delay += 1
+
+                        If tempnpc.Delay >= 600 Then
+                            tempnpc.Delay = 0
+                            tempnpc.Animated = True
+                            tempnpc.Friction = 0
+                        End If
+                    End If
+                Case 14
+
+                    'Follow
+                    tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+
+                    If (tempnpc.totalJumps = 1 And tempnpc.totalFire = 0) Then
+                        If tempnpc.Delay > 100 Then
+                            tempnpc.Delay = 0
+                            tempnpc.totalFire += 1
+                        Else
+                            tempnpc.Delay += 1
+                        End If
+                    ElseIf tempnpc.totalJumps = 3 Then
+                        If tempnpc.Delay > 100 Then
+                            tempnpc.Delay = 0
+                            tempnpc.totalFire += 1
+                            tempnpc.totalJumps = 0
+                            tempnpc.totalFire = 0
+                        Else
+                            tempnpc.Delay += 1
+                        End If
+                    ElseIf (tempnpc.totalJumps < 3) Then
+                        If tempnpc.Delay > 200 Then
+                            If tempnpc.hopHeight >= 128 Then
+                                tempnpc.isJumping = False
+                                tempnpc.Delay = 0
+                                tempnpc.totalJumps += 1
+                                tempnpc.hopHeight = 0
+                            Else
+                                tempnpc.isJumping = True
+
+                                tempnpc.Y -= 2
+                                tempnpc.hopHeight += 2
+
+                                tempnpc.isMoving = True
+                            End If
+                        Else
+                            tempnpc.Delay += 1
+
+                            tempnpc.isMoving = True
+
+                            If (PlayerCollide.X - tempnpc.X) >= 96 And tempnpc.Direction = 2 Then
+                                tempnpc.Direction = 1
+                            ElseIf (tempnpc.X - PlayerCollide.Right) >= 96 And tempnpc.Direction = 1 Then
+                                tempnpc.Direction = 2
+                            End If
+                        End If
+                    End If
             End Select
 
-            If NPC.NPCsets(i).HasGravity = True And tempnpc.isJumping = False Then
-                tempnpc.OnGround = False
+            tempnpc.OnGround = False
 
-                For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s))
-                    If New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) Then
+            If tempnpc.AI <> 4 Then
+                For Each r As Rectangle In Blocks.TileRects.Where(Function(s) New Rectangle(tempnpc.X - tempnpc.Width, tempnpc.Y - tempnpc.Height, tempnpc.Width * 4, tempnpc.Height * 4).Contains(s))
+                    If New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) And tempnpc.HasGravity = True And tempnpc.isJumping = False Then
 
                         tempnpc.OnGround = True
                         tempnpc.Y = (r.Top - tempnpc.Height)
-                    End If
-                Next
 
+                        If tempnpc.AI = 2 And tempnpc.playedSound = False Then
+                            Audio.PlaySound(6)
+                            tempnpc.playedSound = True
+                        End If
+                    End If
+
+                    Select Case tempnpc.Direction
+                        Case 1
+                            If (((tempnpc.X + tempnpc.Width) = r.Left) Or New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X - tempnpc.MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < (tempnpc.Y + tempnpc.Height)) And (r.Bottom > tempnpc.Y) Then
+                                tempnpc.Direction = 2
+                            End If
+                        Case 2
+                            If ((tempnpc.X = r.Right) Or New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X + tempnpc.MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < (tempnpc.Y + tempnpc.Height)) And (r.Bottom > tempnpc.Y) Then
+                                tempnpc.Direction = 1
+                            End If
+                    End Select
+                Next
+            Else
+                Select Case tempnpc.Direction
+                    Case 1
+                        For Each r As Rectangle In Blocks.TileRects.Where(Function(s) New Rectangle(tempnpc.X - tempnpc.Width, tempnpc.Y - tempnpc.Height, tempnpc.Width * 4, tempnpc.Height * 4).Contains(s))
+                            If New Rectangle(tempnpc.X + tempnpc.Width, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) Then
+
+                                tempnpc.OnGround = True
+                                tempnpc.Y = (r.Top - tempnpc.Height)
+
+                            End If
+                        Next
+                    Case 2
+                        For Each r As Rectangle In Blocks.TileRects.Where(Function(s) New Rectangle(tempnpc.X - tempnpc.Width, tempnpc.Y - tempnpc.Height, tempnpc.Width * 4, tempnpc.Height * 4).Contains(s))
+                            If New Rectangle(tempnpc.X - tempnpc.Width, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) Then
+
+                                tempnpc.OnGround = True
+                                tempnpc.Y = (r.Top - tempnpc.Height)
+
+                            End If
+                        Next
+                End Select
+            End If
+
+            If NPC.NPCsets(i).HasGravity = True And tempnpc.isJumping = False Then
                 Select Case NPC.NPCsets(i).AI
-                    Case 0
+                    Case 0, 2, 6, 10, 11, 13, 14
                         If tempnpc.OnGround = False Then
                             tempnpc.Y += GravityLevel
                         End If
-                    Case 1
+                    Case 1, 5
                         If tempnpc.OnGround = False Then
                             tempnpc.Y += GravityLevel / 2
                         End If
+                    Case 4
+                        If tempnpc.OnGround = False Then
+                            Select Case tempnpc.Direction
+                                Case 1
+                                    tempnpc.Direction = 2
+                                Case 2
+                                    tempnpc.Direction = 1
+                            End Select
+
+                            tempnpc.Y += GravityLevel
+                        End If
                 End Select
-                
             End If
 
             NPC.NPCsets(i) = tempnpc
         Next
+
+
     End Sub
 
     Public Shared Sub GetPlayerFrame()
         If IsDucking = False Then
-            If CurPlayer = 1 Then
-                Select Case Play.MarioState
-                    Case 0
-                        DrawH = 30
-                    Case 1, 2, 3, 6
-                        DrawH = 54
-                    Case 4, 5
-                        DrawW = 46
-                        DrawH = 56
-                End Select
-            ElseIf CurPlayer = 2 Then
-                Select Case Play.LuigiState
-                    Case 0
-                        DrawW = 28
-                        DrawH = 32
-                    Case 1, 2, 3, 6
-                        DrawW = 32
-                        DrawH = 62
-                    Case 4, 5
-                        DrawW = 46
-                        DrawH = 64
-                End Select
-            ElseIf CurPlayer = 3 Then
-                Select Case Play.PeachState
-                    Case 0
-                        DrawH = 44
-                    Case 1, 2, 3, 6
-                        DrawW = 32
-                        DrawH = 64
-                    Case 4
-                        DrawW = 44
-                        DrawH = 64
-                    Case 5
-                        DrawW = 44
-                        DrawH = 68
-                End Select
-            ElseIf CurPlayer = 4 Then
-                Select Case Play.ToadState
-                    Case 0
-                        DrawH = 38
-                    Case 1, 2, 3, 6
-                        DrawW = 32
-                        DrawH = 54
-                    Case 4
-                        DrawW = 42
-                        DrawH = 54
-                    Case 5
-                        DrawW = 40
-                        DrawH = 54
-                End Select
-            End If
+            DrawW = Player.P1.PlayerW
+            DrawH = Player.P1.PlayerH
         Else
             If CurPlayer = 1 Then
-                Select Case Play.MarioState
+                Select Case Player.P1.PlayerState
                     Case 0
                         DrawH = 30
                     Case 1, 2, 3, 6
@@ -409,7 +521,7 @@ Public Class Play
                         DrawH = 36
                 End Select
             ElseIf CurPlayer = 2 Then
-                Select Case Play.LuigiState
+                Select Case Player.P1.PlayerState
                     Case 0
                         DrawW = 28
                         DrawH = 32
@@ -419,7 +531,7 @@ Public Class Play
                         DrawH = 36
                 End Select
             ElseIf CurPlayer = 3 Then
-                Select Case Play.PeachState
+                Select Case Player.P1.PlayerState
                     Case 0
                         DrawH = 38
                     Case 1, 2, 3, 6
@@ -433,7 +545,7 @@ Public Class Play
                         DrawH = 38
                 End Select
             ElseIf CurPlayer = 4 Then
-                Select Case Play.ToadState
+                Select Case Player.P1.PlayerState
                     Case 0
                         DrawH = 28
                     Case 1, 2, 3, 6
@@ -562,9 +674,10 @@ Public Class Play
     End Sub
 
     Public Shared Sub Gravity()
-        PlayerCollide = New Rectangle(PlayerX, PlayerY, PlayerW, PlayerH)
+        PlayerCollide = New Rectangle(PlayerX, PlayerY, Player.P1.PlayerW, Player.P1.PlayerH)
 
         OnGround = False
+
         For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s))
             If PlayerCollide.IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) And IsJumping = False Then
 
@@ -572,9 +685,9 @@ Public Class Play
                 CheckCollision()
 
                 If CollideDir = 0 Then
-                    PlayerCollide.Y = (r.Top - PlayerH)
-                    PlayerY = (r.Top - PlayerH)
-                    DrawY = (r.Top - PlayerH)
+                    PlayerCollide.Y = (r.Top - Player.P1.PlayerH)
+                    PlayerY = (r.Top - Player.P1.PlayerH)
+                    DrawY = (r.Top - Player.P1.PlayerH)
                 End If
             End If
         Next
@@ -638,8 +751,10 @@ Public Class Play
         End If
 
         'End Testing when player falls in pit
-        If PlayerCollide.Top > Level.LevelH Then
-            IsTesting = False
+        IsTesting = Not PlayerCollide.Top > Level.LevelH
+
+        If IsTesting = False Then
+            EndTesting()
         End If
 
         CheckCollision()
@@ -649,11 +764,11 @@ Public Class Play
 
     Public Shared Sub Jump()
         Select Case CurPlayer
-            Case 1, 3, 4
+            Case 0, 2, 3
                 If JumpHeight >= 128 Then
                     IsJumping = False
                 End If
-            Case 2
+            Case 1
                 If JumpHeight >= 160 Then
                     IsJumping = False
                 End If
@@ -661,7 +776,7 @@ Public Class Play
     End Sub
 
     Public Shared Sub CheckCollision()
-        PlayerCollide = New Rectangle(PlayerX, PlayerY, PlayerW, PlayerH)
+        PlayerCollide = New Rectangle(PlayerX, PlayerY, Player.P1.PlayerW, Player.P1.PlayerH)
 
         CollideDir = 0
 
@@ -711,9 +826,7 @@ Public Class Play
 
         CheckCollision()
 
-        If Not CollideDir = dir Then
-            IsMoving = True
-        End If
+        IsMoving = Not CollideDir = dir
 
         MaintainLevelBounds()
     End Sub
@@ -725,7 +838,7 @@ Public Class Play
 
             If ViewPort.X < 0 Then
                 ViewPort.X = 0
-            ElseIf ViewPort.Right > (Level.LevelW + PlayerW) Then
+            ElseIf ViewPort.Right > (Level.LevelW + Player.P1.PlayerW) Then
                 ViewPort.X = (Level.LevelW - Form2.Width) + 32
             End If
 

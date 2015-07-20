@@ -1,5 +1,4 @@
-﻿<Serializable()>
-Public Structure Block
+﻿<Serializable()> Public Structure Block
     Dim rectangle As Rectangle
     Dim X As Integer
     Dim Y As Integer
@@ -59,6 +58,9 @@ Public Class Blocks
     Public Shared path As String
 
     Public Shared bmp As Bitmap
+
+    Public Shared CreateBlock As Block
+
     Public Shared Sub FillBlock(X As Integer, Y As Integer, Width As Integer, Height As Integer)
         Dim fill As New Block
 

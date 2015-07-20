@@ -4,7 +4,7 @@ Public Class Audio
 
     Public Shared PlaySFX As New ZPlay()
 
-    Public Shared Sub PlaySound(ID As Int16)
+    Public Shared Sub PlaySound(ID As Integer)
         Select Case ID
             Case 0
                 PlayAudio(Form1.FilePath & "\sound\block-smash.ogg")
@@ -18,12 +18,15 @@ Public Class Audio
                 PlayAudio(Form1.FilePath & "\sound\grab.ogg")
             Case 5
                 PlayAudio(Form1.FilePath & "\sound\has-item.ogg")
+            Case 6
+                'Needs Conversion
+                PlayAudio(Form1.FilePath & "\sound\thwomp.ogg")
         End Select
     End Sub
 
     Public Shared Sub PlayAudio(sound As String)
         PlaySFX.StopPlayback()
-        PlaySFX.OpenFile(sound, TStreamFormat.sfOgg)
+        PlaySFX.OpenFile(sound, TStreamFormat.sfAutodetect)
         PlaySFX.StartPlayback()
     End Sub
 End Class

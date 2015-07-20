@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Classes\Audio.vb" />
     <Compile Include="Classes\libZPlay.vb" />
+    <Compile Include="Classes\Player.vb" />
     <Compile Include="Classes\PlayerC.vb" />
     <Compile Include="Classes\NPC.vb" />
     <Compile Include="Classes\Play.vb" />

@@ -27,12 +27,12 @@ Partial Class IRCclient
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
-        Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
@@ -66,6 +66,15 @@ Partial Class IRCclient
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Chat"
         '
+        'RichTextBox2
+        '
+        Me.RichTextBox2.Location = New System.Drawing.Point(3, 16)
+        Me.RichTextBox2.Name = "RichTextBox2"
+        Me.RichTextBox2.Size = New System.Drawing.Size(519, 352)
+        Me.RichTextBox2.TabIndex = 1
+        Me.RichTextBox2.Text = ""
+        Me.RichTextBox2.Visible = False
+        '
         'RichTextBox1
         '
         Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -98,15 +107,6 @@ Partial Class IRCclient
         'Timer2
         '
         '
-        'RichTextBox2
-        '
-        Me.RichTextBox2.Location = New System.Drawing.Point(3, 16)
-        Me.RichTextBox2.Name = "RichTextBox2"
-        Me.RichTextBox2.Size = New System.Drawing.Size(519, 352)
-        Me.RichTextBox2.TabIndex = 1
-        Me.RichTextBox2.Text = ""
-        Me.RichTextBox2.Visible = False
-        '
         'IRCclient
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -118,6 +118,7 @@ Partial Class IRCclient
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "IRCclient"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "IRC Client"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)

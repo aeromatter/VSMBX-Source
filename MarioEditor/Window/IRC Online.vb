@@ -8,6 +8,9 @@
 
         IRCclient.Show()
         IRCclient.Focus()
+
+        IRCclient.MdiParent = Form1
+        IRCclient.Location = New Point(Form2.Width, 0)
     End Sub
 
     Private Sub IRC_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load

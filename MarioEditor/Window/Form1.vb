@@ -82,9 +82,9 @@ Public Class Form1
         Form2.EditMode = 7
         LevelSettings.MdiParent = Me
 
-        If Form2.Mario Is Nothing And Form2.Luigi Is Nothing And Directory.Exists(Form1.FilePath & "\graphics\mario\") And Directory.Exists(Form1.FilePath & "\graphics\luigi\") Then
-            Form2.Mario = New Bitmap(Form1.FilePath & "\graphics\mario\mario-2.png")
-            Form2.Luigi = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-2.png")
+        If Form2.PlayerGraphic Is Nothing And Form2.Player2Graphic Is Nothing And Directory.Exists(Form1.FilePath & "\graphics\mario\") And Directory.Exists(Form1.FilePath & "\graphics\luigi\") Then
+            Form2.PlayerGraphic = New Bitmap(Form1.FilePath & "\graphics\mario\mario-2.png")
+            Form2.Player2Graphic = New Bitmap(Form1.FilePath & "\graphics\luigi\luigi-2.png")
         End If
 
         LevelSettings.Location = New Point(0, Form2.Height)
@@ -144,6 +144,9 @@ Public Class Form1
 
     Private Sub JoinIRCToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles JoinIRCToolStripMenuItem.Click
         IRC.Show()
+
+        IRC.MdiParent = Me
+        IRC.Location = New Point(Form2.Width, 0)
     End Sub
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
@@ -160,30 +163,9 @@ Public Class Form1
             Case MsgBoxResult.Yes
                 Play.IsTesting = True
                 Play.ShowHUD()
-                Play.GetPlayer()
+                Player.SetPlayer()
 
-                Select Case Play.P1
-                    Case 1
-                        Play.PlayerX = Level.P1start.X - (Play.MarioW - 28)
-                        Play.DrawX = Level.P1start.X - (Play.MarioW - 28)
-                        Play.PlayerY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                    Case 2
-                        Play.PlayerX = Level.P1start.X - (Play.LuigiW - 28)
-                        Play.DrawX = Level.P1start.X - (Play.LuigiW - 28)
-                        Play.PlayerY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                    Case 3
-                        Play.PlayerX = Level.P1start.X - (Play.PeachW - 32)
-                        Play.DrawX = Level.P1start.X - (Play.PeachW - 32)
-                        Play.PlayerY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                    Case 4
-                        Play.PlayerX = Level.P1start.X - (Play.ToadW - 32)
-                        Play.DrawX = Level.P1start.X - (Play.ToadW - 32)
-                        Play.PlayerY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                End Select
+                Form2.ResetSpawn()
 
                 Play.MoveDir = 1
 
@@ -196,30 +178,9 @@ Public Class Form1
             Case MsgBoxResult.No
                 Play.IsTesting = True
                 Play.ShowHUD()
-                Play.GetPlayer()
+                Player.SetPlayer()
 
-                Select Case Play.P1
-                    Case 1
-                        Play.PlayerX = Level.P1start.X - (Play.MarioW - 28)
-                        Play.DrawX = Level.P1start.X - (Play.MarioW - 28)
-                        Play.PlayerY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.MarioH - Level.P1start.Height)
-                    Case 2
-                        Play.PlayerX = Level.P1start.X - (Play.LuigiW - 28)
-                        Play.DrawX = Level.P1start.X - (Play.LuigiW - 28)
-                        Play.PlayerY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.LuigiH - Level.P1start.Height)
-                    Case 3
-                        Play.PlayerX = Level.P1start.X - (Play.PeachW - 32)
-                        Play.DrawX = Level.P1start.X - (Play.PeachW - 32)
-                        Play.PlayerY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.PeachH - Level.P1start.Height)
-                    Case 4
-                        Play.PlayerX = Level.P1start.X - (Play.ToadW - 32)
-                        Play.DrawX = Level.P1start.X - (Play.ToadW - 32)
-                        Play.PlayerY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                        Play.DrawY = Level.P1start.Y - (Play.ToadH - Level.P1start.Height)
-                End Select
+                Form2.ResetSpawn()
 
                 Play.MoveDir = 1
 
