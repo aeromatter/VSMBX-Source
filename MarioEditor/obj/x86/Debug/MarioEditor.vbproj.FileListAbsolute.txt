@@ -26,3 +26,32 @@ C:\Users\buddys\documents\visual studio 2010\Projects\MarioEditor\MarioEditor\ob
 C:\Users\buddys\documents\visual studio 2010\Projects\MarioEditor\MarioEditor\obj\x86\Debug\MarioEditor.application
 C:\Users\buddys\Documents\Visual Studio 2010\Projects\MarioEditor\MarioEditor\obj\x86\Debug\MarioEditor.ControlSettings.resources
 C:\Users\buddys\Documents\Visual Studio 2010\Projects\MarioEditor\MarioEditor\obj\x86\Debug\MarioEditor.Grid.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\Interop.WMPLib.dll
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.vbproj.ResolveComReference.cache
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.exe
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.xml
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.pdb
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\bin\Debug\MarioEditor.exe.manifest
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\bin\Debug\MarioEditor.application
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\bin\Debug\MarioEditor.exe
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\bin\Debug\MarioEditor.pdb
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\bin\Debug\MarioEditor.xml
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.AdvancedBlocks.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.BGOs_Form.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.BlocksAndTiles.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.Chat.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.ControlSettings.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.Debug.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.Form1.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.Form2.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.Grid.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.IRC.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.IRCclient.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.LevelSettings.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.Resources.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.NPCs.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.Online.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.TestSettings.resources
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.vbproj.GenerateResource.Cache
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.exe.manifest
+C:\Users\Mike\Documents\GitHub\VSMBX-Source\MarioEditor\obj\x86\Debug\MarioEditor.application

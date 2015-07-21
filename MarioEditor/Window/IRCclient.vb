@@ -120,18 +120,41 @@ Public Class IRCclient
     End Sub
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        If TextBox1.Text.StartsWith("/") = True Then
-            CMD = TextBox1.Text.Substring(1, TextBox1.Text.IndexOf(" "))
+        SendMessage()
+    End Sub
 
-            MsgBox(CMD)
-            Select Case CMD
-                Case "NICK "
-                    sw.WriteLine(String.Format(CMD & " " & TextBox1.Text & vbCrLf))
-                    sw.Flush()
-                Case "MODE "
-                    sw.WriteLine(String.Format(CMD & " " & TextBox1.Text & vbCrLf))
-                    sw.Flush()
-            End Select
+
+    Private Sub ChangeNick(ByVal newNick As String)
+        Dim OldNick As String = Nick
+
+        For Each Name As String In ListBox1.Items
+            If Name = OldNick Then
+                Name = newNick
+                Return
+            End If
+        Next
+    End Sub
+
+
+    Private Sub SendMessage()
+        If TextBox1.Text.StartsWith("/") = True Then
+            Dim test As String() = TextBox1.Text.Split(New Char() {" "c}, 2)
+            CMD = "USELESSWASTEOFHUMANFLESH"
+
+            If test.Length > 1 Then
+                MsgBox(test(0))
+                Select Case test(0).ToUpper().Trim("/"c)
+                    Case "NICK"
+                        sw.WriteLine(String.Format("NICK {0}{1}", test(1).Trim(), vbCrLf))
+                        ChangeNick(test(1).Trim())
+                        sw.Flush()
+                    Case "MODE"
+                        sw.WriteLine(String.Format("MODE {0}{1}", test(1).Trim(), vbCrLf))
+                        sw.Flush()
+                End Select
+            End If
+
+            TextBox1.Text = ""
         Else
             sw.WriteLine(String.Format("PRIVMSG " & Channel & " :" & TextBox1.Text & vbCrLf))
             sw.Flush()
@@ -139,10 +162,13 @@ Public Class IRCclient
             RichTextBox1.AppendText("<" & Nick & "> " & TextBox1.Text & vbCrLf)
             TextBox1.Clear()
         End If
-
     End Sub
 
-    Private Sub RichTextBox2_TextChanged(sender As System.Object, e As System.EventArgs) Handles RichTextBox2.TextChanged
-
+    Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            SendMessage()
+        ElseIf e.Control And e.KeyCode = Keys.A Then
+            TextBox1.SelectAll()
+        End If
     End Sub
 End Class
