@@ -108,6 +108,7 @@ Public Class Form2
 
                     Audio = New Audio
                     Audio.PlaySound(5)
+
                 Case MsgBoxResult.No
                     Play.IsTesting = True
                     Play.ShowHUD()
@@ -119,6 +120,7 @@ Public Class Form2
 
                     Audio = New Audio
                     Audio.PlaySound(5)
+
             End Select
         End If
 
@@ -648,6 +650,7 @@ Public Class Form2
                 NPC.NPC.MoveSpeed = NPC.MoveSpeed
                 NPC.NPC.MetroidGlass = NPC.MetroidGlass
                 NPC.NPC.Testing = Play.IsTesting
+                NPC.NPC.NPCcollide = NPC.NPCcollide
         End Select
     End Sub
 
@@ -1121,6 +1124,12 @@ Public Class Form2
                                 ElseIf NPC.Direction = 1 Then
                                     graphic.DrawImage(TB.Image, r, New Rectangle(0, ((NPC.gfxHeight) / 2) / 2, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
                                 End If
+                            Case 3
+                                If NPC.Direction = 2 Then
+                                    graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
+                                ElseIf NPC.Direction = 1 Then
+                                    graphic.DrawImage(TB.Image, r, New Rectangle(0, NPC.gfxHeight / 3, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
+                                End If
                         End Select
                     End If
             End Select
@@ -1244,6 +1253,7 @@ Public Class Form2
                 sw.WriteLine(i.TotalFrames)
                 sw.WriteLine(i.X)
                 sw.WriteLine(i.Y)
+                sw.WriteLine(i.NPCcollide)
             Next
 
             sw.Close()
@@ -1668,6 +1678,7 @@ Public Class Form2
                 n.TotalFrames = sr.ReadLine()
                 n.X = sr.ReadLine()
                 n.Y = sr.ReadLine()
+                n.NPCcollide = sr.ReadLine()
 
                 If n.ID >= 1 Then
                     SelectedNPC = n.ID

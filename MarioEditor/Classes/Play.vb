@@ -119,7 +119,22 @@ Public Class Play
                 ElseIf NPC.NPCsets(i).Direction = 1 Then
                     tempnpc.X += NPC.NPCsets(i).MoveSpeed
                 End If
+
+                For Each r As Rectangle In Blocks.TileRects
+                    Select Case tempnpc.Direction
+                        Case 1
+                            If (((tempnpc.X + tempnpc.Width) = r.Left) Or New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X - tempnpc.MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < (tempnpc.Y + tempnpc.Height)) And (r.Bottom > tempnpc.Y) Then
+                                tempnpc.Direction = 2
+                            End If
+                        Case 2
+                            If ((tempnpc.X = r.Right) Or New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X + tempnpc.MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < (tempnpc.Y + tempnpc.Height)) And (r.Bottom > tempnpc.Y) Then
+                                tempnpc.Direction = 1
+                            End If
+                    End Select
+                Next          
             End If
+
+
 
             Select Case NPC.NPCsets(i).AI
                 Case 0
@@ -129,14 +144,18 @@ Public Class Play
 
                     tempnpc.isMoving = True
 
-                    If tempnpc.Delay >= 64 And tempnpc.OnGround = True Then
+                    If tempnpc.Delay >= 64 Then
                         If NPC.NPCsets(i).totalJumps <= 3 Then
-                            tempnpc.TotalFrames = 4
+                            If tempnpc.OnGround = True Then
+                                tempnpc.TotalFrames = 4
 
-                            tempnpc.isJumping = True
+                                tempnpc.isJumping = True
+                            End If
 
-                            tempnpc.Y -= 1
-                            tempnpc.hopHeight += 1
+                            If tempnpc.isJumping = True Then
+                                tempnpc.Y -= 1
+                                tempnpc.hopHeight += 1
+                            End If                            
 
                             If tempnpc.hopHeight >= 12 Then
                                 tempnpc.isJumping = False
@@ -166,14 +185,16 @@ Public Class Play
                         tempnpc.HasGravity = True
                         'tempnpc.thwompFall = True
                     Else
-                        If (New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).Top > tempnpc.rectangle.Top) And tempnpc.OnGround = True Then
+                        If (New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).Top > tempnpc.rectangle.Top) And tempnpc.thwompRise = True Then
                             tempnpc.HasGravity = False
-                            tempnpc.thwompRise = True
-                            tempnpc.Y -= 2
                         ElseIf (New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).Top = tempnpc.rectangle.Top) Then
                             tempnpc.thwompRise = False
                             tempnpc.playedSound = False
                         End If
+                    End If
+
+                    If tempnpc.thwompRise = True Then
+                        tempnpc.Y -= 2
                     End If
                 Case 3
                     If (PlayerCollide.X < tempnpc.X) Then
@@ -217,10 +238,15 @@ Public Class Play
                 Case 5
                     tempnpc.isMoving = True
 
-                    If tempnpc.hopHeight < 144 And tempnpc.OnGround = True Then
-                        tempnpc.Y -= 6
-                        tempnpc.hopHeight += 6
-                        tempnpc.isJumping = True
+                    If tempnpc.hopHeight < 144 Then
+                        If tempnpc.OnGround = True Then
+                            tempnpc.isJumping = True
+                        End If
+
+                        If tempnpc.isJumping = True Then
+                            tempnpc.Y -= 6
+                            tempnpc.hopHeight += 6
+                        End If
                     Else
                         tempnpc.isJumping = False
                         tempnpc.hopHeight = 0
@@ -378,8 +404,6 @@ Public Class Play
                         End If
                     End If
                 Case 14
-
-                    'Follow
                     tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
 
                     If (tempnpc.totalJumps = 1 And tempnpc.totalFire = 0) Then
@@ -425,13 +449,67 @@ Public Class Play
                             End If
                         End If
                     End If
+                Case 15
+                    '5 Jumps - Jump Height: 16
+                    '2-3 Fireballs
+                    'Long Jump - Jump Height: 272
+                    '2 Jumps
+                    'Ground Pound or Fireballs
+
+                    If tempnpc.totalJumps < 6 Then
+                        If tempnpc.OnGround = True Then
+                            tempnpc.isJumping = True
+                        End If
+
+                        If tempnpc.isJumping = True Then
+                            If tempnpc.hopHeight < 16 Then
+                                tempnpc.isJumping = True
+                                tempnpc.Y -= 1
+                                tempnpc.hopHeight += 1
+                            Else
+                                tempnpc.isJumping = False
+                                tempnpc.hopHeight = 0
+                                tempnpc.totalJumps += 1
+                            End If
+                        End If
+                    Else
+                        If tempnpc.Delay >= 150 Then
+
+                            If tempnpc.OnGround = True Then
+                                tempnpc.isJumping = True
+                            End If
+
+                            If tempnpc.isJumping = True Then
+                                If tempnpc.hopHeight < 272 Then
+                                    tempnpc.isJumping = True
+                                    tempnpc.Y -= 6
+                                    tempnpc.hopHeight += 6
+                                Else
+                                    tempnpc.isJumping = False
+                                    tempnpc.hopHeight = 0
+                                    tempnpc.totalJumps = 0
+                                    tempnpc.Delay = 0
+                                End If
+                            End If
+                        End If
+                        tempnpc.Delay += 1
+                    End If
+                Case 16
+                    If PlayerCollide.IntersectsWith(New Rectangle(tempnpc.X, tempnpc.Y - JumpSpeed, tempnpc.Width, tempnpc.Height)) Then
+                        If tempnpc.isMoving = False Then
+                            tempnpc.isMoving = True
+                            tempnpc.Direction = MoveDir
+                        ElseIf tempnpc.isMoving = True And OnGround = False Then
+                            tempnpc.isMoving = False
+                        End If
+                    End If
             End Select
 
             tempnpc.OnGround = False
 
             If tempnpc.AI <> 4 Then
-                For Each r As Rectangle In Blocks.TileRects.Where(Function(s) New Rectangle(tempnpc.X - tempnpc.Width, tempnpc.Y - tempnpc.Height, tempnpc.Width * 4, tempnpc.Height * 4).Contains(s))
-                    If New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) And tempnpc.HasGravity = True And tempnpc.isJumping = False Then
+                For Each r As Rectangle In Blocks.TileRects
+                    If New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) = True And (tempnpc.HasGravity = True And tempnpc.isJumping = False) Then
 
                         tempnpc.OnGround = True
                         tempnpc.Y = (r.Top - tempnpc.Height)
@@ -439,19 +517,9 @@ Public Class Play
                         If tempnpc.AI = 2 And tempnpc.playedSound = False Then
                             Audio.PlaySound(6)
                             tempnpc.playedSound = True
+                            tempnpc.thwompRise = True
                         End If
                     End If
-
-                    Select Case tempnpc.Direction
-                        Case 1
-                            If (((tempnpc.X + tempnpc.Width) = r.Left) Or New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X - tempnpc.MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < (tempnpc.Y + tempnpc.Height)) And (r.Bottom > tempnpc.Y) Then
-                                tempnpc.Direction = 2
-                            End If
-                        Case 2
-                            If ((tempnpc.X = r.Right) Or New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X + tempnpc.MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < (tempnpc.Y + tempnpc.Height)) And (r.Bottom > tempnpc.Y) Then
-                                tempnpc.Direction = 1
-                            End If
-                    End Select
                 Next
             Else
                 Select Case tempnpc.Direction
@@ -476,28 +544,42 @@ Public Class Play
                 End Select
             End If
 
-            If NPC.NPCsets(i).HasGravity = True And tempnpc.isJumping = False Then
+            If tempnpc.OnGround = False And (tempnpc.HasGravity = True And tempnpc.isJumping = False) Then
                 Select Case NPC.NPCsets(i).AI
-                    Case 0, 2, 6, 10, 11, 13, 14
-                        If tempnpc.OnGround = False Then
-                            tempnpc.Y += GravityLevel
-                        End If
+                    Case 0, 2, 6, 10, 11, 13, 14, 15, 16
+                        tempnpc.Y += GravityLevel
                     Case 1, 5
-                        If tempnpc.OnGround = False Then
-                            tempnpc.Y += GravityLevel / 2
-                        End If
+                        tempnpc.Y += GravityLevel / 2
                     Case 4
-                        If tempnpc.OnGround = False Then
-                            Select Case tempnpc.Direction
-                                Case 1
-                                    tempnpc.Direction = 2
-                                Case 2
-                                    tempnpc.Direction = 1
-                            End Select
+                        Select Case tempnpc.Direction
+                            Case 1
+                                tempnpc.Direction = 2
+                            Case 2
+                                tempnpc.Direction = 1
+                        End Select
 
-                            tempnpc.Y += GravityLevel
-                        End If
+                        tempnpc.Y += GravityLevel
                 End Select
+            End If
+
+            'NPC Collision Checking
+            tempnpc.CollRect = New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height)
+
+            If NPC.NPCsets(i).NPCcollide = True And tempnpc.OnGround = True Then
+                Dim f As Integer = i
+                For Each n As NPCsets In NPC.NPCsets.Where(Function(a) Not a.Equals(NPC.NPCsets(f)))
+                    Select Case tempnpc.Direction
+                        Case 1
+                            'Changes direction when colliding, as long as the NPC won't get stuck.
+                            If ((tempnpc.CollRect.Right >= n.CollRect.Left) And tempnpc.CollRect.IntersectsWith(n.CollRect)) And (tempnpc.CollRect.Contains(n.CollRect) = False) Then
+                                tempnpc.Direction = 2
+                            End If
+                        Case 2
+                            If ((tempnpc.X <= n.CollRect.Right) And tempnpc.CollRect.IntersectsWith(n.CollRect)) And (tempnpc.CollRect.Contains(n.CollRect) = False) Then
+                                tempnpc.Direction = 1
+                            End If
+                    End Select
+                Next
             End If
 
             NPC.NPCsets(i) = tempnpc
@@ -506,6 +588,9 @@ Public Class Play
 
     End Sub
 
+    'Public Shared Function CheckNPCCollide() As Boolean
+    'Return NPC.NPCsets.Any(Function(rect) NPC.NPCsets.Where(Function(r) Not r.Equals(rect)).Any(Function(r) r.CollRect.IntersectsWith(rect.CollRect)))
+    ' End Function
     Public Shared Sub GetPlayerFrame()
         If IsDucking = False Then
             DrawW = Player.P1.PlayerW

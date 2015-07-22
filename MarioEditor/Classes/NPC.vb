@@ -20,13 +20,15 @@
     Dim FrameStyle As Integer
     Dim CurFrame As Integer
     Dim MetroidGlass As Boolean
+    Dim NPCcollide As Boolean
+    Dim CollRect As Rectangle
 
     Dim OnGround As Boolean
     Dim Testing As Boolean
     Dim isMoving As Boolean
     Dim hopHeight As Integer
     Dim totalJumps As Integer
-    Dim isJumping As Integer
+    Dim isJumping As Boolean
     Dim Delay As Integer
     Dim thwompRise As Boolean
     Dim thwompFall As Boolean
@@ -38,30 +40,6 @@
     Dim playedSound As Boolean
     Dim totalFire As Integer
 End Structure
-
-Public Class ActiveNPC
-    Public rectangle As Rectangle
-    Public X As Integer
-    Public Y As Integer
-    Public Width As Integer
-    Public Height As Integer
-    Public ID As Integer
-    Public IMG As Image
-    Public Animated As Boolean
-    Public SourceRect As Rectangle
-    Public gfxWidth As Integer
-    Public gfxHeight As Integer
-    Public TotalFrames As Integer
-    Public FrameSpeed As Integer
-    Public AI As Integer
-    Public Direction As Integer
-    Public MSG As String
-    Public HasGravity As Boolean
-    Public MoveSpeed As Double
-    Public FrameStyle As Integer
-    Public CurFrame As Integer
-    Public MetroidGlass As Boolean
-End Class
 
 Public Class NPC
     Public Shared NPCW As Integer = 32
@@ -82,6 +60,7 @@ Public Class NPC
     Public Shared MoveSpeed As Double
     Public Shared FrameStyle As Integer
     Public Shared MetroidGlass As Boolean
+    Public Shared NPCcollide As Boolean
 
     Public Shared bmp As Bitmap
 
@@ -105,6 +84,7 @@ Public Class NPC
         AI = 0
         FrameStyle = 0
         MetroidGlass = False
+        NPCcollide = True
 
         If NPCs.RadioButton1.Checked = True Then
             Direction = 2
@@ -342,6 +322,7 @@ Public Class NPC
                 NPCW = 64
                 NPCH = 80
                 FrameStyle = 3
+                AI = 15
             Case 27
                 path = Form1.FilePath & "\graphics\npc\npc-73.png"
 
@@ -349,6 +330,8 @@ Public Class NPC
                 gfxHeight = 44
                 NPCW = 44
                 NPCH = 44
+                AI = 16
+                MoveSpeed = 5
             Case 28
                 path = Form1.FilePath & "\graphics\npc\npc-5.png"
 
@@ -356,6 +339,8 @@ Public Class NPC
                 gfxHeight = 32
                 NPCW = 32
                 NPCH = 32
+                AI = 16
+                MoveSpeed = 5
             Case 29
                 path = Form1.FilePath & "\graphics\npc\npc-7.png"
 
@@ -363,9 +348,17 @@ Public Class NPC
                 gfxHeight = 32
                 NPCW = 32
                 NPCH = 32
+                AI = 16
+                MoveSpeed = 5
             Case 30
                 path = Form1.FilePath & "\graphics\npc\npc-24.png"
 
+                gfxWidth = 32
+                gfxHeight = 32
+                NPCW = 32
+                NPCH = 32
+                AI = 16
+                MoveSpeed = 5
             Case 31
                 path = Form1.FilePath & "\graphics\npc\npc-21.png"
 
