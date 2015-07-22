@@ -24,26 +24,26 @@ Partial Class IRC
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(IRC))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.lblKey = New System.Windows.Forms.Label()
+        Me.txtBoxKey = New System.Windows.Forms.TextBox()
+        Me.lblChannel = New System.Windows.Forms.Label()
+        Me.txtBoxChannel = New System.Windows.Forms.TextBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.lblUsername = New System.Windows.Forms.Label()
+        Me.txtBoxUsername = New System.Windows.Forms.TextBox()
+        Me.lblPassword = New System.Windows.Forms.Label()
+        Me.txtBoxPassword = New System.Windows.Forms.TextBox()
+        Me.btnConnect = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.TextBox2)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Controls.Add(Me.TextBox1)
+        Me.GroupBox1.Controls.Add(Me.lblKey)
+        Me.GroupBox1.Controls.Add(Me.txtBoxKey)
+        Me.GroupBox1.Controls.Add(Me.lblChannel)
+        Me.GroupBox1.Controls.Add(Me.txtBoxChannel)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(200, 72)
@@ -51,44 +51,45 @@ Partial Class IRC
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Channel Info"
         '
-        'Label2
+        'lblKey
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(6, 48)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(28, 13)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Key:"
+        Me.lblKey.AutoSize = True
+        Me.lblKey.Location = New System.Drawing.Point(6, 48)
+        Me.lblKey.Name = "lblKey"
+        Me.lblKey.Size = New System.Drawing.Size(28, 13)
+        Me.lblKey.TabIndex = 1
+        Me.lblKey.Text = "Key:"
         '
-        'TextBox2
+        'txtBoxKey
         '
-        Me.TextBox2.Location = New System.Drawing.Point(61, 45)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(133, 20)
-        Me.TextBox2.TabIndex = 1
+        Me.txtBoxKey.Location = New System.Drawing.Point(61, 45)
+        Me.txtBoxKey.Name = "txtBoxKey"
+        Me.txtBoxKey.Size = New System.Drawing.Size(133, 20)
+        Me.txtBoxKey.TabIndex = 2
         '
-        'Label1
+        'lblChannel
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 22)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(49, 13)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Channel:"
+        Me.lblChannel.AutoSize = True
+        Me.lblChannel.Location = New System.Drawing.Point(6, 22)
+        Me.lblChannel.Name = "lblChannel"
+        Me.lblChannel.Size = New System.Drawing.Size(49, 13)
+        Me.lblChannel.TabIndex = 1
+        Me.lblChannel.Text = "Channel:"
         '
-        'TextBox1
+        'txtBoxChannel
         '
-        Me.TextBox1.Location = New System.Drawing.Point(61, 19)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(133, 20)
-        Me.TextBox1.TabIndex = 1
+        Me.txtBoxChannel.Location = New System.Drawing.Point(61, 19)
+        Me.txtBoxChannel.Name = "txtBoxChannel"
+        Me.txtBoxChannel.Size = New System.Drawing.Size(133, 20)
+        Me.txtBoxChannel.TabIndex = 1
+        Me.txtBoxChannel.Text = "#vsmbx"
         '
         'GroupBox2
         '
-        Me.GroupBox2.Controls.Add(Me.Label4)
-        Me.GroupBox2.Controls.Add(Me.TextBox4)
-        Me.GroupBox2.Controls.Add(Me.Label3)
-        Me.GroupBox2.Controls.Add(Me.TextBox3)
+        Me.GroupBox2.Controls.Add(Me.lblUsername)
+        Me.GroupBox2.Controls.Add(Me.txtBoxUsername)
+        Me.GroupBox2.Controls.Add(Me.lblPassword)
+        Me.GroupBox2.Controls.Add(Me.txtBoxPassword)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 90)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(200, 71)
@@ -96,59 +97,58 @@ Partial Class IRC
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "NickServ"
         '
-        'Label4
+        'lblUsername
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 22)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(58, 13)
-        Me.Label4.TabIndex = 3
-        Me.Label4.Text = "Username:"
+        Me.lblUsername.AutoSize = True
+        Me.lblUsername.Location = New System.Drawing.Point(6, 22)
+        Me.lblUsername.Name = "lblUsername"
+        Me.lblUsername.Size = New System.Drawing.Size(58, 13)
+        Me.lblUsername.TabIndex = 3
+        Me.lblUsername.Text = "Username:"
         '
-        'TextBox4
+        'txtBoxUsername
         '
-        Me.TextBox4.Location = New System.Drawing.Point(70, 19)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(124, 20)
-        Me.TextBox4.TabIndex = 2
+        Me.txtBoxUsername.Location = New System.Drawing.Point(70, 19)
+        Me.txtBoxUsername.Name = "txtBoxUsername"
+        Me.txtBoxUsername.Size = New System.Drawing.Size(124, 20)
+        Me.txtBoxUsername.TabIndex = 3
         '
-        'Label3
+        'lblPassword
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(6, 48)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(56, 13)
-        Me.Label3.TabIndex = 1
-        Me.Label3.Text = "Password:"
+        Me.lblPassword.AutoSize = True
+        Me.lblPassword.Location = New System.Drawing.Point(6, 48)
+        Me.lblPassword.Name = "lblPassword"
+        Me.lblPassword.Size = New System.Drawing.Size(56, 13)
+        Me.lblPassword.TabIndex = 1
+        Me.lblPassword.Text = "Password:"
         '
-        'TextBox3
+        'txtBoxPassword
         '
-        Me.TextBox3.Location = New System.Drawing.Point(70, 45)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(124, 20)
-        Me.TextBox3.TabIndex = 0
+        Me.txtBoxPassword.Location = New System.Drawing.Point(70, 45)
+        Me.txtBoxPassword.Name = "txtBoxPassword"
+        Me.txtBoxPassword.Size = New System.Drawing.Size(124, 20)
+        Me.txtBoxPassword.TabIndex = 4
         '
-        'Button1
+        'btnConnect
         '
-        Me.Button1.Location = New System.Drawing.Point(137, 167)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 2
-        Me.Button1.Text = "Join"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnConnect.Location = New System.Drawing.Point(137, 167)
+        Me.btnConnect.Name = "btnConnect"
+        Me.btnConnect.Size = New System.Drawing.Size(75, 23)
+        Me.btnConnect.TabIndex = 2
+        Me.btnConnect.Text = "Join"
+        Me.btnConnect.UseVisualStyleBackColor = True
         '
         'IRC
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(226, 202)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnConnect)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "IRC"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "IRC Connection"
@@ -160,14 +160,14 @@ Partial Class IRC
 
     End Sub
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents lblKey As System.Windows.Forms.Label
+    Friend WithEvents txtBoxKey As System.Windows.Forms.TextBox
+    Friend WithEvents lblChannel As System.Windows.Forms.Label
+    Friend WithEvents txtBoxChannel As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents lblUsername As System.Windows.Forms.Label
+    Friend WithEvents txtBoxUsername As System.Windows.Forms.TextBox
+    Friend WithEvents lblPassword As System.Windows.Forms.Label
+    Friend WithEvents txtBoxPassword As System.Windows.Forms.TextBox
+    Friend WithEvents btnConnect As System.Windows.Forms.Button
 End Class
