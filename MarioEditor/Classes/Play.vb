@@ -134,8 +134,6 @@ Public Class Play
                 Next          
             End If
 
-
-
             Select Case NPC.NPCsets(i).AI
                 Case 0
                     tempnpc.isMoving = True
@@ -565,18 +563,27 @@ Public Class Play
             'NPC Collision Checking
             tempnpc.CollRect = New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height)
 
-            If NPC.NPCsets(i).NPCcollide = True And tempnpc.OnGround = True Then
+            If NPC.NPCsets(i).NPCcollide = True And tempnpc.OnGround = True And Not tempnpc.AI = 16 Then
                 Dim f As Integer = i
                 For Each n As NPCsets In NPC.NPCsets.Where(Function(a) Not a.Equals(NPC.NPCsets(f)))
                     Select Case tempnpc.Direction
                         Case 1
                             'Changes direction when colliding, as long as the NPC won't get stuck.
-                            If ((tempnpc.CollRect.Right >= n.CollRect.Left) And tempnpc.CollRect.IntersectsWith(n.CollRect)) And (tempnpc.CollRect.Contains(n.CollRect) = False) Then
-                                tempnpc.Direction = 2
+                            If ((tempnpc.CollRect.Right >= n.CollRect.Left) And tempnpc.CollRect.IntersectsWith(n.CollRect)) And ((tempnpc.CollRect.Contains(n.CollRect) = False)) Then
+                                Dim BoxSize As Rectangle = Rectangle.Intersect(tempnpc.CollRect, n.CollRect)
+
+                                If Not BoxSize.Width > 4 Then
+                                    tempnpc.Direction = 2
+                                End If
+
                             End If
                         Case 2
-                            If ((tempnpc.X <= n.CollRect.Right) And tempnpc.CollRect.IntersectsWith(n.CollRect)) And (tempnpc.CollRect.Contains(n.CollRect) = False) Then
-                                tempnpc.Direction = 1
+                            If ((tempnpc.X <= n.CollRect.Right) And tempnpc.CollRect.IntersectsWith(n.CollRect)) And ((tempnpc.CollRect.Contains(n.CollRect) = False)) Then
+                                Dim BoxSize As Rectangle = Rectangle.Intersect(tempnpc.CollRect, n.CollRect)
+
+                                If Not BoxSize.Width > 4 Then
+                                    tempnpc.Direction = 1
+                                End If
                             End If
                     End Select
                 Next
@@ -943,5 +950,27 @@ Public Class Play
         ElseIf Level.LevelH <= 608 Then
             ViewPort.Y = 0
         End If
+
+        If Play.IsTesting = False Then
+            Select Case Form2.EditMode
+                Case 0, 1, 2, 5, 6, 7
+                    Form2.mouseX = Math.Floor((Form2.mouselocX + (Form2.AutoScrollPosition.X * -1)) / 32)
+                    Form2.mouseY = Math.Floor((Form2.mouselocY + (Form2.AutoScrollPosition.Y * -1)) / 32)
+                Case Else
+                    Form2.mouseX = Math.Floor((Form2.mouselocX + (Form2.AutoScrollPosition.X * -1)) / 4)
+                    Form2.mouseY = Math.Floor((Form2.mouselocY + (Form2.AutoScrollPosition.Y * -1)) / 32)
+            End Select
+        Else
+            Select Case Form2.EditMode
+                Case 0, 1, 2, 5, 6, 7
+                    Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 32)
+                    Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)
+                Case Else
+                    Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 4)
+                    Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)
+            End Select
+        End If
+
+        Form2.AddObject()
     End Sub
 End Class

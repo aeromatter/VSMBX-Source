@@ -669,20 +669,20 @@ Public Class Form2
         If Play.IsTesting = False Then
             Select Case EditMode
                 Case 0, 1, 2, 5, 6, 7
-                    mouseX = Math.Floor((e.X + (Me.AutoScrollPosition.X * -1)) / 32)
-                    mouseY = Math.Floor((e.Y + (Me.AutoScrollPosition.Y * -1)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 32)
+                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
                 Case Else
-                    mouseX = Math.Floor((e.X + (Me.AutoScrollPosition.X * -1)) / 4)
-                    mouseY = Math.Floor((e.Y + (Me.AutoScrollPosition.Y * -1)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 4)
+                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
             End Select
         Else
             Select Case EditMode
                 Case 0, 1, 2, 5, 6, 7
-                    mouseX = Math.Floor((e.X + (Play.ViewPort.X)) / 32)
-                    mouseY = Math.Floor((e.Y + (Play.ViewPort.Y)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 32)
+                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
                 Case Else
-                    mouseX = Math.Floor((e.X + (Play.ViewPort.X)) / 4)
-                    mouseY = Math.Floor((e.Y + (Play.ViewPort.Y)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 4)
+                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
             End Select
         End If
 
@@ -695,6 +695,31 @@ Public Class Form2
 
     Protected Overrides Sub OnLostFocus(e As System.EventArgs)
         MyBase.OnLostFocus(e)
+    End Sub
+
+    Private Sub Form2_MouseWheel(sender As Object, e As Windows.Forms.MouseEventArgs) Handles Me.MouseWheel
+        'Get mouse data relative to level
+        If Play.IsTesting = False Then
+            Select Case EditMode
+                Case 0, 1, 2, 5, 6, 7
+                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 32)
+                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
+                Case Else
+                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 4)
+                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
+            End Select
+        Else
+            Select Case EditMode
+                Case 0, 1, 2, 5, 6, 7
+                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 32)
+                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
+                Case Else
+                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 4)
+                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
+            End Select
+        End If
+
+        AddObject()
     End Sub
 
     Private Sub Form2_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
@@ -1061,7 +1086,6 @@ Public Class Form2
         Next
 
         If MouseIsMoving = True Then
-
             Select Case EditMode
                 Case 0
                     r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
@@ -1072,7 +1096,7 @@ Public Class Form2
                         graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Blocks.gfxWidth, Blocks.gfxHeight), GraphicsUnit.Pixel)
                     End If
                 Case 2
-                    r = New Rectangle((mouseX * 32) + Play.ViewPort.X, mouseY * 32, Backgrounds.BGOW, Backgrounds.BGOH)
+                    r = New Rectangle(mouseX * 32, mouseY * 32, Backgrounds.BGOW, Backgrounds.BGOH)
 
                     If Backgrounds.Animated = True Then
                         graphic.DrawImage(TB.Image, r, New Rectangle(0, Backgrounds.BGOH * Anim(Backgrounds.FrameSpeed, Backgrounds.TotalFrames), Backgrounds.gfxWidth, Backgrounds.BGOH), GraphicsUnit.Pixel)
@@ -1081,18 +1105,19 @@ Public Class Form2
                     End If
                 Case 3
                     If Player.P1.Graphic IsNot Nothing Then
-                        graphic.DrawImage(Player.P1.Graphic, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (Player.P1.PlayerH - 32), Player.P1.PlayerW, Player.P1.PlayerH), New Rectangle(500, 0, Player.P1.PlayerW, Player.P1.PlayerH), GraphicsUnit.Pixel)
-                    Else
-                        Player.SetPlayer()
-                    End If
+                        graphic.DrawImage(Player.P1.Graphic, New Rectangle((mouseX * 4), (mouseY * 32) - (Player.P1.PlayerH - 32), Player.P1.PlayerW, Player.P1.PlayerH), New Rectangle(500, 0, Player.P1.PlayerW, Player.P1.PlayerH), GraphicsUnit.Pixel)
+
+                        Else
+                            Player.SetPlayer()
+                        End If
                 Case 4
                     If Player.P2.Graphic IsNot Nothing Then
-                        graphic.DrawImage(Player.P2.Graphic, New Rectangle((mouseX * 4) + Play.ViewPort.X, (mouseY * 32) - (Player.P2.PlayerH - 32), Player.P2.PlayerW, Player.P2.PlayerH), New Rectangle(500, 0, Player.P2.PlayerW, Player.P2.PlayerH), GraphicsUnit.Pixel)
-                    Else
-                        Player.SetPlayer()
-                    End If
+                        graphic.DrawImage(Player.P2.Graphic, New Rectangle((mouseX * 4), (mouseY * 32) - (Player.P2.PlayerH - 32), Player.P2.PlayerW, Player.P2.PlayerH), New Rectangle(500, 0, Player.P2.PlayerW, Player.P2.PlayerH), GraphicsUnit.Pixel)
+                        Else
+                            Player.SetPlayer()
+                        End If
                 Case 5
-                    r = New Rectangle(((mouseX * NPC.NPCSize) + Play.ViewPort.X) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
+                    r = New Rectangle(((mouseX * NPC.NPCSize)) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
 
                     If NPC.Animated = True Then
                         Select Case NPC.FrameStyle
@@ -1108,7 +1133,6 @@ Public Class Form2
 
                         End Select
                     Else
-
                         Select Case NPC.FrameStyle
                             Case 0
                                 graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, NPC.gfxWidth, NPC.NPCH), GraphicsUnit.Pixel)
