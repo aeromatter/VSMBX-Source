@@ -193,6 +193,8 @@ Partial Class LevelSettings
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+        Me.Button11 = New System.Windows.Forms.Button()
+        Me.BrowseMusic = New System.Windows.Forms.OpenFileDialog()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -1570,6 +1572,7 @@ Partial Class LevelSettings
         '
         'GroupBox27
         '
+        Me.GroupBox27.Controls.Add(Me.Button11)
         Me.GroupBox27.Controls.Add(Me.Button134)
         Me.GroupBox27.Controls.Add(Me.Button133)
         Me.GroupBox27.Controls.Add(Me.Button132)
@@ -1719,7 +1722,7 @@ Partial Class LevelSettings
         '
         Me.TextBox1.Location = New System.Drawing.Point(215, 21)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(202, 20)
+        Me.TextBox1.Size = New System.Drawing.Size(172, 20)
         Me.TextBox1.TabIndex = 7
         '
         'Button121
@@ -1909,6 +1912,19 @@ Partial Class LevelSettings
         Me.TrackBar1.Size = New System.Drawing.Size(93, 45)
         Me.TrackBar1.TabIndex = 19
         Me.TrackBar1.Value = 10
+        '
+        'Button11
+        '
+        Me.Button11.Location = New System.Drawing.Point(393, 19)
+        Me.Button11.Name = "Button11"
+        Me.Button11.Size = New System.Drawing.Size(24, 23)
+        Me.Button11.TabIndex = 21
+        Me.Button11.Text = "..."
+        Me.Button11.UseVisualStyleBackColor = True
+        '
+        'BrowseMusic
+        '
+        Me.BrowseMusic.FileName = "OpenFileDialog1"
         '
         'LevelSettings
         '
@@ -2144,4 +2160,6 @@ Partial Class LevelSettings
     Friend WithEvents Button10 As System.Windows.Forms.Button
     Friend WithEvents GroupBox12 As System.Windows.Forms.GroupBox
     Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
+    Friend WithEvents Button11 As System.Windows.Forms.Button
+    Friend WithEvents BrowseMusic As System.Windows.Forms.OpenFileDialog
 End Class

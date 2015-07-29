@@ -290,6 +290,27 @@ Public Class Form2
                     b.rectangle = r
                     b.X = mouseX * Blocks.TileSize
                     b.Y = mouseY * Blocks.TileSize
+
+                    b.IMG = TB.Image
+                    b.Width = Blocks.TileW
+                    b.Height = Blocks.TileH
+                    b.ID = SelectedBlock
+                    b.gfxWidth = Blocks.gfxWidth
+                    b.gfxHeight = Blocks.gfxHeight
+                    b.TotalFrames = Blocks.TotalFrames
+                    b.SizeW = Blocks.SizeW
+                    b.SizeH = Blocks.SizeH
+                    b.FrameSpeed = Blocks.FrameSpeed
+                    b.Lava = Blocks.Lava
+                    b.R = AdvancedBlocks.R
+                    b.G = AdvancedBlocks.G
+                    b.B = AdvancedBlocks.B
+                    b.Glow = AdvancedBlocks.Glow
+                    b.Breakable = Blocks.Breakable
+
+                    b.Animated = Blocks.Animated
+                    b.Invisible = Blocks.Invisible
+                    b.Slip = Blocks.Slippery
                 End If
 
                 If MouseIsDown = True Then
@@ -398,8 +419,6 @@ Public Class Form2
                         Next
                     End If
                 End If
-
-                Form1.Focus()
             Case 2
                 Dim bgorect As New Rectangle
 
@@ -408,6 +427,18 @@ Public Class Form2
                     Backgrounds.bgo.rectangle = New Rectangle(mouseX * Backgrounds.BGOSize, mouseY * Backgrounds.BGOSize, Backgrounds.BGOW, Backgrounds.BGOH)
                     Backgrounds.bgo.X = mouseX * Backgrounds.BGOSize
                     Backgrounds.bgo.Y = mouseY * Backgrounds.BGOSize
+
+                    Backgrounds.bgo.IMG = TB.Image
+                    Backgrounds.bgo.Width = Backgrounds.BGOW
+                    Backgrounds.bgo.Height = Backgrounds.BGOH
+                    Backgrounds.bgo.ID = SelectedBGO
+                    Backgrounds.bgo.gfxWidth = Backgrounds.gfxWidth
+                    Backgrounds.bgo.gfxHeight = Backgrounds.gfxHeight
+                    Backgrounds.bgo.TotalFrames = Backgrounds.TotalFrames
+                    Backgrounds.bgo.FrameSpeed = Backgrounds.FrameSpeed
+                    Backgrounds.bgo.ForeGround = Backgrounds.ForeGround
+
+                    Backgrounds.bgo.Animated = Backgrounds.Animated
                 End If
 
                 If MouseIsDown = True Then
@@ -467,6 +498,24 @@ Public Class Form2
                     NPC.NPC.X = mouseX * NPC.NPCSize
                     NPC.NPC.Y = mouseY * NPC.NPCSize
 
+                    NPC.NPC.IMG = TB.Image
+                    NPC.NPC.Width = NPC.NPCW
+                    NPC.NPC.Height = NPC.NPCH
+                    NPC.NPC.ID = SelectedNPC
+                    NPC.NPC.gfxWidth = NPC.gfxWidth
+                    NPC.NPC.gfxHeight = NPC.gfxHeight
+                    NPC.NPC.TotalFrames = NPC.TotalFrames
+                    NPC.NPC.FrameSpeed = NPC.FrameSpeed
+                    NPC.NPC.FrameStyle = NPC.FrameStyle
+                    NPC.NPC.AI = NPC.AI
+                    NPC.NPC.Animated = NPC.Animated
+                    NPC.NPC.Direction = NPC.Direction
+                    NPC.NPC.HasGravity = NPC.HasGravity
+                    NPC.NPC.MSG = NPC.Message
+                    NPC.NPC.MoveSpeed = NPC.MoveSpeed
+                    NPC.NPC.MetroidGlass = NPC.MetroidGlass
+                    NPC.NPC.Testing = Play.IsTesting
+                    NPC.NPC.NPCcollide = NPC.NPCcollide
                 End If
 
                 If MouseIsDown = True Then
@@ -578,27 +627,6 @@ Public Class Form2
                 'Get currently selected block and its settings.
                 Blocks.GetBlock(SelectedBlock)
 
-                b.IMG = TB.Image
-                b.Width = Blocks.TileW
-                b.Height = Blocks.TileH
-                b.ID = SelectedBlock
-                b.gfxWidth = Blocks.gfxWidth
-                b.gfxHeight = Blocks.gfxHeight
-                b.TotalFrames = Blocks.TotalFrames
-                b.SizeW = Blocks.SizeW
-                b.SizeH = Blocks.SizeH
-                b.FrameSpeed = Blocks.FrameSpeed
-                b.Lava = Blocks.Lava
-                b.R = AdvancedBlocks.R
-                b.G = AdvancedBlocks.G
-                b.B = AdvancedBlocks.B
-                b.Glow = AdvancedBlocks.Glow
-                b.Breakable = Blocks.Breakable
-
-                b.Animated = Blocks.Animated
-                b.Invisible = Blocks.Invisible
-                b.Slip = Blocks.Slippery
-
                 'Maintain positive integer only data for sizeables
                 Try
                     If Convert.ToInt32(BlocksAndTiles.TextBox2.Text) > 0 And Convert.ToInt32(BlocksAndTiles.TextBox3.Text) > 0 Then
@@ -617,40 +645,11 @@ Public Class Form2
             Case 2
                 'Get currently selected BGO and its settings.
                 Backgrounds.GetBGO()
-
-                Backgrounds.bgo.IMG = TB.Image
-                Backgrounds.bgo.Width = Backgrounds.BGOW
-                Backgrounds.bgo.Height = Backgrounds.BGOH
-                Backgrounds.bgo.ID = SelectedBGO
-                Backgrounds.bgo.gfxWidth = Backgrounds.gfxWidth
-                Backgrounds.bgo.gfxHeight = Backgrounds.gfxHeight
-                Backgrounds.bgo.TotalFrames = Backgrounds.TotalFrames
-                Backgrounds.bgo.FrameSpeed = Backgrounds.FrameSpeed
-                Backgrounds.bgo.ForeGround = Backgrounds.ForeGround
-
-                Backgrounds.bgo.Animated = Backgrounds.Animated
             Case 5
                 'Get currently selected NPC and its settings.
                 NPC.GetNPC()
 
-                NPC.NPC.IMG = TB.Image
-                NPC.NPC.Width = NPC.NPCW
-                NPC.NPC.Height = NPC.NPCH
-                NPC.NPC.ID = SelectedNPC
-                NPC.NPC.gfxWidth = NPC.gfxWidth
-                NPC.NPC.gfxHeight = NPC.gfxHeight
-                NPC.NPC.TotalFrames = NPC.TotalFrames
-                NPC.NPC.FrameSpeed = NPC.FrameSpeed
-                NPC.NPC.FrameStyle = NPC.FrameStyle
-                NPC.NPC.AI = NPC.AI
-                NPC.NPC.Animated = NPC.Animated
-                NPC.NPC.Direction = NPC.Direction
-                NPC.NPC.HasGravity = NPC.HasGravity
-                NPC.NPC.MSG = NPC.Message
-                NPC.NPC.MoveSpeed = NPC.MoveSpeed
-                NPC.NPC.MetroidGlass = NPC.MetroidGlass
-                NPC.NPC.Testing = Play.IsTesting
-                NPC.NPC.NPCcollide = NPC.NPCcollide
+                
         End Select
     End Sub
 
@@ -1170,6 +1169,7 @@ Public Class Form2
         End If
 
         If Play.IsTesting = True Then
+            Draw.DrawRectangle(Pens.Red, Play.NPCground)
             Draw.DrawImage(My.Resources.HoldBox, Play.HoldBoxLoc)
 
             Draw.DrawString(Play.Score, SMB3font, Brushes.White, Play.ScoreLoc)
@@ -1604,6 +1604,8 @@ Public Class Form2
         Dim b As New Block
         Dim bg As New BGO
         Dim n As New NPCsets
+
+        'TODO: Error checking, and section based loading.
 
         CurLine = sr.ReadLine().ToString()
         If CurLine = "[BLOCK]" Then

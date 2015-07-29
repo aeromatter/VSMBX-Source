@@ -64,6 +64,8 @@ Public Class Play
 
     Public Shared ViewPort As Rectangle
 
+    Public Shared NPCground As Rectangle
+
     Public Shared Sub ShowHUD()
         HoldBoxLoc = New Rectangle((Form2.Width / 2) - My.Resources.HoldBox.Width, 16, My.Resources.HoldBox.Width, My.Resources.HoldBox.Height)
         ScoreLoc = New Point((HoldBoxLoc.X + HoldBoxLoc.Width) + 128, 48)
@@ -402,12 +404,18 @@ Public Class Play
                         End If
                     End If
                 Case 14
-                    tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+                    Select Case tempnpc.Direction
+                        Case 1
+                            tempnpc.SourceRect = New Rectangle(0, 0, tempnpc.Width, tempnpc.Height)
+                        Case 2
+                            tempnpc.SourceRect = New Rectangle(0, tempnpc.gfxHeight, tempnpc.Width, tempnpc.Height)
+                    End Select
 
                     If (tempnpc.totalJumps = 1 And tempnpc.totalFire = 0) Then
                         If tempnpc.Delay > 100 Then
                             tempnpc.Delay = 0
                             tempnpc.totalFire += 1
+                            tempnpc.isJumping = False
                         Else
                             tempnpc.Delay += 1
                         End If
@@ -417,6 +425,7 @@ Public Class Play
                             tempnpc.totalFire += 1
                             tempnpc.totalJumps = 0
                             tempnpc.totalFire = 0
+                            tempnpc.isJumping = False
                         Else
                             tempnpc.Delay += 1
                         End If
@@ -430,14 +439,17 @@ Public Class Play
                             Else
                                 tempnpc.isJumping = True
 
-                                tempnpc.Y -= 2
-                                tempnpc.hopHeight += 2
+                                If tempnpc.isJumping = True Then
+                                    tempnpc.Y -= 2
+                                    tempnpc.hopHeight += 2
+                                End If
+
 
                                 tempnpc.isMoving = True
                             End If
                         Else
                             tempnpc.Delay += 1
-
+                            tempnpc.isJumping = False
                             tempnpc.isMoving = True
 
                             If (PlayerCollide.X - tempnpc.X) >= 96 And tempnpc.Direction = 2 Then
@@ -462,8 +474,12 @@ Public Class Play
                         If tempnpc.isJumping = True Then
                             If tempnpc.hopHeight < 16 Then
                                 tempnpc.isJumping = True
-                                tempnpc.Y -= 1
-                                tempnpc.hopHeight += 1
+
+                                If tempnpc.isJumping = True Then
+                                    tempnpc.Y -= 1
+                                    tempnpc.hopHeight += 1
+                                End If
+                                
                             Else
                                 tempnpc.isJumping = False
                                 tempnpc.hopHeight = 0
@@ -479,7 +495,6 @@ Public Class Play
 
                             If tempnpc.isJumping = True Then
                                 If tempnpc.hopHeight < 272 Then
-                                    tempnpc.isJumping = True
                                     tempnpc.Y -= 6
                                     tempnpc.hopHeight += 6
                                 Else
@@ -503,11 +518,13 @@ Public Class Play
                     End If
             End Select
 
+            'Gravity
             tempnpc.OnGround = False
 
             If tempnpc.AI <> 4 Then
                 For Each r As Rectangle In Blocks.TileRects
-                    If New Rectangle(tempnpc.X, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) = True And (tempnpc.HasGravity = True And tempnpc.isJumping = False) Then
+                    'Checks if bottom of NPC is contained in a tile.
+                    If (r.Contains(New Point(tempnpc.X + 2, tempnpc.Y + tempnpc.Height)) = True Or r.Contains(New Point((tempnpc.X + tempnpc.Width) - 2, tempnpc.Y + tempnpc.Height)) = True) And (tempnpc.HasGravity = True And tempnpc.isJumping = False) Then
 
                         tempnpc.OnGround = True
                         tempnpc.Y = (r.Top - tempnpc.Height)
@@ -519,6 +536,7 @@ Public Class Play
                         End If
                     End If
                 Next
+
             Else
                 Select Case tempnpc.Direction
                     Case 1
@@ -526,7 +544,9 @@ Public Class Play
                             If New Rectangle(tempnpc.X + tempnpc.Width, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) Then
 
                                 tempnpc.OnGround = True
-                                tempnpc.Y = (r.Top - tempnpc.Height)
+                                If tempnpc.Y >= r.Top - GravityLevel Then
+                                    tempnpc.Y = (r.Top - tempnpc.Height)
+                                End If
 
                             End If
                         Next
@@ -535,7 +555,9 @@ Public Class Play
                             If New Rectangle(tempnpc.X - tempnpc.Width, tempnpc.Y, tempnpc.Width, tempnpc.Height).IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) Then
 
                                 tempnpc.OnGround = True
-                                tempnpc.Y = (r.Top - tempnpc.Height)
+                                If tempnpc.Y >= r.Top - GravityLevel Then
+                                    tempnpc.Y = (r.Top - tempnpc.Height)
+                                End If
 
                             End If
                         Next
@@ -595,9 +617,6 @@ Public Class Play
 
     End Sub
 
-    'Public Shared Function CheckNPCCollide() As Boolean
-    'Return NPC.NPCsets.Any(Function(rect) NPC.NPCsets.Where(Function(r) Not r.Equals(rect)).Any(Function(r) r.CollRect.IntersectsWith(rect.CollRect)))
-    ' End Function
     Public Shared Sub GetPlayerFrame()
         If IsDucking = False Then
             DrawW = Player.P1.PlayerW
@@ -723,7 +742,6 @@ Public Class Play
                 End If
             End If
         Else
-
             If IsDucking = False And OnGround = True Then
                 Select Case MoveDir
                     Case 1
@@ -855,6 +873,7 @@ Public Class Play
     End Sub
 
     Public Shared Sub Jump()
+        'Sets maxium jump heights based on player ID that is testing.
         Select Case CurPlayer
             Case 0, 2, 3
                 If JumpHeight >= 128 Then
@@ -875,12 +894,14 @@ Public Class Play
         For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s)).ToList
             Select Case MoveDir
                 Case 1
+                    'Check for collision on left side of block.
                     If ((PlayerCollide.Right = r.Left) Or PlayerCollide.IntersectsWith(New Rectangle(r.X - MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
                         CollideDir = 1
                     ElseIf (PlayerCollide.Right >= ViewPort.Right - 32) Then
                         CollideDir = 1
                     End If
                 Case 2
+                    'Check for collision on right side of block.
                     If ((PlayerCollide.Left = r.Right) Or PlayerCollide.IntersectsWith(New Rectangle(r.X + MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
                         CollideDir = 2
                     ElseIf (PlayerCollide.Left <= ViewPort.Left) Then
@@ -888,6 +909,7 @@ Public Class Play
                     End If
             End Select
 
+            'Check if player hit block from below.
             If PlayerCollide.IntersectsWith(New Rectangle(r.X, r.Y + JumpSpeed, r.Width, r.Height)) = True And IsJumping = True Then
                 IsJumping = False
 
@@ -951,25 +973,16 @@ Public Class Play
             ViewPort.Y = 0
         End If
 
-        If Play.IsTesting = False Then
-            Select Case Form2.EditMode
-                Case 0, 1, 2, 5, 6, 7
-                    Form2.mouseX = Math.Floor((Form2.mouselocX + (Form2.AutoScrollPosition.X * -1)) / 32)
-                    Form2.mouseY = Math.Floor((Form2.mouselocY + (Form2.AutoScrollPosition.Y * -1)) / 32)
-                Case Else
-                    Form2.mouseX = Math.Floor((Form2.mouselocX + (Form2.AutoScrollPosition.X * -1)) / 4)
-                    Form2.mouseY = Math.Floor((Form2.mouselocY + (Form2.AutoScrollPosition.Y * -1)) / 32)
-            End Select
-        Else
-            Select Case Form2.EditMode
-                Case 0, 1, 2, 5, 6, 7
-                    Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 32)
-                    Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)
-                Case Else
-                    Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 4)
-                    Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)
-            End Select
-        End If
+        'Keeps mouse in correct position in relation to the level.
+
+        Select Case Form2.EditMode
+            Case 0, 1, 2, 5, 6, 7
+                Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 32)
+                Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)
+            Case Else
+                Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 4)
+                Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)
+        End Select
 
         Form2.AddObject()
     End Sub

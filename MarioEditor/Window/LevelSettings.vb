@@ -931,9 +931,16 @@ Public Class LevelSettings
     End Sub
 
     Private Sub Button121_Click(sender As System.Object, e As System.EventArgs) Handles Button121.Click
-        Level.Music = IO.Path.GetDirectoryName(Level.LevelPath) & "\" & TextBox1.Text
+        If TextBox1.Text.Contains("\") = False Then
+            Level.Music = IO.Path.GetDirectoryName(Level.LevelPath) & "\" & TextBox1.Text
+        Else
+            Level.Music = TextBox1.Text
+        End If
 
-        SetLevelMusic()
+        If (IO.File.Exists(Level.Music) = True And Level.Music.EndsWith(".ogg")) Then
+            SetLevelMusic()
+        End If
+
     End Sub
 
     Private Sub Button122_Click(sender As System.Object, e As System.EventArgs) Handles Button122.Click
@@ -1090,5 +1097,27 @@ Public Class LevelSettings
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
         Level.Brightness = TrackBar1.Value * 10
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        BrowseMusic.Filter = "Music Files|*.ogg"
+        BrowseMusic.InitialDirectory = Form1.FilePath & "\worlds\"
+        BrowseMusic.Title = "Select File"
+
+        BrowseMusic.FileName = ""
+
+        BrowseMusic.ShowDialog()
+    End Sub
+
+    Private Sub BrowseMusic_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles BrowseMusic.FileOk
+        TextBox1.Text = BrowseMusic.FileName
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+        If (IO.File.Exists(TextBox1.Text) And TextBox1.Text.EndsWith(".ogg")) Then
+            TextBox1.ForeColor = Color.Green
+        Else
+            TextBox1.ForeColor = Color.Red
+        End If
     End Sub
 End Class

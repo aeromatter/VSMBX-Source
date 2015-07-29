@@ -101,8 +101,6 @@ Public Class Form1
         BlocksAndTiles.Hide()
         BGOs_Form.Hide()
         NPCs.Hide()
-
-        ActiveControl = Form2
     End Sub
 
     Private Sub Button4_Click(sender As System.Object, e As System.EventArgs) Handles Button4.Click
