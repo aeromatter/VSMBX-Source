@@ -64,122 +64,158 @@ Public Class Blocks
     Public Shared Sub FillBlock(X As Integer, Y As Integer, Width As Integer, Height As Integer)
         Dim fill As New Block
 
-        Dim FilledX As Boolean = False
-        Dim FilledY As Boolean = False
+        Dim frect As New Rectangle(X, Y, Width, Height)
 
         FillBlocks.Clear()
+        FillRects.Clear()
 
-        StartRect = New Rectangle(X, Y, Width, Height)
-        ScanRect = StartRect
+        Dim c1 As Boolean = False
+        Dim c2 As Boolean = False
+        Dim c3 As Boolean = False
+        Dim c4 As Boolean = False
 
-        Do Until FilledX = True And FilledY = True
-            If TileRects.Contains(New Rectangle(ScanRect.X + ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height)) = False Then
-                ScanRect.X += Width
-            Else
-                ScanRect.X = StartRect.X
-                ScanRect.Y += Height
+        Dim safem As Boolean = False
 
-                Do Until TileRects.Contains(New Rectangle(ScanRect.X - ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height))
-                    ScanRect.X -= ScanRect.Width
-                Loop
+        Dim fillq As New List(Of Rectangle)
+        fillq.Add(frect)
 
-                If TileRects.Contains(New Rectangle(ScanRect.X - ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height)) = False Then
-                    ScanRect.X = StartRect.X - ScanRect.Width
+        Dim Filled As Boolean = False
+
+        If Form1.CheckBox2.CheckState = CheckState.Checked Then
+            While Filled = False
+                For Each i As Rectangle In fillq.ToList
+                    If (i.X >= 0 And i.X <= ((Form2.AutoScrollPosition.X * -1) + Form2.Width)) And (i.Y >= 0 And i.Y <= ((Form2.AutoScrollPosition.Y * -1) + Form2.Height)) Then
+                        If fillq.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height))
+                            c2 = False
+                            c3 = False
+                            c4 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = True Then
+                            c1 = True
+                        End If
+
+                        If fillq.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height))
+                            c1 = False
+                            c3 = False
+                            c4 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = True Then
+                            c2 = True
+                        End If
+
+                        If fillq.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height))
+                            c1 = False
+                            c2 = False
+                            c4 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = True Then
+                            c3 = True
+                        End If
+
+                        If fillq.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height))
+                            c1 = False
+                            c2 = False
+                            c3 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = True Then
+                            c4 = True
+                        End If
+                    Else
+                        safem = True
+                    End If
+                Next
+
+                If (c1 = True And c2 = True And c3 = True And c4 = True) Or safem = True Then
+                    Filled = True
                 End If
+            End While
+        Else
+             While Filled = False
+                For Each i As Rectangle In fillq.ToList
+                    If (i.X >= 0 And i.X <= Level.LevelW) And (i.Y >= 0 And i.Y <= Level.LevelH) Then
+                        If fillq.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height))
+                            c2 = False
+                            c3 = False
+                            c4 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = True Then
+                            c1 = True
+                        End If
 
-                If TileRects.Contains(ScanRect) = True Then
-                    ScanRect.Y = StartRect.Y
+                        If fillq.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height))
+                            c1 = False
+                            c3 = False
+                            c4 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = True Then
+                            c2 = True
+                        End If
 
-                    FilledX = True
-                    FilledY = True
-                    Form2.Fill = False
+                        If fillq.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height))
+                            c1 = False
+                            c2 = False
+                            c4 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = True Then
+                            c3 = True
+                        End If
+
+                        If fillq.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False Then
+                            fillq.Add(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height))
+                            c1 = False
+                            c2 = False
+                            c3 = False
+                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = True Then
+                            c4 = True
+                        End If
+                    Else
+                        Filled = True
+                    End If
+                Next
+
+                If c1 = True And c2 = True And c3 = True And c4 = True Then
+                    Filled = True
                 End If
-            End If
+            End While
+        End If
+        
 
-            fill.Animated = Animated
-            fill.ContainItem = ContainItem
-            fill.FrameSpeed = FrameSpeed
-            fill.gfxHeight = gfxHeight
-            fill.gfxWidth = gfxWidth
-            fill.Height = Height
-            fill.ID = Form2.SelectedBlock
-            fill.IMG = Form2.TB.Image
-            fill.Invisible = Invisible
-            fill.rectangle = ScanRect
-            fill.SizeH = SizeH
-            fill.SizeW = SizeW
-            fill.Slip = Slippery
-            fill.TotalFrames = TotalFrames
-            fill.Width = Width
-            fill.X = X
-            fill.Y = Y
+        If Filled = True Then
+            For Each i As Rectangle In fillq
+                fill.rectangle = i
+                fill.X = i.X
+                fill.Y = i.Y
 
-            FillBlocks.Add(fill)
-        Loop
+                fill.IMG = Form2.TB.Image
+                fill.Width = Blocks.TileW
+                fill.Height = Blocks.TileH
+                fill.ID = Form2.SelectedBlock
+                fill.gfxWidth = Blocks.gfxWidth
+                fill.gfxHeight = Blocks.gfxHeight
+                fill.TotalFrames = Blocks.TotalFrames
+                fill.SizeW = Blocks.SizeW
+                fill.SizeH = Blocks.SizeH
+                fill.FrameSpeed = Blocks.FrameSpeed
+                fill.Lava = Blocks.Lava
+                fill.R = AdvancedBlocks.R
+                fill.G = AdvancedBlocks.G
+                fill.B = AdvancedBlocks.B
+                fill.Glow = AdvancedBlocks.Glow
+                fill.Breakable = Blocks.Breakable
 
-        FilledX = False
-        FilledY = False
+                fill.Animated = Blocks.Animated
+                fill.Invisible = Blocks.Invisible
+                fill.Slip = Blocks.Slippery
 
-        Do Until FilledX = True And FilledY = True
-            If TileRects.Contains(New Rectangle(ScanRect.X - ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height)) = False Then
-                ScanRect.X -= Width
-            Else
-                ScanRect.X = StartRect.X
-                ScanRect.Y -= Height
+                Tiles.Add(fill)
+                TileRects.Add(i)
 
-                Do Until TileRects.Contains(New Rectangle(ScanRect.X + ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height))
-                    ScanRect.X += ScanRect.Width
-                Loop
+                FillBlocks.Add(fill)
+                FillRects.Add(i)
+            Next
+        End If
 
-                If TileRects.Contains(New Rectangle(ScanRect.X - ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height)) = False Then
-                    ScanRect.X = StartRect.X - ScanRect.Width
-                End If
 
-                ScanRect.X = StartRect.X
-
-                Do Until TileRects.Contains(New Rectangle(ScanRect.X + ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height))
-                    ScanRect.X += ScanRect.Width
-                Loop
-
-                If TileRects.Contains(New Rectangle(ScanRect.X + ScanRect.Width, ScanRect.Y, ScanRect.Width, ScanRect.Height)) = False Then
-                    ScanRect.X = StartRect.X + ScanRect.Width
-                End If
-
-                If TileRects.Contains(ScanRect) = True Then
-                    ScanRect.Y = StartRect.Y
-
-                    FilledX = True
-                    FilledY = True
-                    Form2.Fill = False
-                End If
-            End If
-
-            fill.Animated = Animated
-            fill.ContainItem = ContainItem
-            fill.FrameSpeed = FrameSpeed
-            fill.gfxHeight = gfxHeight
-            fill.gfxWidth = gfxWidth
-            fill.Height = Height
-            fill.ID = Form2.SelectedBlock
-            fill.IMG = Form2.TB.Image
-            fill.Invisible = Invisible
-            fill.rectangle = ScanRect
-            fill.SizeH = SizeH
-            fill.SizeW = SizeW
-            fill.Slip = Slippery
-            fill.TotalFrames = TotalFrames
-            fill.Width = Width
-            fill.X = X
-            fill.Y = Y
-
-            FillBlocks.Add(fill)
-
-        Loop
-
-        For i = 0 To FillBlocks.Count - 1
-            Tiles.Add(FillBlocks(i))
-            TileRects.Add(FillBlocks(i).rectangle)
-        Next
     End Sub
 
     Public Shared Sub GetBlock(ByVal bID As Integer)

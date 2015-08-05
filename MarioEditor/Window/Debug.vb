@@ -47,6 +47,9 @@ Public Class Debug
             Label4.Text = "Block ID: " & Form2.SelectedBlock
             Label5.Text = "BGO ID: " & Form2.SelectedBGO
             Label6.Text = "NPC ID: " & Form2.SelectedNPC
+
+            Label27.Text = CStr(Form2.FPScounter)
+            Form2.FPScounter = 0
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation)
         End Try

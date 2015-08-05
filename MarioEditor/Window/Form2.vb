@@ -67,6 +67,8 @@ Public Class Form2
     Public Shared Online As Boolean = False
     Public Audio As Audio
 
+    Public FPScounter As Integer = 0
+
     Public Shared Function GetKeyStates(key As Key) As KeyStates
 
     End Function
@@ -1182,6 +1184,8 @@ Public Class Form2
         End If
 
         Draw.ResetTransform()
+
+        FPScounter += 1
     End Sub
 
     Public Sub Save()
@@ -1999,4 +2003,5 @@ Public Class Form2
             Me.Height = Level.LevelH + 32
         End If
     End Sub
+
 End Class
