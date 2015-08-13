@@ -24,8 +24,8 @@ Public Class Play
     Public Shared TotalProjectiles As Integer
     Public Shared MaxProjectiles As Integer = 2
 
-    Public Shared PlayerX As Integer
-    Public Shared PlayerY As Integer
+    Public Shared PlayerX As Double
+    Public Shared PlayerY As Double
 
     Public Shared DrawW As Integer
     Public Shared DrawH As Integer
@@ -60,11 +60,15 @@ Public Class Play
 
     Public Shared HoverTime As Integer = 0
 
-    Public Shared GravityLevel As Integer = 12
+    Public Shared GravityLevel As Double = 12
 
     Public Shared ViewPort As Rectangle
 
     Public Shared NPCground As Rectangle
+
+    Public Shared JumpVel As Double = 0.0
+    Public Shared FallVel As Double = 0.0
+    Public Shared MoveVel As Double = 0.0
 
     Public Shared Sub ShowHUD()
         HoldBoxLoc = New Rectangle((Form2.Width / 2) - My.Resources.HoldBox.Width, 16, My.Resources.HoldBox.Width, My.Resources.HoldBox.Height)
@@ -181,7 +185,7 @@ Public Class Play
                         End If
                     End If
                 Case 2
-                    If ((PlayerCollide.X >= tempnpc.X) And (PlayerCollide.Right <= tempnpc.rectangle.Right)) And tempnpc.thwompRise = False Then
+                    If ((PlayerCollide.X >= tempnpc.X) And (PlayerCollide.Right <= tempnpc.rectangle.Right) And ((PlayerCollide.Top - (tempnpc.Y + tempnpc.Height)) <= 320)) And tempnpc.thwompRise = False Then
                         tempnpc.HasGravity = True
                         'tempnpc.thwompFall = True
                     Else
@@ -789,9 +793,10 @@ Public Class Play
         OnGround = False
 
         For Each r As Rectangle In Blocks.TileRects.Where(Function(s) Play.ViewPort.Contains(s))
-            If PlayerCollide.IntersectsWith(New Rectangle(r.X, r.Y - GravityLevel, r.Width, r.Height)) And IsJumping = False Then
+            If PlayerCollide.IntersectsWith(New Rectangle(r.X, r.Y - (GravityLevel + FallVel), r.Width, r.Height)) And IsJumping = False Then
 
                 OnGround = True
+                FallVel = 0.0
                 CheckCollision()
 
                 If CollideDir = 0 Then
@@ -803,18 +808,24 @@ Public Class Play
         Next
 
         If OnGround = False And IsJumping = False Then
-            PlayerCollide.Y += GravityLevel
-            PlayerY += GravityLevel
-            DrawY += GravityLevel
+            If FallVel < GravityLevel Then
+                FallVel += GravityLevel / 10
+            End If
+            PlayerCollide.Y += FallVel
+            PlayerY += FallVel
+            DrawY += FallVel
+
         End If
 
         If IsJumping = False And IsMoving = False Then
             If JumpHeight > 0 Then
                 JumpHeight = 0
+                JumpVel = 0.0
             End If
         ElseIf IsJumping = False And IsMoving = True Then
             If JumpHeight > 0 Then
                 JumpHeight = 0
+                JumpVel = 0.0
             End If
 
             CheckCollision()
@@ -822,19 +833,19 @@ Public Class Play
             Select Case MoveDir
                 Case 1
                     If Not CollideDir = 1 Then
-                        PlayerX += Play.MoveSpeed
-                        DrawX += Play.MoveSpeed
+                        PlayerX += MoveVel
+                        DrawX += MoveVel
                     End If
                 Case 2
                     If Not CollideDir = 2 Then
-                        PlayerX -= Play.MoveSpeed
-                        DrawX -= Play.MoveSpeed
+                        PlayerX -= MoveVel
+                        DrawX -= MoveVel
                     End If
             End Select
         ElseIf IsJumping = True And IsMoving = True Then
-            PlayerY -= JumpSpeed
-            DrawY -= JumpSpeed
-            JumpHeight += JumpSpeed
+            PlayerY -= JumpVel
+            DrawY -= JumpVel
+            JumpHeight += JumpVel
 
             Jump()
             CheckCollision()
@@ -842,20 +853,20 @@ Public Class Play
             Select Case MoveDir
                 Case 1
                     If Not CollideDir = 1 Then
-                        PlayerX += Play.MoveSpeed
-                        DrawX += Play.MoveSpeed
+                        PlayerX += MoveVel
+                        DrawX += MoveVel
                     End If
                 Case 2
                     If Not CollideDir = 2 Then
-                        PlayerX -= Play.MoveSpeed
-                        DrawX -= Play.MoveSpeed
+                        PlayerX -= MoveVel
+                        DrawX -= MoveVel
                     End If
             End Select
 
         ElseIf IsJumping = True And IsMoving = False Then
-            PlayerY -= JumpSpeed
-            DrawY -= JumpSpeed
-            JumpHeight += JumpSpeed
+            PlayerY -= JumpVel
+            DrawY -= JumpVel
+            JumpHeight += JumpVel
 
             Jump()
         End If
@@ -884,6 +895,10 @@ Public Class Play
                     IsJumping = False
                 End If
         End Select
+
+        If JumpVel < JumpSpeed Then
+            JumpVel += Math.Floor(JumpSpeed / 10)
+        End If
     End Sub
 
     Public Shared Sub CheckCollision()
@@ -895,17 +910,21 @@ Public Class Play
             Select Case MoveDir
                 Case 1
                     'Check for collision on left side of block.
-                    If ((PlayerCollide.Right = r.Left) Or PlayerCollide.IntersectsWith(New Rectangle(r.X - MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
+                    If ((PlayerCollide.Right = r.Left) Or PlayerCollide.IntersectsWith(New Rectangle(Math.Ceiling(r.X - MoveVel), r.Y, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
                         CollideDir = 1
+                        MoveVel = 0.0
                     ElseIf (PlayerCollide.Right >= ViewPort.Right - 32) Then
                         CollideDir = 1
+                        MoveVel = 0.0
                     End If
                 Case 2
                     'Check for collision on right side of block.
-                    If ((PlayerCollide.Left = r.Right) Or PlayerCollide.IntersectsWith(New Rectangle(r.X + MoveSpeed, r.Y + 2, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
+                    If ((PlayerCollide.Left = r.Right) Or PlayerCollide.IntersectsWith(New Rectangle(Math.Ceiling(r.X + MoveVel), r.Y, r.Width, r.Height))) And (r.Y < PlayerCollide.Bottom) And (r.Bottom > PlayerCollide.Top) Then
                         CollideDir = 2
+                        MoveVel = 0.0
                     ElseIf (PlayerCollide.Left <= ViewPort.Left) Then
                         CollideDir = 2
+                        MoveVel = 0.0
                     End If
             End Select
 
@@ -933,6 +952,10 @@ Public Class Play
         If IsStarman = True Then
             MoveSpeed += 4
         End If
+
+        If MoveVel < MoveSpeed Then
+            MoveVel += Math.Ceiling(MoveSpeed / 10)
+        End If
     End Sub
 
     Public Shared Sub Move(dir As Integer)
@@ -948,7 +971,7 @@ Public Class Play
     Public Shared Sub MaintainLevelBounds()
         'Keep player from leaving level
         If Level.LevelW > 640 Or (Level.LevelH > 608 And OnGround = False) Then
-            ViewPort = New Rectangle(PlayerX - (Form2.Width / 2), PlayerY - (Form2.Height / 2), Form2.Width, Form2.Height - 56)
+            ViewPort = New Rectangle(PlayerX - (Form2.Width / 2), Math.Ceiling((PlayerY + Player.PlayerH) - (Form2.Height / 2)), Form2.Width, Form2.Height - 56)
 
             If ViewPort.X < 0 Then
                 ViewPort.X = 0
@@ -974,11 +997,10 @@ Public Class Play
         End If
 
         'Keeps mouse in correct position in relation to the level.
-
         Select Case Form2.EditMode
             Case 0, 1, 2, 5, 6, 7
-                Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 32)
-                Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)
+                Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / Form2.AlignFactor)
+                Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / Form2.AlignFactor)
             Case Else
                 Form2.mouseX = Math.Floor((Form2.mouselocX + (ViewPort.X)) / 4)
                 Form2.mouseY = Math.Floor((Form2.mouselocY + (ViewPort.Y)) / 32)

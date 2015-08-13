@@ -7347,12 +7347,15 @@
     End Sub
 
     Private Sub Button699_Click(sender As System.Object, e As System.EventArgs) Handles Button699.Click
-        For Each i As Block In Blocks.FillBlocks.ToList
-            If Blocks.Tiles.Contains(i) Then
-                Blocks.Tiles.Remove(i)
-                Blocks.TileRects.Remove(i.rectangle)
-            End If
-        Next
+        If Blocks.FillBlocks.Count > 0 Then
+            For Each i As Block In Blocks.FillBlocks.ToList
+                If Blocks.Tiles.Contains(i) Then
+                    Blocks.Tiles.Remove(i)
+                    Blocks.TileRects.Remove(i.rectangle)
+                End If
+            Next
+        End If
+        
     End Sub
 
     Private Sub Button701_Click(sender As System.Object, e As System.EventArgs) Handles Button701.Click

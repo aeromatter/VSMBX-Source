@@ -208,4 +208,12 @@ Public Class Form1
     Private Sub GridCtrlGToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GridCtrlGToolStripMenuItem.Click
         Grid.Show()
     End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If CheckBox1.CheckState = CheckState.Checked Then
+            Form2.AlignFactor = 32
+        Else
+            Form2.AlignFactor = 1
+        End If
+    End Sub
 End Class

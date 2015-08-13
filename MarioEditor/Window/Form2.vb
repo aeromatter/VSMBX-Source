@@ -69,6 +69,8 @@ Public Class Form2
 
     Public FPScounter As Integer = 0
 
+    Public AlignFactor As Integer = 32
+
     Public Shared Function GetKeyStates(key As Key) As KeyStates
 
     End Function
@@ -132,10 +134,10 @@ Public Class Form2
 
         If (Keyboard.GetKeyStates(PlayerC.RightC) And KeyStates.Down) > 0 Then
             Play.Move(1)
-        End If
-
-        If (Keyboard.GetKeyStates(PlayerC.LeftC) And KeyStates.Down) > 0 Then
+        ElseIf (Keyboard.GetKeyStates(PlayerC.LeftC) And KeyStates.Down) > 0 Then
             Play.Move(2)
+        Else
+            Play.MoveVel = 0.0
         End If
 
         If (Keyboard.GetKeyStates(PlayerC.JumpC) And KeyStates.Down) > 0 Then
@@ -192,6 +194,7 @@ Public Class Form2
             Level.Song = ""
             Level.P1start = Nothing
             Level.P2start = Nothing
+            Blocks.fillq.Clear()
             Me.Invalidate()
 
             Audio = New Audio
@@ -287,11 +290,11 @@ Public Class Form2
                 Dim OverLap As Boolean
 
                 If MouseIsDown = True And screen.Contains(mouselocX, mouselocY) = True Then
-                    r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
+                    r = New Rectangle((mouseX * AlignFactor), (mouseY * AlignFactor) - (Blocks.TileH - AlignFactor), Blocks.TileW, Blocks.TileH)
 
                     b.rectangle = r
-                    b.X = mouseX * Blocks.TileSize
-                    b.Y = mouseY * Blocks.TileSize
+                    b.X = r.X
+                    b.Y = r.Y
 
                     b.IMG = TB.Image
                     b.Width = Blocks.TileW
@@ -425,10 +428,10 @@ Public Class Form2
                 Dim bgorect As New Rectangle
 
                 If MouseIsDown = True And screen.Contains(mouselocX, mouselocY) = True Then
-                    r = New Rectangle(mouseX * Backgrounds.BGOSize, mouseY * Backgrounds.BGOSize, Backgrounds.BGOW, Backgrounds.BGOH)
-                    Backgrounds.bgo.rectangle = New Rectangle(mouseX * Backgrounds.BGOSize, mouseY * Backgrounds.BGOSize, Backgrounds.BGOW, Backgrounds.BGOH)
-                    Backgrounds.bgo.X = mouseX * Backgrounds.BGOSize
-                    Backgrounds.bgo.Y = mouseY * Backgrounds.BGOSize
+                    r = New Rectangle(mouseX * AlignFactor, mouseY * AlignFactor, Backgrounds.BGOW, Backgrounds.BGOH)
+                    Backgrounds.bgo.rectangle = r
+                    Backgrounds.bgo.X = r.X
+                    Backgrounds.bgo.Y = r.Y
 
                     Backgrounds.bgo.IMG = TB.Image
                     Backgrounds.bgo.Width = Backgrounds.BGOW
@@ -495,10 +498,10 @@ Public Class Form2
                 Dim OverLap As Boolean = False
 
                 If MouseIsDown = True And screen.Contains(mouselocX, mouselocY) = True Then
-                    r = New Rectangle((mouseX * NPC.NPCSize) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
-                    NPC.NPC.rectangle = New Rectangle(mouseX * NPC.NPCSize, (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
-                    NPC.NPC.X = mouseX * NPC.NPCSize
-                    NPC.NPC.Y = mouseY * NPC.NPCSize
+                    r = New Rectangle((mouseX * AlignFactor) - (NPC.NPCW - AlignFactor), (mouseY * AlignFactor) - (NPC.NPCH - AlignFactor), NPC.NPCW, NPC.NPCH)
+                    NPC.NPC.rectangle = r
+                    NPC.NPC.X = r.X
+                    NPC.NPC.Y = r.Y
 
                     NPC.NPC.IMG = TB.Image
                     NPC.NPC.Width = NPC.NPCW
@@ -670,8 +673,8 @@ Public Class Form2
         If Play.IsTesting = False Then
             Select Case EditMode
                 Case 0, 1, 2, 5, 6, 7
-                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 32)
-                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / AlignFactor)
+                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / AlignFactor)
                 Case Else
                     mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 4)
                     mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
@@ -679,8 +682,8 @@ Public Class Form2
         Else
             Select Case EditMode
                 Case 0, 1, 2, 5, 6, 7
-                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 32)
-                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / AlignFactor)
+                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / AlignFactor)
                 Case Else
                     mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 4)
                     mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
@@ -703,8 +706,8 @@ Public Class Form2
         If Play.IsTesting = False Then
             Select Case EditMode
                 Case 0, 1, 2, 5, 6, 7
-                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 32)
-                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / AlignFactor)
+                    mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / AlignFactor)
                 Case Else
                     mouseX = Math.Floor((mouselocX + (Me.AutoScrollPosition.X * -1)) / 4)
                     mouseY = Math.Floor((mouselocY + (Me.AutoScrollPosition.Y * -1)) / 32)
@@ -712,8 +715,8 @@ Public Class Form2
         Else
             Select Case EditMode
                 Case 0, 1, 2, 5, 6, 7
-                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 32)
-                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
+                    mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / AlignFactor)
+                    mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / AlignFactor)
                 Case Else
                     mouseX = Math.Floor((mouselocX + (Play.ViewPort.X)) / 4)
                     mouseY = Math.Floor((mouselocY + (Play.ViewPort.Y)) / 32)
@@ -1089,7 +1092,7 @@ Public Class Form2
         If MouseIsMoving = True Then
             Select Case EditMode
                 Case 0
-                    r = New Rectangle((mouseX * Blocks.TileSize), (mouseY * Blocks.TileSize) - (Blocks.TileH - Blocks.TileSize), Blocks.TileW, Blocks.TileH)
+                    r = New Rectangle(mouseX * AlignFactor, (mouseY * AlignFactor) - (Blocks.TileH - AlignFactor), Blocks.TileW, Blocks.TileH)
 
                     If Blocks.Animated = True Then
                         graphic.DrawImage(TB.Image, r, New Rectangle(0, Blocks.TileH * Anim(Blocks.FrameSpeed, Blocks.TotalFrames), Blocks.gfxWidth, Blocks.TileH), GraphicsUnit.Pixel)
@@ -1097,7 +1100,7 @@ Public Class Form2
                         graphic.DrawImage(TB.Image, r, New Rectangle(0, 0, Blocks.gfxWidth, Blocks.gfxHeight), GraphicsUnit.Pixel)
                     End If
                 Case 2
-                    r = New Rectangle(mouseX * 32, mouseY * 32, Backgrounds.BGOW, Backgrounds.BGOH)
+                    r = New Rectangle(mouseX * AlignFactor, mouseY * AlignFactor, Backgrounds.BGOW, Backgrounds.BGOH)
 
                     If Backgrounds.Animated = True Then
                         graphic.DrawImage(TB.Image, r, New Rectangle(0, Backgrounds.BGOH * Anim(Backgrounds.FrameSpeed, Backgrounds.TotalFrames), Backgrounds.gfxWidth, Backgrounds.BGOH), GraphicsUnit.Pixel)
@@ -1118,7 +1121,7 @@ Public Class Form2
                             Player.SetPlayer()
                         End If
                 Case 5
-                    r = New Rectangle(((mouseX * NPC.NPCSize)) - (NPC.NPCW - NPC.NPCSize), (mouseY * NPC.NPCSize) - (NPC.NPCH - NPC.NPCSize), NPC.NPCW, NPC.NPCH)
+                    r = New Rectangle(((mouseX * AlignFactor)) - (NPC.NPCW - AlignFactor), (mouseY * AlignFactor) - (NPC.NPCH - AlignFactor), NPC.NPCW, NPC.NPCH)
 
                     If NPC.Animated = True Then
                         Select Case NPC.FrameStyle

@@ -34,7 +34,6 @@ Public Class Player
     Public Shared P2 As Player2Data
 
     Public Shared Sub SetPlayer()
-
         Select Case PlayerID
             Case 0
                 'Mario

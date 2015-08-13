@@ -1,4 +1,4 @@
-﻿<Serializable()> Public Structure Block
+﻿Public Structure Block
     Dim rectangle As Rectangle
     Dim X As Integer
     Dim Y As Integer
@@ -61,6 +61,8 @@ Public Class Blocks
 
     Public Shared CreateBlock As Block
 
+    Public Shared fillq As New List(Of Rectangle)
+
     Public Shared Sub FillBlock(X As Integer, Y As Integer, Width As Integer, Height As Integer)
         Dim fill As New Block
 
@@ -69,116 +71,100 @@ Public Class Blocks
         FillBlocks.Clear()
         FillRects.Clear()
 
-        Dim c1 As Boolean = False
-        Dim c2 As Boolean = False
-        Dim c3 As Boolean = False
-        Dim c4 As Boolean = False
+        fillq.Add(frect)
+
+        Dim CheckRect As Rectangle
 
         Dim safem As Boolean = False
-
-        Dim fillq As New List(Of Rectangle)
-        fillq.Add(frect)
+        Dim timer As Integer = 1
 
         Dim Filled As Boolean = False
 
         If Form1.CheckBox2.CheckState = CheckState.Checked Then
             While Filled = False
                 For Each i As Rectangle In fillq.ToList
-                    If (i.X >= 0 And i.X <= ((Form2.AutoScrollPosition.X * -1) + Form2.Width)) And (i.Y >= 0 And i.Y <= ((Form2.AutoScrollPosition.Y * -1) + Form2.Height)) Then
-                        If fillq.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False Then
-                            fillq.Add(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height))
-                            c2 = False
-                            c3 = False
-                            c4 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = True Then
-                            c1 = True
+                        If (i.X >= 0 And i.X <= ((Form2.AutoScrollPosition.X * -1) + Form2.Width)) And (i.Y >= 0 And i.Y <= ((Form2.AutoScrollPosition.Y * -1) + Form2.Height)) Then
+                            CheckRect = New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And CheckRect.Contains(i) = False And TileRects.Contains(CheckRect) = False Then
+                            fillq.Add(CheckRect)
+                            timer += 1
                         End If
 
-                        If fillq.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False Then
-                            fillq.Add(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height))
-                            c1 = False
-                            c3 = False
-                            c4 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = True Then
-                            c2 = True
+                            CheckRect = New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And CheckRect.Contains(i) = False And TileRects.Contains(CheckRect) = False Then
+                            fillq.Add(CheckRect)
+                            timer += 1
                         End If
 
-                        If fillq.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False Then
-                            fillq.Add(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height))
-                            c1 = False
-                            c2 = False
-                            c4 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = True Then
-                            c3 = True
+                            CheckRect = New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And CheckRect.Contains(i) = False And TileRects.Contains(CheckRect) = False Then
+                            fillq.Add(CheckRect)
+                            timer += 1
                         End If
 
-                        If fillq.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False Then
+                            CheckRect = New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And CheckRect.Contains(i) = False And TileRects.Contains(CheckRect) = False Then
                             fillq.Add(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height))
-                            c1 = False
-                            c2 = False
-                            c3 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = True Then
-                            c4 = True
+                            timer += 1
                         End If
-                    Else
-                        safem = True
-                    End If
+                        Else
+                            safem = True
+                        End If
                 Next
 
-                If (c1 = True And c2 = True And c3 = True And c4 = True) Or safem = True Then
+                timer -= 1
+
+                If (timer <= 0) Or safem = True Then
                     Filled = True
+                    timer = 1
                 End If
             End While
         Else
-             While Filled = False
+            While Filled = False
                 For Each i As Rectangle In fillq.ToList
                     If (i.X >= 0 And i.X <= Level.LevelW) And (i.Y >= 0 And i.Y <= Level.LevelH) Then
-                        If fillq.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = False Then
-                            fillq.Add(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height))
-                            c2 = False
-                            c3 = False
-                            c4 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)) = True Then
-                            c1 = True
+                        CheckRect = New Rectangle(i.X - i.Width, i.Y, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And TileRects.Contains(CheckRect) = False Then
+                            fillq.Add(CheckRect)
+                            timer += 1
                         End If
 
-                        If fillq.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = False Then
-                            fillq.Add(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height))
-                            c1 = False
-                            c3 = False
-                            c4 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)) = True Then
-                            c2 = True
+                        CheckRect = New Rectangle(i.X, i.Y - i.Height, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And TileRects.Contains(CheckRect) = False Then
+                            fillq.Add(CheckRect)
+                            timer += 1
                         End If
 
-                        If fillq.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = False Then
-                            fillq.Add(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height))
-                            c1 = False
-                            c2 = False
-                            c4 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)) = True Then
-                            c3 = True
+                        CheckRect = New Rectangle(i.X + i.Width, i.Y, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And TileRects.Contains(CheckRect) = False Then
+                            fillq.Add(CheckRect)
+                            timer += 1
                         End If
 
-                        If fillq.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False And TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = False Then
+                        CheckRect = New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)
+
+                        If fillq.Contains(CheckRect) = False And TileRects.Contains(CheckRect) = False Then
                             fillq.Add(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height))
-                            c1 = False
-                            c2 = False
-                            c3 = False
-                        ElseIf TileRects.Contains(New Rectangle(i.X, i.Y + i.Height, i.Width, i.Height)) = True Then
-                            c4 = True
+                            timer += 1
                         End If
                     Else
                         Filled = True
                     End If
                 Next
 
-                If c1 = True And c2 = True And c3 = True And c4 = True Then
+                If timer <= 0 Then
                     Filled = True
+                    timer = 10
                 End If
             End While
         End If
-        
 
         If Filled = True Then
             For Each i As Rectangle In fillq
@@ -187,8 +173,8 @@ Public Class Blocks
                 fill.Y = i.Y
 
                 fill.IMG = Form2.TB.Image
-                fill.Width = Blocks.TileW
-                fill.Height = Blocks.TileH
+                fill.Width = i.Width
+                fill.Height = i.Height
                 fill.ID = Form2.SelectedBlock
                 fill.gfxWidth = Blocks.gfxWidth
                 fill.gfxHeight = Blocks.gfxHeight
@@ -214,13 +200,12 @@ Public Class Blocks
                 FillRects.Add(i)
             Next
         End If
-
-
     End Sub
 
     Public Shared Sub GetBlock(ByVal bID As Integer)
         bmp = Nothing
 
+        'Set Defaults
         TileW = 32
         TileH = 32
         gfxWidth = 32

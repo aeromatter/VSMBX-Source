@@ -1,5 +1,5 @@
 ﻿Imports System.Diagnostics
-
+Imports System.Windows.Input
 Public Class Debug
     Public Shared TotalBlocks As Integer = 0
     Public Shared TotalBGOs As Integer = 0
@@ -7,8 +7,8 @@ Public Class Debug
     Public Shared TotalObjBlocks As Integer = 0
     Public Shared TotalObjBGOs As Integer = 0
     Public Shared TotalObjNPCs As Integer = 0
-    Public Memory As New PerformanceCounter("Memory", "Available MBytes")
-    Public CPU As New PerformanceCounter("Processor", "% Processor Time", "_Total")
+    Public Memory As New PerformanceCounter("Memory", "Available MBytes", True)
+    Public CPU As New PerformanceCounter("Process", "% Processor Time", Process.GetCurrentProcess().ProcessName, True)
 
     Public Shared Sub MouseLoc(X As Integer, Y As Integer)
         Debug.Label7.Text = "X: " & X
@@ -16,18 +16,13 @@ Public Class Debug
     End Sub
 
     Private Sub Debug_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        Label21.Text = "Left: " & PlayerC.LeftC
-        Label22.Text = "Right: " & PlayerC.RightC
-        Label23.Text = "Up: " & PlayerC.UpC
-        Label24.Text = "Down: " & PlayerC.DownC
-        Label25.Text = "Jump: " & PlayerC.JumpC
-        Label26.Text = "Run: " & PlayerC.RunC
+        
     End Sub
 
     Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
         Try
-            Label1.Text = "Memory Available: " & Memory.NextValue() & "MB"
-            Label2.Text = "CPU: " & Math.Round(CPU.NextValue()) & "%"
+            Label1.Text = "Memory Available: " & Math.Round(Memory.NextValue() / 1024, 2) & " GB"
+            Label2.Text = "CPU: " & Math.Round(CPU.NextValue() * 0.5) & "%"
 
             Select Case Form2.EditMode
                 Case 0
@@ -47,6 +42,15 @@ Public Class Debug
             Label4.Text = "Block ID: " & Form2.SelectedBlock
             Label5.Text = "BGO ID: " & Form2.SelectedBGO
             Label6.Text = "NPC ID: " & Form2.SelectedNPC
+
+            Dim kc As New KeyConverter
+
+            Label21.Text = "Left: " & kc.ConvertToString(PlayerC.LeftC)
+            Label22.Text = "Right: " & kc.ConvertToString(PlayerC.RightC)
+            Label23.Text = "Up: " & kc.ConvertToString(PlayerC.UpC)
+            Label24.Text = "Down: " & kc.ConvertToString(PlayerC.DownC)
+            Label25.Text = "Jump: " & kc.ConvertToString(PlayerC.JumpC)
+            Label26.Text = "Run: " & kc.ConvertToString(PlayerC.RunC)
 
             Label27.Text = CStr(Form2.FPScounter)
             Form2.FPScounter = 0
